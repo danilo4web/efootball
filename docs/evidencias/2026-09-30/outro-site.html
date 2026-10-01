@@ -1,0 +1,10 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Outro site</title>
+<style>body{font:18px system-ui,sans-serif;max-width:760px;margin:60px auto;padding:0 16px}pre{background:#111;color:#0f0;padding:16px;border-radius:8px;white-space:pre-wrap}</style></head>
+<body><h1>Uma página qualquer da internet</h1>
+<p>Esta página tenta chamar o endpoint do dashboard local em segundo plano, como um site malicioso faria:</p>
+<pre id="r">POST http://localhost:8765/api/clear-cache …</pre>
+<script>
+fetch("http://localhost:8765/api/clear-cache", {method: "POST", mode: "cors"})
+  .then(r => document.getElementById("r").textContent += "\nresposta HTTP " + r.status)
+  .catch(e => document.getElementById("r").textContent += "\nrecusado pelo servidor (o navegador não mostra o corpo: " + e + ")");
+</script></body></html>
