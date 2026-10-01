@@ -20,7 +20,7 @@ DASHBOARD_DIR = os.path.join(ROOT, "dashboard")
 SCRIPTS_DIR = os.path.join(ROOT, "scripts")
 STATUS_PATH = os.path.join(ROOT, "data", "refresh_status.json")
 
-PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8765
+DEFAULT_PORT = 8765
 
 refresh_lock = threading.Lock()
 
@@ -64,10 +64,20 @@ def run_refresh():
                          message="select_team.py falhou: " + select.stderr[-500:])
             return
 
+        # O dashboard.html embute o time no build: sem esta etapa, recarregar a
+        # página mostrava o time antigo.
+        write_status(state="running", started_at=time.time(), step="gerando o dashboard")
+        build = subprocess.run(
+            [sys.executable, os.path.join(SCRIPTS_DIR, "build_dashboard.py")],
+            capture_output=True, text=True, cwd=ROOT,
+        )
+        if build.returncode != 0:
+            write_status(state="error", finished_at=time.time(),
+                         message="build_dashboard.py falhou: " + build.stderr[-500:])
+            return
+
         write_status(state="done", finished_at=time.time(),
-                      message="Cache limpo e time remontado. Recarregue a página pra ver os dados novos "
-                              "(o dashboard.html publicado continua sendo o mesmo arquivo -- "
-                              "gere e republique de novo pra atualizar o link do artifact).")
+                      message="Cache limpo, time remontado e dashboard gerado. Recarregue a página pra ver os dados novos.")
     finally:
         refresh_lock.release()
 
@@ -86,8 +96,20 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             return self._json(read_status())
         return super().do_GET()
 
+    def _same_origin(self):
+        """O endpoint dispara uma raspagem completa do efhub: só o próprio dashboard
+        pode chamá-lo. Navegadores mandam Origin em POST de outro site (CSRF);
+        sem Origin (curl, chamada local) é aceito."""
+        origin = self.headers.get("Origin")
+        if origin is None:
+            return True
+        host = self.headers.get("Host", "")
+        return origin in (f"http://{host}", f"https://{host}")
+
     def do_POST(self):
         if self.path == "/api/clear-cache":
+            if not self._same_origin():
+                return self._json({"state": "forbidden", "message": "origem não permitida"}, 403)
             if refresh_lock.locked():
                 return self._json({"state": "running", "message": "já tem uma atualização rodando"}, 202)
             threading.Thread(target=run_refresh, daemon=True).start()
@@ -100,10 +122,11 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 
 def main():
+    port = int(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_PORT
     os.chdir(DASHBOARD_DIR)
     write_status(state="idle")
-    with http.server.ThreadingHTTPServer(("127.0.0.1", PORT), Handler) as httpd:
-        print(f"Dashboard disponível em: http://localhost:{PORT}/dashboard.html")
+    with http.server.ThreadingHTTPServer(("127.0.0.1", port), Handler) as httpd:
+        print(f"Dashboard disponível em: http://localhost:{port}/dashboard.html")
         print("Ctrl+C pra parar.")
         httpd.serve_forever()
 
