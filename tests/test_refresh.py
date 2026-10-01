@@ -102,8 +102,34 @@ def test_limpar_cache_remonta_o_dashboard(tmp_path, monkeypatch):
 
     serve_dashboard.run_refresh()
 
-    assert rodados == ["fetch_players.py", "select_team.py", "build_dashboard.py"]
+    assert rodados == ["fetch_players.py", "select_team.py", "fetch_boxes.js", "build_dashboard.py"]
     assert json.loads((tmp_path / "status.json").read_text())["state"] == "done"
+
+
+def test_falha_nas_boxes_nao_derruba_a_atualizacao(tmp_path, monkeypatch):
+    rodados = []
+
+    class Resultado:
+        def __init__(self, ok):
+            self.returncode = 0 if ok else 1
+            self.stderr = "" if ok else "Error: HTTP 403"
+
+    def run(cmd, **k):
+        nome = Path(cmd[1]).name
+        rodados.append(nome)
+        return Resultado(nome != "fetch_boxes.js")
+
+    monkeypatch.setattr(serve_dashboard.subprocess, "run", run)
+    monkeypatch.setattr(serve_dashboard, "find_node", lambda: "/usr/bin/node")
+    monkeypatch.setattr(serve_dashboard, "STATUS_PATH", str(tmp_path / "status.json"))
+    monkeypatch.setattr(serve_dashboard, "PLAYERS_JSON", str(tmp_path / "nao-existe.json"))
+
+    serve_dashboard.run_refresh()
+
+    status = json.loads((tmp_path / "status.json").read_text())
+    assert rodados[-1] == "build_dashboard.py"
+    assert status["state"] == "done"
+    assert "Boxes não atualizadas" in status["message"]
 
 
 @pytest.fixture

@@ -21,6 +21,8 @@ TEMPLATE_PATH = os.path.join(ASSETS_DIR, "template.html")
 ANTON_PATH = os.path.join(ASSETS_DIR, "anton_b64.txt")
 PHOTOS_PATH = os.path.join(ASSETS_DIR, "minicards_b64.json")
 TEAM_PATH = os.path.join(ROOT, "data", "best_team.json")
+PLAYERS_PATH = os.path.join(ROOT, "data", "players.json")
+BOXES_PATH = os.path.join(ROOT, "data", "boxes.json")
 OUT_PATH = os.path.join(ROOT, "dashboard", "dashboard.html")
 
 
@@ -39,6 +41,20 @@ def main():
     html = html.replace("__ANTON_B64__", anton_b64)
     html = html.replace("__TEAM_JSON__", json.dumps(team, ensure_ascii=False))
     html = html.replace("__PHOTOS_JSON__", json.dumps(photos, ensure_ascii=False))
+    # momento da busca mais recente no efhub, pro "dados de há X h" do topo
+    try:
+        players = json.load(open(PLAYERS_PATH, encoding="utf-8"))["players"]
+        fetched_at = max((p.get("fetched_at") or 0) for p in players) or None
+    except (OSError, ValueError, KeyError):
+        fetched_at = None
+    html = html.replace("__DATA_FETCHED_AT__", json.dumps(fetched_at))
+    # boxes do efhub (scripts/card_scraper/fetch_boxes.js); sem o arquivo a aba
+    # mostra como gerar
+    try:
+        boxes = json.load(open(BOXES_PATH, encoding="utf-8"))
+    except (OSError, ValueError):
+        boxes = None
+    html = html.replace("__BOXES_JSON__", json.dumps(boxes, ensure_ascii=False))
 
     os.makedirs(os.path.dirname(OUT_PATH), exist_ok=True)
     with open(OUT_PATH, "w", encoding="utf-8") as f:

@@ -7,9 +7,11 @@ Uso:
 
 Depois abra http://localhost:<porta>/dashboard.html no navegador.
 """
+import glob
 import http.server
 import json
 import os
+import shutil
 import subprocess
 import sys
 import threading
@@ -55,6 +57,34 @@ def resumo_de_falhas():
     return f" Atenção: {len(erros)} falha(s) na busca ({nomes}); os jogadores já conhecidos mantiveram o dado anterior."
 
 
+def find_node():
+    """O servico systemd nao herda o PATH do nvm: procura o node no PATH e,
+    se nao achar, na instalacao mais recente do nvm."""
+    found = shutil.which("node")
+    if found:
+        return found
+    candidates = sorted(glob.glob(os.path.expanduser("~/.nvm/versions/node/*/bin/node")))
+    return candidates[-1] if candidates else None
+
+
+def refresh_boxes():
+    """Atualiza data/boxes.json (aba Boxes). Falha aqui nao derruba a
+    atualizacao do time: devolve uma mensagem curta pro resumo final."""
+    node = find_node()
+    if not node:
+        return " Boxes não atualizadas: node não encontrado."
+    try:
+        r = subprocess.run(
+            [node, os.path.join(SCRIPTS_DIR, "card_scraper", "fetch_boxes.js")],
+            capture_output=True, text=True, cwd=os.path.join(SCRIPTS_DIR, "card_scraper"), timeout=600,
+        )
+    except subprocess.TimeoutExpired:
+        return " Boxes não atualizadas: a busca passou de 10 min."
+    if r.returncode != 0:
+        return " Boxes não atualizadas: " + (r.stderr.strip().splitlines() or ["erro"])[-1][:200]
+    return ""
+
+
 def run_refresh():
     if not refresh_lock.acquire(blocking=False):
         return  # ja tem uma atualizacao rodando
@@ -79,6 +109,9 @@ def run_refresh():
                          message="select_team.py falhou: " + select.stderr[-500:])
             return
 
+        write_status(state="running", started_at=time.time(), step="buscando as boxes do efhub")
+        boxes_msg = refresh_boxes()
+
         # O dashboard.html embute o time no build: sem esta etapa, recarregar a
         # página mostrava o time antigo.
         write_status(state="running", started_at=time.time(), step="gerando o dashboard")
@@ -93,7 +126,7 @@ def run_refresh():
 
         write_status(state="done", finished_at=time.time(),
                      message="Cache limpo, time remontado e dashboard gerado. Recarregue a página pra ver os dados novos."
-                     + resumo_de_falhas())
+                     + resumo_de_falhas() + boxes_msg)
     finally:
         refresh_lock.release()
 
