@@ -73,6 +73,80 @@ def greedy_assign_slots(slot_candidates, slot_count=None):
     return starters, used_players
 
 
+def optimal_assign_slots(slot_candidates, slot_count=None):
+    """Atribuicao que MAXIMIZA a soma dos scores do time inteiro (fluxo de
+    custo minimo). A gulosa (greedy_assign_slots) fecha vaga por vaga pelo
+    maior score disponivel e pode errar o conjunto: punha o Kounde de
+    lateral (86) quando ele de zagueiro (81 contra 73 do Tapsoba) com o
+    Matheuzinho na lateral rendia +9 no total. Mesma regra de unicidade da
+    gulosa: um jogador (pelo nome -- cartas diferentes do mesmo jogador
+    contam como um so) ocupa no maximo uma vaga."""
+    slot_count = SLOT_COUNT if slot_count is None else slot_count
+    slots = [sl for sl in slot_count if slot_count[sl] > 0]
+    # melhor carta de cada jogador (nome) pra cada slot
+    best = {}
+    for sl in slots:
+        for c in slot_candidates.get(sl, []):
+            key = (c["player"]["name"], sl)
+            if key not in best or c["score"] > best[key]["score"]:
+                best[key] = c
+    names = sorted({name for name, _ in best})
+
+    src, sink = 0, 1
+    name_node = {n: 2 + i for i, n in enumerate(names)}
+    slot_node = {sl: 2 + len(names) + j for j, sl in enumerate(slots)}
+    graph = [[] for _ in range(2 + len(names) + len(slots))]
+
+    def add(u, v, cap, cost):
+        graph[u].append([v, cap, cost, len(graph[v])])
+        graph[v].append([u, 0, -cost, len(graph[u]) - 1])
+
+    for n in names:
+        add(src, name_node[n], 1, 0)
+    for sl in slots:
+        add(slot_node[sl], sink, slot_count[sl], 0)
+    for (n, sl), c in best.items():
+        add(name_node[n], slot_node[sl], 1, -c["score"])
+
+    # caminhos aumentantes de menor custo (Bellman-Ford/SPFA, ha arestas negativas)
+    for _ in range(sum(slot_count[sl] for sl in slots)):
+        dist = [float("inf")] * len(graph)
+        prev = [None] * len(graph)
+        in_queue = [False] * len(graph)
+        dist[src] = 0
+        queue = [src]
+        while queue:
+            u = queue.pop(0)
+            in_queue[u] = False
+            for i, (v, cap, cost, _) in enumerate(graph[u]):
+                if cap > 0 and dist[u] + cost < dist[v] - 1e-9:
+                    dist[v] = dist[u] + cost
+                    prev[v] = (u, i)
+                    if not in_queue[v]:
+                        in_queue[v] = True
+                        queue.append(v)
+        if dist[sink] == float("inf"):
+            break
+        v = sink
+        while v != src:
+            u, i = prev[v]
+            graph[u][i][1] -= 1
+            graph[v][graph[u][i][3]][1] += 1
+            v = u
+
+    starters = {sl: [] for sl in slot_count}
+    used_players = set()
+    slot_of_node = {node: sl for sl, node in slot_node.items()}
+    for n in names:
+        for v, cap, cost, _ in graph[name_node[n]]:
+            if v in slot_of_node and cap == 0 and cost < 0:
+                starters[slot_of_node[v]].append(best[(n, slot_of_node[v])])
+                used_players.add(n)
+    for sl in starters:
+        starters[sl].sort(key=lambda c: c["score"], reverse=True)
+    return starters, used_players
+
+
 def group_candidates_from_slots(slot_candidates):
     """Colapsa os candidatos por SLOT de volta pros 6 GRUPOS genericos
     (GK/CB/FB/DMF/AMF/CF), usado so pro banco/excluidos -- cada jogador
@@ -91,6 +165,23 @@ def group_candidates_from_slots(slot_candidates):
         group: sorted(d.values(), key=lambda c: c["score"], reverse=True)
         for group, d in by_group.items()
     }
+
+
+def group_scores_for(players, slot_count=None):
+    """Nota de cada jogador em TODOS os grupos que ele pode jogar (posicao
+    nativa ou secundaria, ja multiplicada pela familiaridade) -- o dashboard
+    usa isso pra deixar escalar manualmente fora da melhor posicao (ex.: De
+    Jong de zagueiro, Kounde de ZC). {label: {grupo: {role_score, ...}}}"""
+    cands = group_candidates_from_slots(build_slot_candidates(players, slot_count=slot_count))
+    out = {}
+    for group, lst in cands.items():
+        for c in lst:
+            out.setdefault(c["player"]["label"], {})[group] = {
+                "role_score": c["score"],
+                "familiarity_factor": c["familiarity_factor"],
+                "native_fit": c["native"],
+            }
+    return out
 
 
 def pick_side(player, other_side_taken=None):
@@ -345,7 +436,7 @@ def build_formation_4231(eligible_players, low_tier_players):
     groups = ["GK", "CB", "FB", "DMF", "MLE", "AMF", "MLD", "CF"]
 
     slot_candidates = build_slot_candidates(eligible_players, slot_count=slot_count)
-    starters, used_players = greedy_assign_slots(slot_candidates, slot_count=slot_count)
+    starters, used_players = optimal_assign_slots(slot_candidates, slot_count=slot_count)
     candidates = group_candidates_from_slots(slot_candidates)
     completar_vagas(starters, used_players, low_tier_players, slot_count, rotulo=" (4-2-3-1)")
 
@@ -482,7 +573,7 @@ def build_formation_4231(eligible_players, low_tier_players):
             "role_score": p["role_score"],
             "consensus_tier": p["consensus_tier"],
             "consensus_tier_votes": p["consensus_tier_votes"],
-            "reason": "Ranking baixo",
+            "reason": "Menor nota do banco",
         }
         for p in weakest_list
     ]
@@ -517,7 +608,7 @@ def main():
     low_tier_players = [p for p in players if is_low_tier(p)]
 
     slot_candidates = build_slot_candidates(eligible_players)
-    starters, used_players = greedy_assign_slots(slot_candidates)
+    starters, used_players = optimal_assign_slots(slot_candidates)
     candidates = group_candidates_from_slots(slot_candidates)
     completar_vagas(starters, used_players, low_tier_players, SLOT_COUNT)
 
@@ -655,7 +746,7 @@ def main():
             "role_score": p["role_score"],
             "consensus_tier": p["consensus_tier"],
             "consensus_tier_votes": p["consensus_tier_votes"],
-            "reason": "Ranking baixo",
+            "reason": "Menor nota do banco",
         }
         for p in weakest_list
     ]
@@ -684,6 +775,10 @@ def main():
         },
         "formation2": formation2,
     }
+
+    result["group_scores"] = group_scores_for(players)
+    result["formation2"]["group_scores"] = group_scores_for(
+        players, slot_count=FORMATIONS["4-2-3-1"]["slot_count"])
 
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2, ensure_ascii=False)

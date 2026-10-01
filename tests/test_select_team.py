@@ -72,3 +72,32 @@ def test_elenco_sem_goleiro_explica_o_que_falta(tmp_path):
     with pytest.raises(SystemExit) as erro:
         escolher(tmp_path, jogadores)
     assert "GK" in str(erro.value) and "players.txt" in str(erro.value)
+
+
+def _cand(nome, score):
+    return {"player": {"name": nome, "label": nome}, "score": score, "familiarity_factor": 1.0, "native": True}
+
+
+def test_atribuicao_otima_ganha_da_gulosa_no_conjunto():
+    # Caso Kounde: K é o melhor lateral (86), mas também é bom zagueiro (81);
+    # M é lateral quase tão bom (83) e não joga de zagueiro; T é zagueiro fraco (73).
+    candidatos = {
+        "FB": [_cand("K", 86), _cand("M", 83)],
+        "CB": [_cand("K", 81), _cand("T", 73)],
+    }
+    vagas = {"FB": 1, "CB": 1}
+    gulosa, _ = st.greedy_assign_slots(candidatos, slot_count=vagas)
+    otima, usados = st.optimal_assign_slots(candidatos, slot_count=vagas)
+    soma = lambda t: sum(c["score"] for lst in t.values() for c in lst)
+    assert soma(gulosa) == 86 + 73
+    assert soma(otima) == 83 + 81
+    assert [c["player"]["name"] for c in otima["CB"]] == ["K"]
+    assert usados == {"K", "M"}
+
+
+def test_atribuicao_otima_nao_escala_duas_cartas_do_mesmo_jogador():
+    a = _cand("De Jong", 80)
+    b = {**_cand("De Jong", 79), "player": {"name": "De Jong", "label": "De Jong (Holanda)"}}
+    candidatos = {"DMF": [a, b, _cand("Rice", 70)]}
+    otima, _ = st.optimal_assign_slots(candidatos, slot_count={"DMF": 2})
+    assert sorted(c["player"]["label"] for c in otima["DMF"]) == ["De Jong", "Rice"]
