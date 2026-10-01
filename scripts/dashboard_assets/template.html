@@ -1,5 +1,9 @@
+<!doctype html>
+<html lang="pt-BR">
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Onze Ideal</title>
+<script>try { var t = localStorage.getItem("onze-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
 <style>
   @font-face {
     font-family: 'Anton';
@@ -17,8 +21,12 @@
     --panel-3: #1e2433;
     --border: #262c3d;
     --ink: #f3f5fb;
+    --ink-strong: #ffffff;
+    --on-gold: #14110a;
+    --glow-1: rgba(52, 211, 153, 0.08);
+    --glow-2: rgba(240, 196, 25, 0.06);
     --ink-2: #9aa3ba;
-    --ink-3: #5e6780;
+    --ink-3: #808aa6;
     --gold: #f0c419;
     --gold-soft: rgba(240, 196, 25, 0.14);
     --g-defesa: #3aa0e8;
@@ -45,8 +53,8 @@
   body {
     margin: 0;
     background:
-      radial-gradient(ellipse 900px 500px at 15% -8%, rgba(52, 211, 153, 0.08), transparent 60%),
-      radial-gradient(ellipse 800px 500px at 100% 0%, rgba(240, 196, 25, 0.06), transparent 55%),
+      radial-gradient(ellipse 900px 500px at 15% -8%, var(--glow-1), transparent 60%),
+      radial-gradient(ellipse 800px 500px at 100% 0%, var(--glow-2), transparent 55%),
       var(--bg);
     color: var(--ink);
     font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -95,7 +103,7 @@
   .topbar-left { display: flex; align-items: center; gap: 12px; }
   .crest { flex: none; }
   .topbar-kicker { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-3); font-weight: 800; }
-  .topbar h1 { font-size: clamp(20px, 3vw, 26px); color: #fff; line-height: 1; margin-top: 2px; }
+  .topbar h1 { font-size: clamp(20px, 3vw, 26px); color: var(--ink-strong); line-height: 1; margin-top: 2px; }
   .topbar h1 span { color: var(--gold); }
   .tabs { display: flex; gap: 6px; background: var(--panel-2); border: 1px solid var(--border); border-radius: 12px; padding: 4px; }
   .tab-btn {
@@ -104,7 +112,7 @@
     transition: background 0.15s ease, color 0.15s ease;
   }
   .tab-btn:hover { color: var(--ink); }
-  .tab-btn.active { background: var(--gold); color: #14110a; }
+  .tab-btn.active { background: var(--gold); color: var(--on-gold); }
   .tab-panel[hidden] { display: none; }
   .pills { display: flex; gap: 8px; flex-wrap: wrap; }
   .pill {
@@ -216,6 +224,14 @@
   .side-card.dragging, .bench-card.dragging { opacity: 0.4; }
   .bench-card.swap-target { border-color: var(--gold) !important; box-shadow: 0 0 0 2px rgba(240,196,25,0.35) inset; cursor: pointer; animation: swap-pulse 1.4s ease-in-out infinite; }
   @keyframes swap-pulse { 0%, 100% { box-shadow: 0 0 0 2px rgba(240,196,25,0.35) inset; } 50% { box-shadow: 0 0 0 2px rgba(240,196,25,0.75) inset; } }
+  .side-card { position: relative; }
+  .side-card.swap-target { border-color: var(--gold) !important; cursor: pointer; animation: swap-pulse 1.4s ease-in-out infinite; }
+  .side-card.swap-target::after {
+    content: "Trocar ⇄"; position: absolute; inset: 0; border-radius: 11px;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    background: rgba(20,17,10,0.85); color: var(--gold); font-weight: 800; font-size: 12px;
+    pointer-events: none;
+  }
   .bench-card.swap-target::after {
     content: "Clique aqui pra colocar ⇄"; position: absolute; inset: 0; border-radius: 11px;
     display: flex; align-items: center; justify-content: center; text-align: center; padding: 4px 10px;
@@ -285,7 +301,7 @@
   }
   .card-name-wrap { min-width: 0; flex: 1; }
   .card-name-row { display: flex; align-items: center; gap: 6px; }
-  .card-name { font-weight: 800; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff; }
+  .card-name { font-weight: 800; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-strong); }
   .tier-chip {
     display: inline-flex; align-items: center; justify-content: center; flex: none;
     font-size: 10.5px; font-weight: 800; padding: 1px 7px; border-radius: 7px; letter-spacing: 0.01em;
@@ -330,7 +346,7 @@
   }
   .bench-avatar { width: 38px; height: 38px; border-radius: 8px; flex: none; object-fit: cover; border: 2px solid var(--border); }
   .bench-info { min-width: 0; flex: 1; }
-  .bench-name { font-weight: 800; font-size: 13.5px; display: flex; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff; }
+  .bench-name { font-weight: 800; font-size: 13.5px; display: flex; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-strong); }
   .bench-meta { font-size: 11px; color: var(--ink-3); margin-top: 2px; }
   .bench-score { text-align: right; flex: none; font-size: 15px; font-weight: 800; color: var(--gold); }
   .super-sub-mark { color: var(--gold); font-weight: 800; margin-left: 1px; cursor: help; }
@@ -348,7 +364,7 @@
     font-size: 12px; line-height: 1.4; color: var(--ink-2);
   }
   .custom-tooltip.visible { opacity: 1; transform: translateY(0); }
-  .custom-tooltip .tip-title { font-weight: 800; color: #fff; font-size: 12.5px; margin-bottom: 3px; }
+  .custom-tooltip .tip-title { font-weight: 800; color: var(--ink-strong); font-size: 12.5px; margin-bottom: 3px; }
   .custom-tooltip .tip-line { color: var(--ink-2); }
   .custom-tooltip .tip-sep { height: 1px; background: var(--border); margin: 7px 0 6px; }
   .custom-tooltip .tip-skill-row { padding: 3px 0; }
@@ -426,7 +442,7 @@
   }
   .compare-player-top { display: flex; align-items: center; gap: 8px; }
   .compare-player-avatar { width: 34px; height: 34px; border-radius: 8px; object-fit: cover; border: 2px solid var(--border); flex: none; }
-  .compare-player-name { font-weight: 800; font-size: 12.5px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .compare-player-name { font-weight: 800; font-size: 12.5px; color: var(--ink-strong); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .compare-player-meta { font-size: 10px; color: var(--ink-3); display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
   .compare-fit-native { color: var(--tier-top); font-weight: 700; }
   .compare-fit-secondary { color: var(--ink-3); }
@@ -486,7 +502,7 @@
   .roster-row:hover { background: var(--panel-2); }
   .roster-img { width: 32px; height: 32px; border-radius: 7px; object-fit: cover; border: 1.5px solid var(--border); flex: none; }
   .roster-name-wrap { min-width: 0; flex: 1 1 170px; }
-  .roster-name { font-weight: 700; font-size: 13px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .roster-name { font-weight: 700; font-size: 13px; color: var(--ink-strong); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .roster-style { font-size: 11px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .roster-ovr-wrap { flex: none; text-align: right; min-width: 40px; }
   .roster-ovr { font-family: 'Anton', sans-serif; font-size: 15px; color: var(--gold); line-height: 1; }
@@ -509,7 +525,7 @@
     border-radius: 7px; text-decoration: none; color: inherit; cursor: pointer;
   }
   .ex-row:hover { background: var(--panel-2); }
-  .ex-name { font-size: 12px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1 1 auto; min-width: 0; }
+  .ex-name { font-size: 12px; font-weight: 700; color: var(--ink-strong); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1 1 auto; min-width: 0; }
   .ex-meta { font-size: 10px; color: var(--ink-3); flex: none; white-space: nowrap; }
   .ex-score { font-size: 11.5px; font-weight: 800; color: var(--ink-2); flex: none; }
   .ex-swap-btn {
@@ -529,7 +545,7 @@
 
   /* ---------- module note ---------- */
   .module { padding: 24px 26px; display: flex; flex-direction: column; gap: 14px; }
-  .module h2 { font-family: 'Anton', 'Arial Narrow', Arial, sans-serif; font-weight: 400; text-transform: uppercase; font-size: 20px; color: #fff; }
+  .module h2 { font-family: 'Anton', 'Arial Narrow', Arial, sans-serif; font-weight: 400; text-transform: uppercase; font-size: 20px; color: var(--ink-strong); }
   .module p { margin: 0; color: var(--ink-2); font-size: 13.5px; max-width: 74ch; }
   code, .codebox { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 12.5px; }
   code { background: var(--panel-2); padding: 1px 5px; border-radius: 4px; }
@@ -538,6 +554,162 @@
   .codebox .cmt { color: var(--ink-3); }
 
   footer { text-align: center; font-size: 11.5px; color: var(--ink-3); }
+
+  .rep-list { display: flex; flex-direction: column; gap: 4px; padding: 0 20px; max-height: 260px; overflow: auto; }
+  .rep-row { font: inherit; display: grid; grid-template-columns: minmax(0, 1fr) auto 48px 52px; gap: 10px; align-items: center; text-align: left; background: var(--panel-2); border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px; cursor: pointer; color: var(--ink); }
+  .rep-row.rep-disabled { cursor: default; opacity: 0.7; border-style: dashed; }
+  .rep-row.rep-disabled .rep-meta { white-space: normal; }
+  .rep-row:hover { border-color: rgba(240,196,25,0.45); }
+  .rep-name { font-weight: 800; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rep-meta { font-size: 11px; color: var(--ink-3); white-space: nowrap; }
+  .rep-score { font-weight: 800; color: var(--gold); text-align: right; }
+  .rep-delta { font-weight: 800; font-size: 12px; text-align: right; }
+  .rep-delta.pos { color: var(--g-ataque); }
+  .rep-delta.neg { color: var(--tier-low); }
+  @media (max-width: 640px) { .rep-row { grid-template-columns: minmax(0, 1fr) 44px 48px; } .rep-meta { display: none; } }
+  .ex-note { color: var(--gold); font-weight: 800; }
+  .data-age { font-size: 11px; color: var(--ink-3); align-self: center; }
+  #main-tabs { overflow-x: auto; flex-wrap: nowrap; max-width: 100%; scrollbar-width: thin; }
+  #main-tabs .tab-btn { flex: none; white-space: nowrap; }
+  #pitch { display: block; height: auto; }
+  .pitch-svg-wrap { flex: none; }
+  .pitch-panel { justify-content: flex-start; }
+  .ex-swap-btn { width: 26px; height: 26px; font-size: 13px; }
+  @media (pointer: coarse) { .ex-swap-btn { width: 34px; height: 34px; } .ex-chip { padding: 6px 10px; } }
+  @media (max-width: 1200px) { .hud-a.with-side > .pitch-panel { order: -1; } }
+  @media (max-width: 640px) {
+    .pitch-toolbar { flex-wrap: wrap; }
+    .pills { width: 100%; }
+  }
+  .ex-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+  .ex-chip { font: inherit; font-size: 10.5px; font-weight: 800; color: var(--ink-2); background: var(--panel-2); border: 1px solid var(--border); border-radius: 999px; padding: 3px 8px; cursor: pointer; }
+  .ex-chip span { color: var(--ink-3); font-weight: 700; margin-left: 2px; }
+  .ex-chip:hover { color: var(--ink); }
+  .ex-chip.active { background: var(--gold); border-color: var(--gold); color: #14110a; }
+  .ex-chip.active span { color: #14110a; }
+  .detail-modal .card { border: none; box-shadow: none; background: transparent; }
+  /* ---------- modal de comparação antes da troca ---------- */
+  .cmp-overlay { position: fixed; inset: 0; background: rgba(4,6,10,0.78); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 16px; }
+  .cmp-overlay[hidden] { display: none; }
+  .cmp-modal { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow-lg); width: min(860px, 100%); max-height: calc(100vh - 32px); overflow: auto; }
+  .cmp-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--border); }
+  .cmp-head h2 { font-family: 'Anton', 'Arial Narrow', Arial, sans-serif; font-weight: 400; text-transform: uppercase; font-size: 20px; letter-spacing: 0.02em; }
+  .cmp-head .cmp-sub { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+  .cmp-close { background: none; border: 1px solid var(--border); color: var(--ink-2); border-radius: 8px; width: 32px; height: 32px; cursor: pointer; font-size: 16px; }
+  .cmp-close:hover { color: var(--ink); border-color: var(--ink-3); }
+  .cmp-players { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; padding: 16px 20px 6px; align-items: stretch; }
+  .cmp-player { background: var(--panel-2); border: 1px solid var(--border); border-radius: 12px; padding: 12px; display: flex; gap: 12px; align-items: center; min-width: 0; }
+  .cmp-player.win { border-color: rgba(52,211,153,0.55); }
+  .cmp-player img, .cmp-player .cmp-noimg { width: 84px; height: 56px; border-radius: 8px; object-fit: cover; flex: none; background: var(--panel-3); }
+  .cmp-tag { font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; }
+  .cmp-tag.in { color: var(--g-ataque); }
+  .cmp-tag.out { color: var(--tier-low); }
+  .cmp-pname { font-weight: 800; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cmp-pmeta { font-size: 11.5px; color: var(--ink-3); margin-top: 2px; }
+  .cmp-score { margin-left: auto; text-align: right; flex: none; }
+  .cmp-score .n { font-family: 'Anton', sans-serif; font-size: 28px; line-height: 1; color: var(--gold); }
+  .cmp-score .l { font-size: 10px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; }
+  .cmp-vs { align-self: center; font-family: 'Anton', sans-serif; color: var(--ink-3); font-size: 16px; }
+  .cmp-verdict { margin: 8px 20px 4px; padding: 9px 12px; border-radius: 8px; font-size: 12.5px; font-weight: 700; }
+  .cmp-verdict.pos { background: var(--g-ataque-soft); color: var(--g-ataque); }
+  .cmp-verdict.neg { background: var(--tier-low-soft); color: var(--tier-low); }
+  .cmp-verdict.eq { background: var(--panel-3); color: var(--ink-2); }
+  .cmp-section-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-3); padding: 12px 20px 6px; }
+  .cmp-stats { padding: 0 20px; }
+  .cmp-stat { display: grid; grid-template-columns: 34px 1fr 130px 1fr 34px; gap: 8px; align-items: center; padding: 4px 0; font-size: 12.5px; }
+  .cmp-stat .lbl { text-align: center; color: var(--ink-2); font-size: 11.5px; }
+  .cmp-stat .v { font-weight: 800; color: var(--ink-3); }
+  .cmp-stat .v.l { text-align: right; }
+  .cmp-stat .v.best { color: var(--ink); }
+  .cmp-track { height: 6px; background: var(--panel-3); border-radius: 3px; overflow: hidden; display: flex; }
+  .cmp-track.l { justify-content: flex-end; }
+  .cmp-track > div { height: 100%; border-radius: 3px; background: var(--ink-3); }
+  .cmp-track > div.best { background: var(--g-ataque); }
+  .cmp-reasons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 20px; }
+  .cmp-reason-box { background: var(--panel-2); border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; }
+  .cmp-reason-box h4 { font-size: 12px; font-weight: 800; margin-bottom: 6px; }
+  .cmp-reason-box ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .cmp-reason-box li { font-size: 12.5px; color: var(--ink-2); line-height: 1.4; padding-left: 14px; position: relative; }
+  .cmp-reason-box li::before { content: "“"; position: absolute; left: 0; top: -2px; color: var(--gold); font-weight: 800; font-size: 15px; }
+  .cmp-reason-box .none { font-size: 12px; color: var(--ink-3); font-style: italic; }
+  .cmp-foot { display: flex; justify-content: flex-end; gap: 10px; padding: 16px 20px; border-top: 1px solid var(--border); margin-top: 16px; }
+  .cmp-btn { font: inherit; font-size: 13px; font-weight: 800; border-radius: 10px; padding: 9px 16px; cursor: pointer; border: 1px solid var(--border); background: var(--panel-2); color: var(--ink-2); }
+  .cmp-btn:hover { color: var(--ink); }
+  .cmp-btn.primary { background: var(--gold); border-color: var(--gold); color: #14110a; }
+  .cmp-note { font-size: 11px; color: var(--ink-3); padding: 6px 20px 0; }
+  @media (max-width: 640px) {
+    .cmp-players { grid-template-columns: 1fr; }
+    .cmp-vs { display: none; }
+    .cmp-reasons { grid-template-columns: 1fr; }
+    .cmp-stat { grid-template-columns: 30px 1fr 96px 1fr 30px; }
+  }
+
+  /* ---------- temas ---------- */
+  :root[data-theme="claro"] {
+    color-scheme: light;
+    --bg: #eef1f6; --panel: #ffffff; --panel-2: #f4f6fa; --panel-3: #e6eaf2; --border: #d6dce7;
+    --ink: #161a26; --ink-strong: #0b0e15; --ink-2: #454e64; --ink-3: #5c6680;
+    --gold: #b07d00; --gold-soft: rgba(176, 125, 0, 0.12); --on-gold: #ffffff;
+    --g-defesa: #1c78bd; --g-defesa-soft: rgba(28, 120, 189, 0.12);
+    --g-meio: #b86d08; --g-meio-soft: rgba(184, 109, 8, 0.12);
+    --g-ataque: #0b8a5d; --g-ataque-soft: rgba(11, 138, 93, 0.12);
+    --g-goleiro: #7444c9; --g-goleiro-soft: rgba(116, 68, 201, 0.12);
+    --tier-top: #b07d00; --tier-top-soft: rgba(176, 125, 0, 0.12);
+    --tier-low: #c2364f; --tier-low-soft: rgba(194, 54, 79, 0.10);
+    --glow-1: rgba(11, 138, 93, 0.07); --glow-2: rgba(176, 125, 0, 0.06);
+    --shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 10px 24px -14px rgba(16, 24, 40, 0.18);
+    --shadow-lg: 0 6px 18px rgba(16, 24, 40, 0.12), 0 30px 60px -28px rgba(16, 24, 40, 0.3);
+  }
+  :root[data-theme="claro"] .cmp-overlay { background: rgba(20, 26, 40, 0.45); }
+  :root[data-theme="moderno"] {
+    --bg: #0c1024; --panel: rgba(255, 255, 255, 0.07); --panel-2: rgba(255, 255, 255, 0.09);
+    --panel-3: rgba(255, 255, 255, 0.14); --border: rgba(255, 255, 255, 0.16);
+    --ink-2: #c3c9e3; --ink-3: #9ba3c7;
+    --gold: #ffd166; --gold-soft: rgba(255, 209, 102, 0.16);
+    --accent-grad: linear-gradient(135deg, #7c5cff 0%, #22d3ee 100%);
+    --shadow: 0 8px 32px -12px rgba(5, 8, 30, 0.6);
+    --shadow-lg: 0 20px 60px -20px rgba(5, 8, 30, 0.8);
+  }
+  :root[data-theme="moderno"] body {
+    background: linear-gradient(135deg, #1b1f55 0%, #2b1656 45%, #0b2f52 100%) fixed;
+  }
+  :root[data-theme="moderno"] .panel,
+  :root[data-theme="moderno"] .card,
+  :root[data-theme="moderno"] .topbar {
+    backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border-radius: 20px;
+  }
+  :root[data-theme="moderno"] .tab-btn.active,
+  :root[data-theme="moderno"] .ex-chip.active,
+  :root[data-theme="moderno"] .cmp-btn.primary,
+  :root[data-theme="moderno"] .theme-btn.active { background: var(--accent-grad); color: #fff; border-color: transparent; }
+  :root[data-theme="moderno"] .cmp-modal { background: rgba(22, 24, 58, 0.94); }
+  .theme-switch { display: inline-flex; gap: 2px; background: var(--panel-2); border: 1px solid var(--border); border-radius: 999px; padding: 2px; }
+  .theme-btn { font: inherit; font-size: 11px; font-weight: 800; border: none; background: transparent; color: var(--ink-3); border-radius: 999px; padding: 5px 10px; cursor: pointer; }
+  .theme-btn:hover { color: var(--ink); }
+  .theme-btn.active { background: var(--gold); color: var(--on-gold); }
+
+  /* ---------- aba boxes ---------- */
+  .box-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 4px 0 14px; }
+  .box-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 14px; }
+  .box-card { padding: 14px 14px 10px; }
+  .box-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+  .box-name { font-weight: 800; font-size: 14px; color: var(--ink-strong); }
+  .box-sub { font-size: 11.5px; color: var(--ink-3); margin-top: 2px; }
+  .pay-badge { font-size: 10.5px; font-weight: 800; border-radius: 999px; padding: 3px 9px; white-space: nowrap; flex: none; }
+  .pay-moedas { background: var(--gold-soft); color: var(--gold); }
+  .pay-troca { background: var(--g-defesa-soft); color: var(--g-defesa); }
+  .pay-evento { background: var(--g-goleiro-soft); color: var(--g-goleiro); }
+  .box-row { display: grid; grid-template-columns: 34px minmax(0, 1fr) 38px 30px 64px; gap: 8px; align-items: center; padding: 6px 0; border-top: 1px solid var(--border); text-decoration: none; color: inherit; }
+  .box-row:hover .box-pname { color: var(--gold); }
+  .box-row img { width: 34px; height: 48px; object-fit: cover; object-position: top; border-radius: 5px; background: var(--panel-3); }
+  .box-pname { font-weight: 700; font-size: 12.5px; color: var(--ink-strong); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .box-pmeta { font-size: 11px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .box-ovr { font-family: 'Anton', sans-serif; font-size: 17px; color: var(--gold); text-align: right; }
+  .box-votes { font-size: 11px; color: var(--ink-3); text-align: right; }
+  .own-badge { font-size: 9.5px; font-weight: 800; color: var(--g-ataque); background: var(--g-ataque-soft); border-radius: 4px; padding: 1px 5px; margin-left: 4px; }
+  .box-note { font-size: 11.5px; color: var(--ink-3); margin: -4px 0 12px; line-height: 1.5; }
+  .box-empty { padding: 30px; text-align: center; color: var(--ink-3); }
 </style>
 
 <div class="wrap">
@@ -565,6 +737,7 @@
       <button class="tab-btn" type="button" data-tab="treino">Treinamento Ideal</button>
       <button class="tab-btn" type="button" data-tab="skills">Habilidades Mais Votadas</button>
       <button class="tab-btn" type="button" data-tab="comparar">Comparar Jogadores</button>
+      <button class="tab-btn" type="button" data-tab="boxes">Boxes</button>
     </div>
     <div class="tabs" id="squad-formation-toggle" style="padding:2px; margin-top:8px">
       <button class="tab-btn active" type="button" data-squad-formation="1">Op&ccedil;&atilde;o 1 &middot; 4-2-2-2</button>
@@ -573,7 +746,13 @@
     <div class="pills">
       <span class="pill gold" id="formation-pill">4-2-2-2</span>
       <span class="pill">Contra-Ataque</span>
-      <button class="toggle-btn" id="clear-cache-btn" type="button" data-tip="Rebusca todos os jogadores no efhub ignorando o cache de 6h (só funciona rodando localhost via scripts/serve_dashboard.py)">🗑️ Limpar Cache</button>
+      <span class="theme-switch" role="group" aria-label="Tema">
+        <button type="button" class="theme-btn" data-theme-set="escuro">Escuro</button>
+        <button type="button" class="theme-btn" data-theme-set="claro">Claro</button>
+        <button type="button" class="theme-btn" data-theme-set="moderno">Moderno</button>
+      </span>
+      <span class="data-age" id="data-age"></span>
+      <button class="toggle-btn" id="clear-cache-btn" type="button" data-tip="Busca de novo os jogadores do players.txt no efhub e remonta os dois times (1 a 2 min; só funciona em localhost via scripts/serve_dashboard.py)">↻ Atualizar dados</button>
     </div>
     <div id="cache-status-note" class="cache-status-note" hidden></div>
   </div>
@@ -612,9 +791,9 @@
           </div>
           <button id="toggle-overmax" class="toggle-btn active" type="button">Overmax (treino smart)</button>
         </div>
-        <div class="drag-hint">↕ Arraste um reserva (da lista ao lado ou do banco) pra cima de um titular no campo pra substituir</div>
+        <div class="drag-hint">↕ Arraste um reserva pra cima de um titular pra comparar e trocar · clique num titular pra ver os detalhes</div>
         <div class="pitch-svg-wrap">
-          <svg id="pitch" viewBox="0 0 600 660" width="100%" height="auto" role="img" aria-label="Escala&ccedil;&atilde;o t&aacute;tica 4-2-2-2"></svg>
+          <svg id="pitch" viewBox="0 0 600 660" width="100%" role="img" aria-label="Escala&ccedil;&atilde;o t&aacute;tica 4-2-2-2"></svg>
         </div>
       </div>
 
@@ -629,7 +808,17 @@
         </div>
       </div>
     </div>
-    <div id="sections"></div>
+    <div id="sections" hidden></div>
+  <section class="panel bench-panel" style="margin-top:16px">
+    <div class="section-head" style="padding:18px 18px 0">
+      <span class="dot" style="background:var(--ink-3)"></span>
+      <h2 class="display" style="font-size:20px">Banco de Reserva</h2>
+      <span class="count">at&eacute; 2 op&ccedil;&otilde;es por posi&ccedil;&atilde;o (limitado pelo elenco/regras) &middot; detalhado</span>
+    </div>
+    <div class="drag-hint" style="padding:8px 18px 0">Clique no &#8644; ao lado de um jogador em N&atilde;o Relacionados e depois num reserva destacado em dourado (aqui ou na coluna Reservas) pra trocar os dois</div>
+    <div id="swap-hint" class="swap-hint" hidden style="margin:0 18px"></div>
+    <div id="bench-groups" style="padding:14px 18px 18px"></div>
+  </section>
   </section>
 
   <section class="tab-panel" data-tab-panel="analises" hidden>
@@ -676,7 +865,7 @@
 
   <section class="tab-panel" data-tab-panel="elenco" hidden>
     <div class="panel roster-panel">
-      <div class="panel-title" style="padding:18px 18px 0">Elenco completo &middot; 42 cartas</div>
+      <div class="panel-title" style="padding:18px 18px 0">Elenco completo &middot; <span id="roster-count"></span> cartas</div>
       <p style="padding:4px 18px 0; margin:0; font-size:12px; color:var(--ink-3)">Agrupado pela posi&ccedil;&atilde;o nativa de cada carta, ordenado por Community Tier Ranking (desempate: mais votos naquele tier).</p>
       <div class="roster-filters">
         <div class="filter-group" id="line-filters">
@@ -733,6 +922,25 @@
     <div class="cards" id="skills-cards"></div>
   </section>
 
+  <section class="tab-panel" data-tab-panel="boxes" hidden>
+    <div class="section-head">
+      <span class="dot" style="background:var(--gold)"></span>
+      <h2 class="display">Boxes dispon&iacute;veis</h2>
+      <span class="count" id="boxes-sub"></span>
+    </div>
+    <div class="box-note" id="boxes-note"></div>
+    <div class="box-toolbar">
+      <div class="ex-chips" id="box-pay-chips" style="margin:0"></div>
+      <div class="ex-chips" id="box-line-chips" style="margin:0"></div>
+      <select id="box-sort" class="tier-select" aria-label="Ordenar jogadores">
+        <option value="tier">Ordenar por voto (tier)</option>
+        <option value="overall">Ordenar por overall</option>
+      </select>
+      <label class="box-sub" style="display:flex; gap:6px; align-items:center; margin:0"><input type="checkbox" id="box-hide-owned" /> esconder os que j&aacute; tenho</label>
+    </div>
+    <div class="box-grid" id="boxes-grid"></div>
+  </section>
+
   <section class="tab-panel" data-tab-panel="comparar" hidden>
     <div class="section-head">
       <span class="dot" style="background:var(--gold)"></span>
@@ -745,16 +953,6 @@
     <div id="compare-sections"></div>
   </section>
 
-  <section class="panel bench-panel">
-    <div class="section-head" style="padding:18px 18px 0">
-      <span class="dot" style="background:var(--ink-3)"></span>
-      <h2 class="display" style="font-size:20px">Banco de Reserva</h2>
-      <span class="count">at&eacute; 2 op&ccedil;&otilde;es por posi&ccedil;&atilde;o (limitado pelo elenco/regras) &middot; detalhado</span>
-    </div>
-    <div class="drag-hint" style="padding:8px 18px 0">Clique no &#8644; ao lado de um jogador em N&atilde;o Relacionados pra substituir um reserva do mesmo grupo</div>
-    <div id="swap-hint" class="swap-hint" hidden style="margin:0 18px"></div>
-    <div id="bench-groups" style="padding:14px 18px 18px"></div>
-  </section>
 
   <section class="panel module">
     <h2>M&oacute;dulo de verifica&ccedil;&atilde;o de jogador</h2>
@@ -769,6 +967,8 @@
 <script>
 const TEAM = __TEAM_JSON__;
 const PHOTOS = __PHOTOS_JSON__;
+const DATA_FETCHED_AT = __DATA_FETCHED_AT__;
+const BOXES = __BOXES_JSON__;
 
 // copia mutavel do time -- arrastar um reserva pro campo troca aqui (so
 // nessa visualizacao/sessao; nao recalcula as metricas agregadas do time,
@@ -786,6 +986,8 @@ function currentTeamData() {
 let LINEUP = deepClone(currentTeamData().lineup);
 let BENCH = deepClone(currentTeamData().bench);
 let EXCLUDED = deepClone(currentTeamData().excluded || []);
+// nota de cada jogador em cada grupo que ele joga (nativo ou secundário)
+let GROUP_SCORES = currentTeamData().group_scores || {};
 let dragPayload = null;
 
 // elenco completo indexado por label, pro tooltip customizado buscar tier
@@ -902,7 +1104,7 @@ function renderOverview() {
   document.getElementById("tip-next-leave").innerHTML = tipList.map(n => `
     <a class="tip-box" href="${n.url}" target="_blank" rel="noopener noreferrer">
       <span class="tip-body">${shortName(n.label)}</span>
-      <span class="tip-sub">nota ${n.role_score} · tier ${n.consensus_tier || "sem votos"}${n.consensus_tier ? ` (${n.consensus_tier_votes} votos)` : ""}</span>
+      <span class="tip-sub">nota ${n.role_score} · tier ${n.consensus_tier || "sem votos"}${n.consensus_tier ? ` (${n.consensus_tier_votes} voto${n.consensus_tier_votes === 1 ? "" : "s"})` : ""}</span>
       <span class="tip-reason">${n.reason}</span>
     </a>
   `).join("");
@@ -918,7 +1120,7 @@ function renderOverview() {
     <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--g-ataque)" stroke-width="10"
       stroke-linecap="round" stroke-dasharray="${circ}" stroke-dashoffset="${offset}"
       transform="rotate(-90 ${cx} ${cy})" />
-    <text x="${cx}" y="${cy - 2}" text-anchor="middle" font-family="Anton, sans-serif" font-size="26" fill="#fff">${pct}%</text>
+    <text x="${cx}" y="${cy - 2}" text-anchor="middle" font-family="Anton, sans-serif" font-size="26" style="fill:var(--ink-strong)">${pct}%</text>
     <text x="${cx}" y="${cy + 16}" text-anchor="middle" font-size="9" fill="var(--ink-3)">titulares</text>
   `;
 }
@@ -971,7 +1173,7 @@ function renderRadarChart(containerId, data, color) {
   });
 
   document.getElementById(containerId).innerHTML = `
-    <svg viewBox="0 0 ${size} ${size - 10}">
+    <svg viewBox="-56 -4 ${size + 112} ${size + 2}">
       ${grid}
       ${shape}
       ${labels}
@@ -1302,10 +1504,21 @@ function renderBench() {
   document.getElementById("bench-groups").innerHTML = html;
 }
 
+let exFilter = "all";
+const EX_FILTER_ORDER = ["GK", "CB", "FB", "DMF", "MLE", "AMF", "MLD", "CF"];
+
 function renderExcluded() {
   const labels = POS_LABELS;
-  const list = [...EXCLUDED].sort((a, b) => b.overmax - a.overmax);
-  document.getElementById("side-excluded-count").textContent = list.length;
+  const all = [...EXCLUDED].sort((a, b) => b.overmax - a.overmax);
+  const present = EX_FILTER_ORDER.filter(g => all.some(p => p.best_group === g));
+  if (exFilter !== "all" && !present.includes(exFilter)) exFilter = "all";
+  const list = exFilter === "all" ? all : all.filter(p => p.best_group === exFilter);
+  document.getElementById("side-excluded-count").textContent =
+    exFilter === "all" ? all.length : `${list.length} de ${all.length}`;
+  const chips = ["all", ...present].map(g => {
+    const n = g === "all" ? all.length : all.filter(p => p.best_group === g).length;
+    return `<button type="button" class="ex-chip ${exFilter === g ? "active" : ""}" data-ex-filter="${g}">${g === "all" ? "Todos" : labels[g]} <span>${n}</span></button>`;
+  }).join("");
   const rows = list.map(p => {
     const tc = tierColors(p.consensus_tier);
     const tierTitle = p.consensus_tier
@@ -1318,13 +1531,13 @@ function renderExcluded() {
         <span class="tier-chip" style="background:${tc.bg}; color:${tc.fg}">${p.consensus_tier || "—"}</span>
         <span class="ex-name">${p.name}</span>
         <span class="ex-meta">${labels[p.best_group]}${reasonTxt}</span>
-        <span class="ex-score tnum">${ovrTxt}</span>
+        <span class="ex-score tnum" data-tip="Overall ${ovrTxt} · nota de ${POS_NAME[p.best_group]} ${p.role_score.toFixed(1)} (é a nota que decide quem entra no time)">${ovrTxt} <span class="ex-note">· ${p.role_score.toFixed(1)}</span></span>
         <button class="ex-swap-btn" type="button" data-label="${p.label}" data-best-group="${p.best_group}"
-                data-tip="Substituir um reserva de ${labels[p.best_group]} por ${p.name}">⇄</button>
+                data-tip="Colocar ${p.name} no banco (no lugar de um reserva de qualquer posição que ele jogue)" aria-label="Colocar ${p.name} no banco">⇄</button>
       </div>
     `;
   }).join("");
-  document.getElementById("side-excluded-list").innerHTML = `<div class="ex-list">${rows}</div>`;
+  document.getElementById("side-excluded-list").innerHTML = `<div class="ex-chips">${chips}</div><div class="ex-list">${rows}</div>`;
 }
 
 // ---------------- sidebar reservas (compacto) ----------------
@@ -1377,7 +1590,7 @@ function votesCard(p) {
           ${avatarEl}
           <div class="card-name-wrap">
             <div class="card-name">${p.name}</div>
-            <span class="card-role" style="background:var(--g-${GROUP_OF[p.group] === "goleiro" ? "goleiro" : GROUP_OF[p.group]}-soft); color:${color}">${p.squad} · ${p.role}</span>
+            <span class="card-role" style="background:var(--g-${GROUP_OF[p.group] === "goleiro" ? "goleiro" : GROUP_OF[p.group]}-soft); color:${color}">${p.squad} · ${p.role || POS_NAME[p.group] || POS_LABELS[p.group]}</span>
           </div>
         </div>
         <div class="votes-total">Community Tier Ranking &middot; ${total} voto${total === 1 ? "" : "s"} no total</div>
@@ -1430,9 +1643,9 @@ function trainingCard(p) {
       <div class="train-ovr-row">
         <span class="n tnum" style="color:${color}; font-family:'Anton',sans-serif; font-size:22px">${p.overall}</span>
         <span class="train-ovr-arrow">→</span>
-        <span class="train-ovr-new tnum">${build.overall}</span>
+        <span class="train-ovr-new tnum">${p.overmax}</span>
       </div>
-      <div class="train-votes">build de ${build.votes} pessoa${build.votes === 1 ? "" : "s"} da comunidade</div>
+      <div class="train-votes">overall projetado no nível ${p.level_cap} · build de ${build.votes} pessoa${build.votes === 1 ? "" : "s"} da comunidade${build.overall && build.overall !== p.overmax ? ` (que registrou ${build.overall})` : ""}</div>
       <div class="train-points">
         ${Object.entries(build.points).map(([k, v]) => `
           <div class="train-chip">
@@ -1500,7 +1713,7 @@ function skillsCard(p) {
           ${avatarEl}
           <div class="card-name-wrap">
             <div class="card-name">${p.name}</div>
-            <span class="card-role" style="background:var(--g-${GROUP_OF[p.group] === "goleiro" ? "goleiro" : GROUP_OF[p.group]}-soft); color:${color}">${p.squad} · ${p.role}</span>
+            <span class="card-role" style="background:var(--g-${GROUP_OF[p.group] === "goleiro" ? "goleiro" : GROUP_OF[p.group]}-soft); color:${color}">${p.squad} · ${p.role || POS_NAME[p.group] || POS_LABELS[p.group]}</span>
           </div>
         </div>
         <div class="skills-total">Habilidades adicionais mais escolhidas pela comunidade (Community Picks)</div>
@@ -1559,7 +1772,7 @@ function comparePlayerHead(p, posKey, removable) {
       <div class="compare-player-top">
         ${avatar}
         <div style="min-width:0; flex:1">
-          <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="compare-player-name" style="display:block; color:#fff; text-decoration:none">${p.name}</a>
+          <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="compare-player-name" style="display:block; color:var(--ink-strong); text-decoration:none">${p.name}</a>
           <div class="compare-player-meta">${fit}</div>
         </div>
         <div class="compare-player-ovr tnum">${ovrTxt}</div>
@@ -1696,7 +1909,17 @@ function collectBenchUnique() {
   return [...seen.values()].sort((a, b) => b.role_score - a.role_score);
 }
 
+// "David de Gea" -> "de Gea", "Virgil van Dijk" -> "van Dijk", "Samuel Eto o" -> "Eto"
+function shortSideName(name) {
+  const words = name.split(" ").filter(Boolean);
+  let last = words.pop() || name;
+  if (last.length <= 2 && words.length) last = words.pop();
+  if (words.length && /^(de|da|do|dos|das|van|von|der|di|del|le)$/i.test(words[words.length - 1])) last = words.pop() + " " + last;
+  return last;
+}
+
 function sideCard(p, posLabel) {
+  const swapIndex = (BENCH[p.group] || []).findIndex(b => b.label === p.label);
   const src = photoSrc(p.label);
   const img = src
     ? `<img class="side-card-img" src="${src}" alt="${p.name}" />`
@@ -1708,14 +1931,14 @@ function sideCard(p, posLabel) {
   const tierEl = `<span class="side-card-tier" style="background:${tc.fg}" data-tip="${tierTitle}">${p.consensus_tier || "–"}</span>`;
   const subMark = isSuperSub(p) ? `<span class="super-sub-mark" data-tip="Super Substituto entre as habilidades mais votadas pela comunidade">*</span>` : "";
   return `
-    <a class="side-card" href="${p.url}" target="_blank" rel="noopener noreferrer" data-tip-label="${p.label}" data-tip-kind="full" draggable="true" data-drag-label="${p.label}">
+    <a class="side-card" href="${p.url}" target="_blank" rel="noopener noreferrer" data-tip-label="${p.label}" data-tip-kind="full" draggable="true" data-drag-label="${p.label}" data-swap-group="${p.group}" data-swap-index="${swapIndex}">
       <div class="side-card-img-wrap">
         ${img}
         <span class="side-card-pos">${posLabel}</span>
         ${tierEl}
       </div>
       <span class="side-card-ovr tnum">${p.overall}</span>
-      <span class="side-card-name">${p.name.split(" ").slice(-1)[0]}${subMark}</span>
+      <span class="side-card-name">${shortSideName(p.name)}${subMark}</span>
     </a>
   `;
 }
@@ -1772,6 +1995,7 @@ function rosterRow(p) {
 
 function renderRoster() {
   let players = TEAM.roster || [];
+  document.getElementById("roster-count").textContent = players.length;
   if (rosterLineFilter !== "all") {
     players = players.filter(p => ROSTER_LINE_OF[p.native_position] === rosterLineFilter);
   }
@@ -1833,13 +2057,44 @@ function renderAfterSubstitution() {
 // no LINEUP). So funciona se o reserva ja for elegivel pra esse grupo
 // especifico (aparece em BENCH[targetGroup]) -- evita escalar, por ex., um
 // centroavante no lugar de um zagueiro.
-function substituteAt(targetGroup, targetIndex, benchLabel) {
-  const benchList = BENCH[targetGroup] || [];
-  const benchIdx = benchList.findIndex(p => p.label === benchLabel);
-  if (benchIdx === -1) return false;
-  const incoming = benchList[benchIdx];
+function isStarter(label) {
+  return Object.values(LINEUP).some(list => list.some(p => p.label === label));
+}
+
+// acha o jogador fora do time titular (banco de qualquer grupo ou não relacionados)
+function findOffPitch(label) {
+  for (const list of Object.values(BENCH)) {
+    const p = list.find(b => b.label === label);
+    if (p) return p;
+  }
+  return EXCLUDED.find(p => p.label === label) || null;
+}
+
+function canPlay(label, group) {
+  return !!(GROUP_SCORES[label] && GROUP_SCORES[label][group]);
+}
+
+// cópia do jogador com a nota/encaixe DAQUELE grupo (pode ser posição secundária)
+function asGroup(p, group) {
+  if (!p) return null;
+  const gs = (GROUP_SCORES[p.label] || {})[group];
+  if (!gs) return null;
+  const { best_group, excluded_reason, ...rest } = p;
+  return { ...rest, role_score: gs.role_score, familiarity_factor: gs.familiarity_factor, native_fit: gs.native_fit };
+}
+
+function removeOffPitch(label) {
+  Object.keys(BENCH).forEach(g => { BENCH[g] = BENCH[g].filter(p => p.label !== label); });
+  EXCLUDED = EXCLUDED.filter(p => p.label !== label);
+}
+
+// coloca um jogador de fora (banco de qualquer grupo ou não relacionado) no
+// lugar de um titular, em qualquer posição que ele jogue; o titular vai pro
+// banco do grupo da vaga.
+function substituteAt(targetGroup, targetIndex, label) {
   const outgoing = LINEUP[targetGroup][targetIndex];
-  if (!outgoing || incoming.label === outgoing.label) return false;
+  const incoming = asGroup(findOffPitch(label), targetGroup);
+  if (!outgoing || !incoming || incoming.label === outgoing.label) return false;
 
   const newStarter = { ...incoming, role: outgoing.role };
   if (outgoing.side) newStarter.side = outgoing.side;
@@ -1847,35 +2102,30 @@ function substituteAt(targetGroup, targetIndex, benchLabel) {
   delete demoted.role;
   delete demoted.side;
 
+  removeOffPitch(incoming.label);
   LINEUP[targetGroup][targetIndex] = newStarter;
-  Object.keys(BENCH).forEach(g => {
-    BENCH[g] = BENCH[g].filter(p => p.label !== incoming.label);
-  });
-  if (!BENCH[targetGroup].some(p => p.label === demoted.label)) {
-    BENCH[targetGroup].push(demoted);
-    BENCH[targetGroup].sort((a, b) => b.role_score - a.role_score);
-  }
+  BENCH[targetGroup] = BENCH[targetGroup] || [];
+  BENCH[targetGroup].push(demoted);
+  BENCH[targetGroup].sort((a, b) => b.role_score - a.role_score);
   return true;
 }
 
-// troca um "não relacionado" pra dentro do banco (grupo + indice dentro do
-// BENCH[targetGroup]), mandando quem tava no banco pra lista de "não
-// relacionados" no lugar. Só funciona se o não relacionado tiver o mesmo
-// best_group do slot do banco -- a nota (role_score) que ele carrega foi
-// calculada só pra esse grupo, não faz sentido usá-la em outro.
+// troca um "não relacionado" por um reserva, em qualquer grupo que o não
+// relacionado jogue (a nota usada é a dele naquele grupo); o reserva vai pra
+// lista de não relacionados.
 function substituteBench(targetGroup, targetIndex, exLabel) {
-  const exIdx = EXCLUDED.findIndex(p => p.label === exLabel && p.best_group === targetGroup);
+  const exIdx = EXCLUDED.findIndex(p => p.label === exLabel);
   if (exIdx === -1) return false;
   const benchList = BENCH[targetGroup] || [];
   const outgoing = benchList[targetIndex];
-  if (!outgoing) return false;
-
-  const { best_group, excluded_reason, ...incoming } = EXCLUDED[exIdx];
-  if (incoming.label === outgoing.label) return false;
+  const incoming = asGroup(EXCLUDED[exIdx], targetGroup);
+  if (!outgoing || !incoming || incoming.label === outgoing.label) return false;
 
   benchList[targetIndex] = incoming;
   EXCLUDED.splice(exIdx, 1);
-  EXCLUDED.push({ ...outgoing, best_group: targetGroup, excluded_reason: null });
+  if (!Object.values(BENCH).some(list => list.some(p => p.label === outgoing.label))) {
+    EXCLUDED.push({ ...outgoing, best_group: targetGroup, excluded_reason: null });
+  }
   return true;
 }
 
@@ -1971,10 +2221,16 @@ function setupDragDrop() {
     const target = e.target.closest("[data-drop-group]");
     if (!target || !dragPayload) return;
     e.preventDefault();
-    const isValid = (BENCH[target.dataset.dropGroup] || []).some(p => p.label === dragPayload);
+    const isValid = !isStarter(dragPayload) && canPlay(dragPayload, target.dataset.dropGroup);
     target.classList.toggle("drag-over", isValid);
     target.classList.toggle("drag-invalid", !isValid);
     e.dataTransfer.dropEffect = isValid ? "move" : "none";
+  });
+  svg.addEventListener("click", e => {
+    const node = e.target.closest(".pitch-node[data-drop-group]");
+    if (!node) return;
+    e.preventDefault();
+    openPlayerDetail(node.dataset.dropGroup, Number(node.dataset.dropIndex));
   });
   svg.addEventListener("dragleave", e => {
     const target = e.target.closest("[data-drop-group]");
@@ -1986,9 +2242,8 @@ function setupDragDrop() {
     e.preventDefault();
     target.classList.remove("drag-over", "drag-invalid");
     const label = dragPayload || e.dataTransfer.getData("text/plain");
-    const ok = substituteAt(target.dataset.dropGroup, Number(target.dataset.dropIndex), label);
     dragPayload = null;
-    if (ok) renderAfterSubstitution();
+    openPitchSwapModal(target.dataset.dropGroup, Number(target.dataset.dropIndex), label);
   });
 }
 
@@ -2006,20 +2261,306 @@ function updateArmedUI() {
     b.classList.toggle("active", b.dataset.label === armedLabel);
   });
   document.querySelectorAll(".bench-card").forEach(c => {
-    c.classList.toggle("swap-target", !!armedLabel && c.dataset.dropGroup === armedGroup);
+    c.classList.toggle("swap-target", !!armedLabel && canPlay(armedLabel, c.dataset.dropGroup) && c.dataset.dragLabel !== armedLabel);
+  });
+  document.querySelectorAll(".side-card[data-swap-group]").forEach(c => {
+    c.classList.toggle("swap-target", !!armedLabel && canPlay(armedLabel, c.dataset.swapGroup) && c.dataset.dragLabel !== armedLabel);
   });
   const hint = document.getElementById("swap-hint");
   if (!hint) return;
   if (armedLabel) {
     hint.hidden = false;
-    hint.textContent = `Substituindo: ${armedLabel} — clique num reserva destacado em dourado pra confirmar (ou clique de novo no ⇄ pra cancelar).`;
+    hint.textContent = `Substituindo: ${armedLabel} — clique num reserva destacado em dourado (na coluna Reservas ou no Banco de Reserva) pra confirmar (ou clique de novo no ⇄ pra cancelar).`;
   } else {
     hint.hidden = true;
   }
 }
 
+
+// ---------------- modal de comparação antes da troca ----------------
+// abre quando o usuário escolhe o reserva que vai sair: mostra os dois lado
+// a lado (nota da posição, atributos-chave do grupo, tier, treino) e até 3
+// motivos de cada lado. A troca só acontece no "Confirmar".
+const POS_NAME = {
+  GK: "goleiro", CB: "zagueiro", FB: "lateral", DMF: "volante", AMF: "meia-atacante",
+  CF: "centroavante", MLE: "meia-lateral esquerdo", MLD: "meia-lateral direito",
+};
+let pendingAction = null;
+
+function shortName(p) { return p.name; }
+
+function swapReasons(a, b, group) {
+  const out = [];
+  const dScore = a.role_score - b.role_score;
+  if (dScore >= 0.5) {
+    out.push(`Nota de ${POS_NAME[group]} maior: ${a.role_score.toFixed(1)} contra ${b.role_score.toFixed(1)} (+${dScore.toFixed(1)}). É a nota que o time usa pra escolher titulares e reservas.`);
+  }
+  if (a.native_fit && !b.native_fit) {
+    out.push(`Joga na posição natural; ${shortName(b)} atuaria improvisado (fator ${b.familiarity_factor}).`);
+  }
+  const statWins = ROLE_TOP_STATS[group]
+    .map(k => ({ k, d: (a.stats[k] || 0) - (b.stats[k] || 0) }))
+    .filter(x => x.d >= 3)
+    .sort((x, y) => y.d - x.d);
+  if (statWins.length) {
+    const top = statWins.slice(0, 2).map(x => `${STAT_LABEL[x.k]} (${a.stats[x.k]} contra ${b.stats[x.k]})`);
+    out.push(`Melhor no que a posição mais pede: ${top.join(" e ")}.`);
+  }
+  const ta = TIER_RANK[a.consensus_tier] || 0, tb = TIER_RANK[b.consensus_tier] || 0;
+  if (ta > tb) {
+    out.push(`Mais bem avaliado pela comunidade: tier ${a.consensus_tier} contra ${b.consensus_tier || "sem votos"}.`);
+  }
+  if ((a.overmax || 0) - (b.overmax || 0) >= 2) {
+    out.push(`Tem mais teto de treino: chega a ${a.overmax} de overall (${shortName(b)} chega a ${b.overmax}).`);
+  }
+  return out.slice(0, 3);
+}
+
+function ensureSwapModal() {
+  let el = document.getElementById("cmp-overlay");
+  if (el) return el;
+  el = document.createElement("div");
+  el.id = "cmp-overlay";
+  el.className = "cmp-overlay";
+  el.hidden = true;
+  el.innerHTML = `<div class="cmp-modal" role="dialog" aria-modal="true" aria-labelledby="cmp-title"></div>`;
+  document.body.appendChild(el);
+  el.addEventListener("click", e => {
+    const rep = e.target.closest("[data-rep-label]");
+    if (rep) {
+      openPitchSwapModal(rep.dataset.repGroup, Number(rep.dataset.repIndex), rep.dataset.repLabel);
+      return;
+    }
+    if (e.target === el || e.target.closest("[data-cmp-cancel]")) closeSwapModal();
+    else if (e.target.closest("[data-cmp-confirm]")) confirmSwapModal();
+  });
+  document.addEventListener("keydown", e => {
+    if (el.hidden) return;
+    if (e.key === "Escape") closeSwapModal();
+    if (e.key === "Enter") confirmSwapModal();
+  });
+  return el;
+}
+
+function cmpPlayerBox(p, kind, win, tagText) {
+  const src = photoSrc(p.label);
+  const img = src ? `<img src="${src}" alt="${p.name}" />` : `<div class="cmp-noimg"></div>`;
+  const ovr = p.level_cap > 1 ? `${p.overall}→${p.overmax}` : `${p.overall}`;
+  const tier = p.consensus_tier || "—";
+  const style = p.playing_style_pt ? ` · ${p.playing_style_pt}` : "";
+  return `
+    <div class="cmp-player ${win ? "win" : ""}">
+      ${img}
+      <div style="min-width:0">
+        <div class="cmp-tag ${kind}">${tagText}</div>
+        <div class="cmp-pname">${p.name}</div>
+        <div class="cmp-pmeta">${p.native_position}${style} · Overall ${ovr} · tier ${tier}</div>
+      </div>
+      <div class="cmp-score"><div class="n tnum">${p.role_score.toFixed(1)}</div><div class="l">nota</div></div>
+    </div>`;
+}
+
+// monta o modal de comparação: incoming entra, outgoing sai. ctx diz onde
+// (banco ou campo) só pra ajustar os textos; onConfirm faz a troca de fato.
+function openCompareModal(group, incoming, outgoing, ctx, onConfirm) {
+  if (!incoming || !outgoing || incoming.label === outgoing.label) return false;
+  pendingAction = onConfirm;
+  const where = ctx === "campo" ? "o time" : "o banco";
+  const d = incoming.role_score - outgoing.role_score;
+  const verdict = Math.abs(d) < 0.5
+    ? `<div class="cmp-verdict eq">Praticamente empatados na nota de ${POS_NAME[group]} (${d >= 0 ? "+" : ""}${d.toFixed(1)}).</div>`
+    : d > 0
+      ? `<div class="cmp-verdict pos">A troca melhora ${where}: +${d.toFixed(1)} na nota de ${POS_NAME[group]}.</div>`
+      : `<div class="cmp-verdict neg">A troca piora ${where}: ${d.toFixed(1)} na nota de ${POS_NAME[group]}.</div>`;
+
+  const stats = ROLE_TOP_STATS[group].map(k => {
+    const a = incoming.stats[k] || 0, b = outgoing.stats[k] || 0;
+    return `
+      <div class="cmp-stat">
+        <span class="v l tnum ${a > b ? "best" : ""}">${a}</span>
+        <div class="cmp-track l"><div class="${a > b ? "best" : ""}" style="width:${a}%"></div></div>
+        <span class="lbl">${STAT_LABEL[k]}</span>
+        <div class="cmp-track"><div class="${b > a ? "best" : ""}" style="width:${b}%"></div></div>
+        <span class="v tnum ${b > a ? "best" : ""}">${b}</span>
+      </div>`;
+  }).join("");
+
+  const reasonBox = (a, b) => {
+    const rs = swapReasons(a, b, group);
+    const body = rs.length
+      ? `<ul>${rs.map(r => `<li>${r}</li>`).join("")}</ul>`
+      : `<div class="none">Nenhuma vantagem clara nos critérios dessa posição.</div>`;
+    return `<div class="cmp-reason-box"><h4>Por que ${a.name}</h4>${body}</div>`;
+  };
+
+  const tags = ctx === "campo" ? ["Entra no time", "Vai pro banco"] : ["Entra no banco", "Sai do banco"];
+  const sub = ctx === "campo"
+    ? `Titular de ${POS_NAME[group]} (${POS_LABELS[group]})${outgoing.role && outgoing.role.length > 3 ? " · " + outgoing.role : ""}`
+    : `Vaga de ${POS_NAME[group]} (${POS_LABELS[group]}) no banco`;
+
+  const el = ensureSwapModal();
+  const modal = el.querySelector(".cmp-modal");
+  modal.classList.remove("detail-modal");
+  modal.innerHTML = `
+    <div class="cmp-head">
+      <div>
+        <h2 id="cmp-title">Comparar antes de trocar</h2>
+        <div class="cmp-sub">${sub}</div>
+      </div>
+      <button class="cmp-close" type="button" data-cmp-cancel aria-label="Fechar">✕</button>
+    </div>
+    <div class="cmp-players">
+      ${cmpPlayerBox(incoming, "in", d >= 0.5, tags[0])}
+      <div class="cmp-vs">VS</div>
+      ${cmpPlayerBox(outgoing, "out", d <= -0.5, tags[1])}
+    </div>
+    ${verdict}
+    <div class="cmp-section-title">Atributos-chave de ${POS_NAME[group]}</div>
+    <div class="cmp-stats">${stats}</div>
+    <div class="cmp-note">Atributos base da carta (sem treino). A nota já considera o treino projetado.</div>
+    <div class="cmp-section-title">Motivos</div>
+    <div class="cmp-reasons">
+      ${reasonBox(incoming, outgoing)}
+      ${reasonBox(outgoing, incoming)}
+    </div>
+    <div class="cmp-foot">
+      <button class="cmp-btn" type="button" data-cmp-cancel>Cancelar</button>
+      <button class="cmp-btn primary" type="button" data-cmp-confirm>Confirmar troca</button>
+    </div>`;
+  el.hidden = false;
+  el.querySelector("[data-cmp-confirm]").focus();
+  return true;
+}
+
+function openSwapModal(group, index, exLabel) {
+  const incoming = asGroup(EXCLUDED.find(p => p.label === exLabel), group);
+  const outgoing = (BENCH[group] || [])[index];
+  return openCompareModal(group, incoming, outgoing, "banco", () => {
+    armedLabel = null; armedGroup = null;
+    if (substituteBench(group, index, exLabel)) renderAfterSubstitution();
+    else updateArmedUI();
+  });
+}
+
+function openPitchSwapModal(group, index, benchLabel) {
+  const incoming = asGroup(findOffPitch(benchLabel), group);
+  const outgoing = (LINEUP[group] || [])[index];
+  return openCompareModal(group, incoming, outgoing, "campo", () => {
+    if (substituteAt(group, index, benchLabel)) renderAfterSubstitution();
+  });
+}
+
+// todos de fora do time que jogam nessa posição (nativa ou secundária)
+function replaceOptionsBox(group, index) {
+  const seen = new Set();
+  const opts = [];
+  [...Object.values(BENCH).flat(), ...EXCLUDED].forEach(p => {
+    if (seen.has(p.label) || isStarter(p.label)) return;
+    seen.add(p.label);
+    const g = asGroup(p, group);
+    if (g) opts.push({ ...g, onBench: Object.values(BENCH).some(l => l.some(b => b.label === p.label)) });
+  });
+  opts.sort((a, b) => b.role_score - a.role_score);
+  // titulares de outra posição que também jogam aqui: só como dica, porque
+  // tirar ele de lá deixaria a outra vaga vazia
+  const elsewhere = [];
+  Object.entries(LINEUP).forEach(([g, list]) => {
+    if (g === group) return;
+    list.forEach(p => {
+      const gp = asGroup(p, group);
+      if (gp) elsewhere.push({ ...gp, from: g });
+    });
+  });
+  if (!opts.length && !elsewhere.length) return "";
+  const starter = LINEUP[group][index];
+  const nameCount = {};
+  [...opts, ...elsewhere].forEach(o => { nameCount[o.name] = (nameCount[o.name] || 0) + 1; });
+  const shown = o => nameCount[o.name] > 1 && o.label !== o.name ? o.label : o.name;
+  const hint = elsewhere.map(o => `
+      <div class="rep-row rep-disabled">
+        <span class="rep-name">${shown(o)}</span>
+        <span class="rep-meta">titular de ${POS_LABELS[o.from]} · tire ele de lá primeiro (troque por um reserva) e depois escale aqui</span>
+        <span class="rep-score tnum">${o.role_score.toFixed(1)}</span>
+        <span class="rep-delta tnum ${o.role_score >= starter.role_score ? "pos" : "neg"}">${o.role_score >= starter.role_score ? "+" : ""}${(o.role_score - starter.role_score).toFixed(1)}</span>
+      </div>`).join("");
+  const rows = opts.map(o => {
+    const d = o.role_score - starter.role_score;
+    const fit = o.native_fit ? "posição natural" : `secundária · fator ${o.familiarity_factor}`;
+    return `
+      <button type="button" class="rep-row" data-rep-group="${group}" data-rep-index="${index}" data-rep-label="${o.label}">
+        <span class="rep-name">${shown(o)}</span>
+        <span class="rep-meta">${o.native_position} · ${fit} · ${o.onBench ? "banco" : "não relacionado"}</span>
+        <span class="rep-score tnum">${o.role_score.toFixed(1)}</span>
+        <span class="rep-delta tnum ${d >= 0 ? "pos" : "neg"}">${d >= 0 ? "+" : ""}${d.toFixed(1)}</span>
+      </button>`;
+  }).join("");
+  return `
+    <div class="cmp-section-title">Trocar por… <span style="text-transform:none; letter-spacing:0; font-weight:600">(quem joga de ${POS_NAME[group]}, inclusive em posição secundária · clique pra comparar)</span></div>
+    <div class="rep-list">${rows}${hint}</div>`;
+}
+
+function whyStarterBox(p, group) {
+  const bench = bestBenchFor(group, p.label);
+  if (!bench) return "";
+  const rs = swapReasons(p, bench, group);
+  const body = rs.length
+    ? `<ul>${rs.map(r => `<li>${r}</li>`).join("")}</ul>`
+    : `<div class="none">Vantagem pequena sobre ${bench.name}: a nota de ${POS_NAME[group]} é praticamente igual.</div>`;
+  return `
+    <div class="cmp-reasons" style="grid-template-columns:1fr; padding-top:14px">
+      <div class="cmp-reason-box"><h4>Por que ${p.name} é titular, e não ${bench.name}</h4>${body}</div>
+    </div>`;
+}
+
+// detalhe de um titular (o mesmo card que antes ficava listado abaixo do campo)
+function openPlayerDetail(group, index) {
+  const p = (LINEUP[group] || [])[index];
+  if (!p) return;
+  pendingAction = null;
+  const el = ensureSwapModal();
+  const modal = el.querySelector(".cmp-modal");
+  modal.classList.add("detail-modal");
+  modal.innerHTML = `
+    <div class="cmp-head">
+      <div>
+        <h2 id="cmp-title">Detalhes do titular</h2>
+        <div class="cmp-sub">${POS_NAME[group]}${p.role && p.role.length > 3 ? " · " + p.role : ""} · arraste um reserva pra cima dele no campo pra comparar e trocar</div>
+      </div>
+      <button class="cmp-close" type="button" data-cmp-cancel aria-label="Fechar">✕</button>
+    </div>
+    ${whyStarterBox(p, group)}
+    ${replaceOptionsBox(group, index)}
+    <div style="padding:4px 4px 8px">${playerCard(p, group)}</div>`;
+  el.hidden = false;
+  el.querySelector(".cmp-close").focus();
+}
+
+function closeSwapModal() {
+  const el = document.getElementById("cmp-overlay");
+  if (el) el.hidden = true;
+  pendingAction = null;
+  armedLabel = null; armedGroup = null;
+  updateArmedUI();
+}
+
+function confirmSwapModal() {
+  if (!pendingAction) return;
+  const action = pendingAction;
+  pendingAction = null;
+  const el = document.getElementById("cmp-overlay");
+  if (el) el.hidden = true;
+  action();
+}
+
 function setupExcludedSwap() {
   document.getElementById("side-excluded-list").addEventListener("click", e => {
+    const chip = e.target.closest("[data-ex-filter]");
+    if (chip) {
+      exFilter = chip.dataset.exFilter;
+      renderExcluded();
+      updateArmedUI();
+      return;
+    }
     const btn = e.target.closest(".ex-swap-btn");
     if (btn) {
       if (armedLabel === btn.dataset.label) {
@@ -2035,15 +2576,22 @@ function setupExcludedSwap() {
     if (row) window.open(row.dataset.url, "_blank", "noopener,noreferrer");
   });
 
+  // os reservas da coluna lateral ficam logo acima de "Não Relacionados" --
+  // sem isso o único alvo do clique era o Banco de Reserva, lá no fim da página
+  document.getElementById("side-bench-grid").addEventListener("click", e => {
+    if (!armedLabel) return;
+    const card = e.target.closest(".side-card[data-swap-group]");
+    if (!card || !card.classList.contains("swap-target")) return;
+    e.preventDefault();
+    openSwapModal(card.dataset.swapGroup, Number(card.dataset.swapIndex), armedLabel);
+  });
+
   document.getElementById("bench-groups").addEventListener("click", e => {
     if (!armedLabel) return;
     const card = e.target.closest(".bench-card[data-drop-group]");
-    if (!card || card.dataset.dropGroup !== armedGroup) return;
+    if (!card || !card.classList.contains("swap-target")) return;
     e.preventDefault();
-    const ok = substituteBench(card.dataset.dropGroup, Number(card.dataset.dropIndex), armedLabel);
-    armedLabel = null; armedGroup = null;
-    if (ok) renderAfterSubstitution();
-    else updateArmedUI();
+    openSwapModal(card.dataset.dropGroup, Number(card.dataset.dropIndex), armedLabel);
   });
 }
 
@@ -2084,6 +2632,7 @@ function switchSquadFormation(option) {
   LINEUP = deepClone(data.lineup);
   BENCH = deepClone(data.bench);
   EXCLUDED = deepClone(data.excluded || []);
+  GROUP_SCORES = data.group_scores || {};
   armedLabel = null;
   armedGroup = null;
 
@@ -2148,9 +2697,17 @@ function setupCacheClear() {
     });
   }
 
+  const age = document.getElementById("data-age");
+  if (age && DATA_FETCHED_AT) {
+    const h = (Date.now() / 1000 - DATA_FETCHED_AT) / 3600;
+    age.textContent = h < 1 ? "dados de há menos de 1 h" : h < 48 ? `dados de há ${Math.round(h)} h` : `dados de há ${Math.round(h / 24)} dias`;
+    age.title = "Última busca no efhub: " + new Date(DATA_FETCHED_AT * 1000).toLocaleString("pt-BR");
+  }
+
   btn.addEventListener("click", () => {
+    if (!window.confirm("Buscar de novo todos os jogadores no efhub e remontar os times?\n\nLeva de 1 a 2 minutos. Trocas feitas na tela serão perdidas.")) return;
     btn.disabled = true;
-    showNote("⏳ Pedindo pra limpar o cache...");
+    showNote("⏳ Pedindo pra atualizar os dados...");
     fetch("/api/clear-cache", { method: "POST" })
       .then(r => r.json())
       .then(() => poll())
@@ -2181,6 +2738,111 @@ function renderRadars() {
   renderRadarChart("radar-def", t.radar_def, cssVar("--g-defesa"));
 }
 
+// ---------------- temas ----------------
+function setupThemes() {
+  const current = document.documentElement.dataset.theme || "escuro";
+  const mark = t => document.querySelectorAll("[data-theme-set]").forEach(b => b.classList.toggle("active", b.dataset.themeSet === t));
+  mark(current);
+  document.querySelectorAll("[data-theme-set]").forEach(btn => btn.addEventListener("click", () => {
+    const t = btn.dataset.themeSet;
+    if (t === "escuro") delete document.documentElement.dataset.theme;
+    else document.documentElement.dataset.theme = t;
+    try { localStorage.setItem("onze-theme", t); } catch (e) {}
+    mark(t);
+    renderRadars();
+    renderOverview();
+  }));
+}
+
+// ---------------- boxes ----------------
+const BOX_POS_PT = {
+  GK: "GO", CB: "ZC", LB: "LE", RB: "LD", DMF: "VOL", CMF: "MLG", AMF: "MAT",
+  LMF: "MLE", RMF: "MLD", LWF: "PTE", RWF: "PTD", SS: "SA", CF: "CA",
+};
+const BOX_LINE_OF = {
+  GK: "goleiro", CB: "defesa", LB: "defesa", RB: "defesa", DMF: "meio", CMF: "meio", AMF: "meio",
+  LMF: "meio", RMF: "meio", LWF: "ataque", RWF: "ataque", SS: "ataque", CF: "ataque",
+};
+const PAY_LABEL = { moedas: "Moedas", troca: "Troca ★5/★4", evento: "Evento / recompensa" };
+let boxPay = "all", boxLine = "all";
+const OWNED_IDS = new Set((TEAM.roster || []).map(p => (p.url.match(/players\/(\d+)/) || [])[1]));
+
+function renderBoxes() {
+  const grid = document.getElementById("boxes-grid");
+  if (!BOXES || !BOXES.packs) {
+    document.getElementById("boxes-sub").textContent = "";
+    grid.innerHTML = `<div class="box-empty panel">Ainda não há dados de boxes. Clique em “↻ Atualizar dados” (ou rode <code>node scripts/card_scraper/fetch_boxes.js</code>).</div>`;
+    return;
+  }
+  const h = (Date.now() - BOXES.fetchedAt) / 3600000;
+  document.getElementById("boxes-sub").textContent =
+    `lançadas desde ${new Date(BOXES.cutoffDate + "T12:00:00").toLocaleDateString("pt-BR")} (últimos ${BOXES.daysBack} dias) · dados de há ${h < 1 ? "menos de 1" : Math.round(h)} h`;
+  document.getElementById("boxes-note").innerHTML =
+    "O efhub não informa preço nem data de término. A forma de pagamento é estimada pelo tipo de carta: boxes com POTW/POTM ou cartas épicas = <b>Moedas</b>; " +
+    "boxes “Selection” só com jogadores padrão = <b>Troca ★5/★4</b>; nomes com Reward/Campaign/Ranking/Road to = <b>Evento</b>. Se alguma estiver errada, me avise.";
+
+  const counts = { all: BOXES.packs.length };
+  BOXES.packs.forEach(pk => { counts[pk.payment] = (counts[pk.payment] || 0) + 1; });
+  document.getElementById("box-pay-chips").innerHTML = ["all", "moedas", "troca", "evento"].filter(k => counts[k])
+    .map(k => `<button type="button" class="ex-chip ${boxPay === k ? "active" : ""}" data-box-pay="${k}">${k === "all" ? "Todas" : PAY_LABEL[k]} <span>${counts[k]}</span></button>`).join("");
+  document.getElementById("box-line-chips").innerHTML = [["all", "Todas posições"], ["goleiro", "Goleiro"], ["defesa", "Defesa"], ["meio", "Meio"], ["ataque", "Ataque"]]
+    .map(([k, l]) => `<button type="button" class="ex-chip ${boxLine === k ? "active" : ""}" data-box-line="${k}">${l}</button>`).join("");
+
+  const sortBy = document.getElementById("box-sort").value;
+  const hideOwned = document.getElementById("box-hide-owned").checked;
+  const rank = p => (TIER_RANK[p.consensusTier] || 0) * 100000 + (p.totalPlacements || 0);
+  const cards = BOXES.packs
+    .filter(pk => boxPay === "all" || pk.payment === boxPay)
+    .map(pk => {
+      let players = pk.players.filter(p => (boxLine === "all" || BOX_LINE_OF[p.position] === boxLine) && !(hideOwned && OWNED_IDS.has(p.id)));
+      players = players.sort((a, b) => sortBy === "overall" ? b.overall - a.overall || rank(b) - rank(a) : rank(b) - rank(a) || b.overall - a.overall);
+      if (!players.length) return "";
+      const rows = players.map(p => {
+        const tc = tierColors(p.consensusTier);
+        const votes = p.totalPlacements ? `${p.totalPlacements} voto${p.totalPlacements === 1 ? "" : "s"}` : "sem votos";
+        const tip = p.consensusTier
+          ? Object.entries(p.tierCounts || {}).map(([t, n]) => `${t}: ${n}`).join(" · ")
+          : "Carta nova, ainda sem votos na Community Tier Ranking";
+        return `
+          <a class="box-row" href="https://efhub.com/players/${p.id}" target="_blank" rel="noopener noreferrer">
+            <img src="${p.imageUrl}" alt="${p.name}" loading="lazy" />
+            <div style="min-width:0">
+              <div class="box-pname">${p.name}${OWNED_IDS.has(p.id) ? `<span class="own-badge">JÁ TENHO</span>` : ""}</div>
+              <div class="box-pmeta">${BOX_POS_PT[p.position] || p.position} · ${p.team}${p.playingStyle ? " · " + p.playingStyle : ""}</div>
+            </div>
+            <span class="box-ovr tnum">${p.overall}</span>
+            <span class="tier-chip" style="background:${tc.bg}; color:${tc.fg}; justify-self:center" data-tip="${tip}">${p.consensusTier || "—"}</span>
+            <span class="box-votes tnum" data-tip="${tip}">${votes}</span>
+          </a>`;
+      }).join("");
+      const d = new Date(pk.date + "T12:00:00").toLocaleDateString("pt-BR", { day: "2-digit", month: "short" });
+      return `
+        <div class="panel box-card">
+          <div class="box-head">
+            <div style="min-width:0">
+              <a class="box-name" href="https://efhub.com/packs/${pk.slug}" target="_blank" rel="noopener noreferrer" style="text-decoration:none">${pk.name}</a>
+              <div class="box-sub">lançada em ${d} · ${pk.players.length} jogadores</div>
+            </div>
+            <span class="pay-badge pay-${pk.payment}">${PAY_LABEL[pk.payment]}</span>
+          </div>
+          ${rows}
+        </div>`;
+    }).join("");
+  grid.innerHTML = cards || `<div class="box-empty panel">Nenhum jogador com esses filtros.</div>`;
+}
+
+function setupBoxes() {
+  const tab = document.querySelector('[data-tab-panel="boxes"]');
+  tab.addEventListener("click", e => {
+    const pay = e.target.closest("[data-box-pay]");
+    const line = e.target.closest("[data-box-line]");
+    if (pay) { boxPay = pay.dataset.boxPay; renderBoxes(); }
+    if (line) { boxLine = line.dataset.boxLine; renderBoxes(); }
+  });
+  document.getElementById("box-sort").addEventListener("change", renderBoxes);
+  document.getElementById("box-hide-owned").addEventListener("change", renderBoxes);
+}
+
 renderOverview();
 renderResumo();
 renderRadars();
@@ -2204,4 +2866,7 @@ setupCacheClear();
 setupTabs();
 setupRosterFilters();
 setupVotesSort();
+setupThemes();
+renderBoxes();
+setupBoxes();
 </script>
