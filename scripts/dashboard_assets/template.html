@@ -1,0 +1,2207 @@
+<meta charset="utf-8">
+<title>Onze Ideal</title>
+<style>
+  @font-face {
+    font-family: 'Anton';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(data:font/woff2;base64,__ANTON_B64__) format('woff2');
+  }
+
+  :root {
+    color-scheme: dark;
+    --bg: #090c12;
+    --panel: #11151f;
+    --panel-2: #171c29;
+    --panel-3: #1e2433;
+    --border: #262c3d;
+    --ink: #f3f5fb;
+    --ink-2: #9aa3ba;
+    --ink-3: #5e6780;
+    --gold: #f0c419;
+    --gold-soft: rgba(240, 196, 25, 0.14);
+    --g-defesa: #3aa0e8;
+    --g-defesa-soft: rgba(58, 160, 232, 0.14);
+    --g-meio: #f0a63a;
+    --g-meio-soft: rgba(240, 166, 58, 0.14);
+    --g-ataque: #34d399;
+    --g-ataque-soft: rgba(52, 211, 153, 0.14);
+    --g-goleiro: #a878e8;
+    --g-goleiro-soft: rgba(168, 120, 232, 0.14);
+    --tier-top: #f0c419;
+    --tier-top-soft: rgba(240, 196, 25, 0.14);
+    --tier-low: #e8657a;
+    --tier-low-soft: rgba(232, 101, 122, 0.14);
+    --pitch-1: #123a24;
+    --pitch-2: #0a2317;
+    --pitch-line: rgba(255, 255, 255, 0.14);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 14px 32px -16px rgba(0, 0, 0, 0.7);
+    --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.5), 0 32px 64px -28px rgba(0, 0, 0, 0.85);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -8%, rgba(52, 211, 153, 0.08), transparent 60%),
+      radial-gradient(ellipse 800px 500px at 100% 0%, rgba(240, 196, 25, 0.06), transparent 55%),
+      var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 28px 20px 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  h1, h2, h3 { text-wrap: balance; margin: 0; }
+  .display {
+    font-family: 'Anton', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+  .tnum { font-variant-numeric: tabular-nums; }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--g-ataque);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--g-ataque);
+    box-shadow: 0 0 0 3px var(--g-ataque-soft);
+  }
+
+  /* ---------- topbar ---------- */
+  .topbar {
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;
+    padding: 12px 18px; background: var(--panel); border: 1px solid var(--border); border-radius: 16px;
+    box-shadow: var(--shadow);
+  }
+  .topbar-left { display: flex; align-items: center; gap: 12px; }
+  .crest { flex: none; }
+  .topbar-kicker { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-3); font-weight: 800; }
+  .topbar h1 { font-size: clamp(20px, 3vw, 26px); color: #fff; line-height: 1; margin-top: 2px; }
+  .topbar h1 span { color: var(--gold); }
+  .tabs { display: flex; gap: 6px; background: var(--panel-2); border: 1px solid var(--border); border-radius: 12px; padding: 4px; }
+  .tab-btn {
+    font-family: inherit; font-size: 12px; font-weight: 800; letter-spacing: 0.02em; text-transform: uppercase;
+    padding: 8px 16px; border-radius: 9px; border: none; background: transparent; color: var(--ink-3); cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active { background: var(--gold); color: #14110a; }
+  .tab-panel[hidden] { display: none; }
+  .pills { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill {
+    font-size: 11px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border);
+    background: var(--panel-2); color: var(--ink-2);
+  }
+  .pill.gold { color: var(--gold); border-color: rgba(240,196,25,0.35); background: var(--gold-soft); }
+  #clear-cache-btn { font-size: 11px; padding: 6px 12px; }
+  .cache-status-note {
+    font-size: 11.5px; color: var(--ink-3); margin-top: 8px;
+    padding: 8px 12px; border-radius: 9px; background: var(--panel-2); border: 1px solid var(--border);
+  }
+  .cache-status-note.err { color: var(--tier-low); border-color: rgba(232,101,122,0.3); }
+  .cache-status-note.ok { color: var(--g-ataque); border-color: rgba(52,211,153,0.3); }
+
+  /* ---------- side col (reservas/excluídos compactos) ---------- */
+  .hud-a.with-side { grid-template-columns: 240px minmax(0, 1fr) 280px; }
+  @media (max-width: 1200px) { .hud-a.with-side { grid-template-columns: 1fr; } }
+  .side-col { display: flex; flex-direction: column; gap: 16px; }
+  .side-panel { padding: 14px 14px 16px; }
+  .side-panel-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
+  .side-panel-head h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); font-weight: 800; }
+  .side-panel-head .count { font-size: 10.5px; color: var(--gold); font-weight: 800; }
+  .side-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .side-card {
+    display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none;
+    background: var(--panel-2); border: 1px solid var(--border); border-radius: 12px; padding: 10px 5px 10px;
+  }
+  .side-card:hover { border-color: rgba(240,196,25,0.35); }
+  .side-card-img-wrap { position: relative; width: 60px; height: 60px; }
+  .side-card-img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; border: 1.5px solid var(--border); display: block; }
+  .side-card-pos {
+    position: absolute; top: -6px; left: -6px; font-size: 8.5px; font-weight: 800; letter-spacing: 0.3px;
+    background: var(--panel-3); color: var(--ink-2); border-radius: 5px; padding: 1px 4px; border: 1px solid var(--border);
+  }
+  .side-card-tier {
+    position: absolute; top: -7px; right: -7px; width: 19px; height: 19px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9.5px; font-weight: 800; color: #0a0e16; border: 1.5px solid #0a0e16;
+  }
+  .side-card-ovr { font-family: 'Anton', sans-serif; font-size: 18px; color: var(--gold); line-height: 1; margin-top: 1px; }
+  .side-card-name { font-size: 10.5px; font-weight: 700; color: var(--ink); text-align: center; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 78px; }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+  }
+  .panel-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    font-weight: 800;
+    padding: 16px 18px 0;
+  }
+
+  /* ---------- HUD row A: overview / pitch / radar ---------- */
+  .hud-a { display: grid; grid-template-columns: 240px minmax(0, 1fr) 300px; gap: 16px; align-items: stretch; }
+  @media (max-width: 1080px) { .hud-a { grid-template-columns: 1fr; } }
+
+  .overview { padding: 18px; display: flex; flex-direction: column; gap: 16px; }
+  .ring-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 6px 0 4px; }
+  .ring-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); font-weight: 800; }
+  .ov-stat { display: flex; flex-direction: column; gap: 2px; }
+  .ov-stat .l { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-3); font-weight: 700; }
+  .ov-stat .v { font-size: 19px; font-weight: 800; }
+  .grade-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: 10px;
+    font-family: 'Anton', sans-serif; font-size: 20px;
+    background: var(--gold-soft); color: var(--gold); border: 1px solid rgba(240,196,25,0.3);
+  }
+  .grade-row { display: flex; align-items: center; gap: 12px; }
+  .tip-group { margin-top: 4px; display: flex; flex-direction: column; gap: 6px; }
+  .tip-group-label { font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--tier-low); font-weight: 800; }
+  #tip-next-leave { display: flex; flex-direction: column; gap: 6px; }
+  .tip-box {
+    padding: 8px 10px; border-radius: 10px;
+    background: var(--tier-low-soft); border: 1px solid rgba(232,101,122,0.3);
+    display: flex; flex-direction: column; gap: 2px; text-decoration: none;
+  }
+  .tip-box .tip-body { font-size: 12.5px; color: var(--ink); font-weight: 700; }
+  .tip-box .tip-sub { font-size: 10.5px; color: var(--ink-3); }
+  .tip-box .tip-reason { font-size: 10px; color: var(--tier-low); font-weight: 700; }
+
+  .pitch-panel { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+  .pitch-toolbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 12px 16px; border-bottom: 1px solid var(--border);
+  }
+  .pitch-toolbar-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); font-weight: 800; }
+  .toggle-btn {
+    font-family: inherit; font-size: 12px; font-weight: 800; letter-spacing: 0.02em;
+    padding: 7px 14px; border-radius: 999px; border: 1px solid var(--border);
+    background: var(--panel-2); color: var(--ink-2); cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .toggle-btn:hover { border-color: rgba(240,196,25,0.4); color: var(--ink); }
+  .toggle-btn.active { background: var(--gold-soft); color: var(--gold); border-color: rgba(240,196,25,0.4); }
+  .pitch-svg-wrap { line-height: 0; flex: 1; }
+  .pitch-node { cursor: grab; }
+  .pitch-node-drop-ring { transition: opacity 0.12s ease; pointer-events: none; }
+  .pitch-node.drag-over .pitch-node-drop-ring { opacity: 1; }
+  .pitch-node.drag-invalid .pitch-node-drop-ring { opacity: 1; stroke: var(--tier-low); }
+  .side-card[draggable="true"], .bench-card[draggable="true"] { cursor: grab; }
+  .side-card.dragging, .bench-card.dragging { opacity: 0.4; }
+  .bench-card.swap-target { border-color: var(--gold) !important; box-shadow: 0 0 0 2px rgba(240,196,25,0.35) inset; cursor: pointer; animation: swap-pulse 1.4s ease-in-out infinite; }
+  @keyframes swap-pulse { 0%, 100% { box-shadow: 0 0 0 2px rgba(240,196,25,0.35) inset; } 50% { box-shadow: 0 0 0 2px rgba(240,196,25,0.75) inset; } }
+  .bench-card.swap-target::after {
+    content: "Clique aqui pra colocar ⇄"; position: absolute; inset: 0; border-radius: 11px;
+    display: flex; align-items: center; justify-content: center; text-align: center; padding: 4px 10px;
+    background: rgba(20,17,10,0.9); color: var(--gold); font-weight: 800; font-size: 12.5px;
+    pointer-events: none;
+  }
+  .swap-hint {
+    font-size: 11.5px; font-weight: 700; color: var(--gold); background: var(--gold-soft);
+    border: 1px solid rgba(240,196,25,0.35); border-radius: 8px; padding: 7px 12px;
+  }
+  .drag-hint {
+    font-size: 11px; color: var(--ink-3); padding: 8px 18px 0; display: flex; align-items: center; gap: 6px;
+  }
+
+  .radar-col { display: flex; flex-direction: column; gap: 16px; }
+  .radar-panel { padding: 16px 16px 18px; }
+  .radar-panel h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); font-weight: 800; margin-bottom: 4px; }
+  .radar-svg-wrap svg { display: block; width: 100%; height: auto; }
+  .radar-axis-label { font-size: 9.5px; fill: var(--ink-2); font-weight: 700; }
+  .radar-axis-value { font-size: 9px; fill: var(--ink-3); font-variant-numeric: tabular-nums; }
+
+  /* ---------- HUD row B ---------- */
+  .hud-b { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 16px; }
+  @media (max-width: 900px) { .hud-b { grid-template-columns: 1fr; } }
+  .plano-panel { padding: 18px; display: flex; flex-direction: column; gap: 16px; }
+  .plano-block h3 { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); font-weight: 800; margin-bottom: 8px; }
+  .plano-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  .plano-list li { font-size: 13px; color: var(--ink); display: flex; align-items: baseline; gap: 8px; }
+  .plano-list li::before { content: "▸"; color: var(--g-ataque); font-size: 11px; }
+  .plano-instr { display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
+  .plano-instr div { display: flex; justify-content: space-between; gap: 10px; }
+  .plano-instr span.k { color: var(--ink-3); }
+  .plano-instr span.v { color: var(--ink); font-weight: 700; }
+
+  .resumo-panel { padding: 18px; display: flex; flex-direction: column; gap: 16px; }
+  .resumo-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; }
+  .rtile { background: var(--panel-2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; }
+  .rtile .n { font-family: 'Anton', sans-serif; font-size: 26px; color: var(--gold); }
+  .rtile .l { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); font-weight: 700; }
+  .cat-bars { display: flex; flex-direction: column; gap: 10px; }
+  .cat-row { display: grid; grid-template-columns: 96px 1fr 34px; align-items: center; gap: 10px; }
+  .cat-label { font-size: 12px; font-weight: 800; color: var(--ink); }
+  .cat-track { height: 9px; border-radius: 6px; background: var(--panel-3); overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 6px; }
+  .cat-val { font-size: 13px; font-weight: 800; text-align: right; }
+
+  /* ---------- section ---------- */
+  .section-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; }
+  .section-head .dot { width: 13px; height: 13px; border-radius: 50%; flex: none; }
+  .section-head h2 { font-family: 'Anton', 'Arial Narrow', Arial, sans-serif; font-weight: 400; text-transform: uppercase; letter-spacing: 0.02em; font-size: 24px; }
+  .section-head .count { font-size: 12px; color: var(--ink-3); font-weight: 700; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 16px; }
+
+  /* ---------- player card ---------- */
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 16px;
+    box-shadow: var(--shadow); padding: 0; display: flex; flex-direction: column; overflow: hidden;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+  .card-accent { height: 4px; width: 100%; }
+  .card-body { padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 12px; }
+  .card-top { display: flex; align-items: center; gap: 12px; }
+  .avatar {
+    width: 48px; height: 48px; border-radius: 10px; flex: none; object-fit: cover;
+    border: 2px solid var(--border);
+  }
+  .card-name-wrap { min-width: 0; flex: 1; }
+  .card-name-row { display: flex; align-items: center; gap: 6px; }
+  .card-name { font-weight: 800; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff; }
+  .tier-chip {
+    display: inline-flex; align-items: center; justify-content: center; flex: none;
+    font-size: 10.5px; font-weight: 800; padding: 1px 7px; border-radius: 7px; letter-spacing: 0.01em;
+  }
+  .training-note { font-size: 10.5px; color: var(--ink-3); display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+  .card-style { font-size: 11px; color: var(--ink-3); margin-top: 3px; font-style: italic; }
+  .card-role {
+    display: inline-block; margin-top: 4px; font-size: 10px; font-weight: 800; letter-spacing: 0.05em;
+    text-transform: uppercase; padding: 2px 8px; border-radius: 20px;
+  }
+  .card-ovr { text-align: right; flex: none; }
+  .ovr-row { display: flex; align-items: baseline; gap: 5px; justify-content: flex-end; }
+  .card-ovr .n { font-family: 'Anton', 'Arial Narrow', Arial, sans-serif; font-size: 26px; line-height: 1; color: var(--gold); }
+  .ovr-max { font-size: 13px; font-weight: 800; color: var(--ink-3); }
+  .card-ovr .l { font-size: 9px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+  .meta-line { font-size: 12px; color: var(--ink-2); display: flex; justify-content: space-between; gap: 8px; }
+  .meta-line .fit-native { color: var(--g-ataque); font-weight: 700; }
+  .meta-line .fit-secondary { color: var(--ink-3); }
+
+  .bars { display: flex; flex-direction: column; gap: 7px; }
+  .bar-row { display: grid; grid-template-columns: 100px 1fr 24px; align-items: center; gap: 8px; }
+  .bar-label { font-size: 11px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar-track { height: 6px; border-radius: 4px; background: var(--panel-3); overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; }
+  .bar-val { font-variant-numeric: tabular-nums; font-size: 11px; font-weight: 700; text-align: right; color: var(--ink-2); }
+
+  .compare { border-top: 1px solid var(--border); padding-top: 10px; font-size: 12px; color: var(--ink-2); display: flex; justify-content: space-between; gap: 10px; }
+  .compare .delta { font-weight: 800; font-variant-numeric: tabular-nums; }
+  .compare .delta.pos { color: var(--g-ataque); }
+  .card-link { font-size: 11.5px; font-weight: 700; color: var(--ink-3); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+  .card-link:hover { color: var(--gold); }
+
+  /* ---------- bench ---------- */
+  .bench-group { margin-bottom: 14px; }
+  .bench-group:last-child { margin-bottom: 0; }
+  .bench-group-label { font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-3); margin-bottom: 8px; }
+  .bench-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
+  .bench-card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 10px 13px;
+    display: flex; align-items: center; gap: 10px; box-shadow: var(--shadow); text-decoration: none; color: inherit;
+    position: relative;
+  }
+  .bench-avatar { width: 38px; height: 38px; border-radius: 8px; flex: none; object-fit: cover; border: 2px solid var(--border); }
+  .bench-info { min-width: 0; flex: 1; }
+  .bench-name { font-weight: 800; font-size: 13.5px; display: flex; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff; }
+  .bench-meta { font-size: 11px; color: var(--ink-3); margin-top: 2px; }
+  .bench-score { text-align: right; flex: none; font-size: 15px; font-weight: 800; color: var(--gold); }
+  .super-sub-mark { color: var(--gold); font-weight: 800; margin-left: 1px; cursor: help; }
+
+  /* ---------- excluded table ---------- */
+  .bench-excluded-grid { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 16px; align-items: start; }
+  @media (max-width: 900px) { .bench-excluded-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- tooltip customizado (substitui o title nativo) ---------- */
+  .custom-tooltip {
+    position: fixed; z-index: 999; max-width: 260px; pointer-events: none;
+    background: var(--panel); border: 1px solid rgba(240,196,25,0.35); border-radius: 10px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.45); padding: 10px 12px;
+    opacity: 0; transform: translateY(4px); transition: opacity 0.12s ease, transform 0.12s ease;
+    font-size: 12px; line-height: 1.4; color: var(--ink-2);
+  }
+  .custom-tooltip.visible { opacity: 1; transform: translateY(0); }
+  .custom-tooltip .tip-title { font-weight: 800; color: #fff; font-size: 12.5px; margin-bottom: 3px; }
+  .custom-tooltip .tip-line { color: var(--ink-2); }
+  .custom-tooltip .tip-sep { height: 1px; background: var(--border); margin: 7px 0 6px; }
+  .custom-tooltip .tip-skill-row { padding: 3px 0; }
+  .custom-tooltip .tip-skill-top { display: flex; align-items: center; gap: 6px; }
+  .custom-tooltip .tip-skill-rank { font-family: 'Anton', sans-serif; font-size: 11px; color: var(--ink-3); width: 14px; flex: none; }
+  .custom-tooltip .tip-skill-name { flex: 1; min-width: 0; font-weight: 700; color: var(--ink); white-space: normal; }
+  .custom-tooltip .tip-skill-votes { font-weight: 800; color: var(--gold); font-size: 11px; flex: none; font-variant-numeric: tabular-nums; }
+  .custom-tooltip .tip-skill-track { height: 4px; border-radius: 3px; background: var(--panel-3); overflow: hidden; margin: 2px 0 0 20px; }
+  .custom-tooltip .tip-skill-fill { height: 100%; border-radius: 3px; background: var(--gold); }
+
+  /* ---------- elenco por posição ---------- */
+  .roster-panel { padding: 0; }
+  .roster-filters {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+    padding: 12px 18px 0;
+  }
+  .filter-group { display: flex; gap: 6px; flex-wrap: wrap; }
+  .filter-btn {
+    font-family: inherit; font-size: 11.5px; font-weight: 800; letter-spacing: 0.02em;
+    padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border);
+    background: var(--panel-2); color: var(--ink-2); cursor: pointer;
+  }
+  .filter-btn:hover { color: var(--ink); border-color: rgba(240,196,25,0.35); }
+  .filter-btn.active { background: var(--gold); color: #14110a; border-color: var(--gold); }
+  .tier-select {
+    font-family: inherit; font-size: 11.5px; font-weight: 700;
+    padding: 7px 12px; border-radius: 999px; border: 1px solid var(--border);
+    background: var(--panel-2); color: var(--ink); cursor: pointer;
+  }
+  .roster-empty { padding: 24px 8px; text-align: center; color: var(--ink-3); font-size: 13px; }
+
+  /* ---------- comparar jogadores ---------- */
+  .compare-jump { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+  .compare-section { margin-bottom: 26px; scroll-margin-top: 14px; }
+  .compare-section:last-child { margin-bottom: 0; }
+  .compare-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  .compare-head h3 { font-size: 16px; }
+  .compare-head .count { font-size: 11px; }
+  .compare-add-select { margin-left: auto; }
+  .compare-add-empty { margin-left: auto; font-size: 11px; color: var(--ink-3); }
+  .compare-remove-btn {
+    flex: none; width: 18px; height: 18px; border-radius: 5px; font-size: 12px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--panel-3); color: var(--ink-3); border: 1px solid var(--border);
+    cursor: pointer; font-family: inherit; padding: 0;
+  }
+  .compare-remove-btn:hover { color: var(--tier-low); border-color: rgba(232,101,122,0.4); }
+  .compare-empty { padding: 14px 4px; font-size: 12.5px; color: var(--ink-3); }
+  .compare-table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); background: var(--panel); }
+  .compare-table { display: grid; min-width: 480px; }
+  .compare-row-label {
+    display: flex; align-items: center; padding: 7px 12px; font-size: 11.5px; font-weight: 700;
+    color: var(--ink-2); border-bottom: 1px solid var(--border); border-right: 1px solid var(--border);
+    background: var(--panel-2); position: sticky; left: 0;
+  }
+  .compare-cat-label {
+    grid-column: 1 / -1;
+    padding: 9px 12px 5px; font-size: 10.5px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.07em; color: var(--gold); border-bottom: 1px solid var(--border);
+    background: var(--gold-soft);
+  }
+  .compare-cell {
+    display: flex; flex-direction: column; justify-content: center; gap: 3px;
+    padding: 7px 12px; border-bottom: 1px solid var(--border); border-left: 1px solid var(--border);
+  }
+  .compare-cell .v { font-size: 12.5px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .compare-cell.best .v { color: var(--gold); font-weight: 800; }
+  .compare-cell-track { height: 4px; border-radius: 3px; background: var(--panel-3); overflow: hidden; }
+  .compare-cell-fill { height: 100%; border-radius: 3px; background: var(--ink-3); }
+  .compare-cell.best .compare-cell-fill { background: var(--gold); }
+  .compare-head-row { display: contents; }
+  .compare-player-head {
+    padding: 12px; border-bottom: 2px solid var(--gold-soft); border-left: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 5px; background: var(--panel-2);
+  }
+  .compare-player-top { display: flex; align-items: center; gap: 8px; }
+  .compare-player-avatar { width: 34px; height: 34px; border-radius: 8px; object-fit: cover; border: 2px solid var(--border); flex: none; }
+  .compare-player-name { font-weight: 800; font-size: 12.5px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .compare-player-meta { font-size: 10px; color: var(--ink-3); display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+  .compare-fit-native { color: var(--tier-top); font-weight: 700; }
+  .compare-fit-secondary { color: var(--ink-3); }
+  .compare-player-ovr { font-family: 'Anton', sans-serif; font-size: 19px; color: var(--gold); line-height: 1; }
+  .compare-corner {
+    padding: 12px; border-bottom: 2px solid var(--gold-soft); background: var(--panel-2);
+    font-size: 10px; color: var(--ink-3); display: flex; align-items: flex-end;
+    position: sticky; left: 0;
+  }
+
+  /* ---------- votos por carta ---------- */
+  .votes-toolbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .votes-card-head { display: flex; align-items: center; gap: 10px; }
+  .votes-total { font-size: 11px; color: var(--ink-3); margin: 8px 0 10px; }
+  .vote-row { display: grid; grid-template-columns: 32px 1fr 40px; align-items: center; gap: 8px; padding: 2px 0; }
+  .vote-tier-label { font-size: 11px; font-weight: 800; }
+  .vote-track { height: 8px; border-radius: 5px; background: var(--panel-3); overflow: hidden; }
+  .vote-fill { height: 100%; border-radius: 5px; }
+  .vote-count { font-size: 11px; font-weight: 700; color: var(--ink-2); text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* ---------- treinamento ideal ---------- */
+  .train-ovr-row { display: flex; align-items: baseline; gap: 6px; }
+  .train-ovr-arrow { color: var(--ink-3); font-size: 13px; }
+  .train-ovr-new { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--gold); }
+  .train-votes { font-size: 11px; color: var(--ink-3); margin: 2px 0 10px; }
+  .train-points { display: flex; flex-wrap: wrap; gap: 6px; }
+  .train-chip {
+    display: flex; flex-direction: column; align-items: center; gap: 1px;
+    background: var(--panel-2); border: 1px solid var(--border); border-radius: 9px;
+    padding: 6px 10px; min-width: 54px;
+  }
+  .train-chip .k { font-size: 9px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-3); font-weight: 700; }
+  .train-chip .v { font-family: 'Anton', sans-serif; font-size: 17px; color: var(--ink); }
+  .train-empty { padding: 10px 2px; font-size: 12.5px; color: var(--ink-3); }
+
+  /* ---------- habilidades mais votadas ---------- */
+  .skills-total { font-size: 11px; color: var(--ink-3); margin: 8px 0 10px; }
+  .skill-row { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .skill-row:last-child { border-bottom: none; }
+  .skill-rank { font-family: 'Anton', sans-serif; font-size: 15px; color: var(--ink-3); width: 18px; flex: none; }
+  .skill-name { font-size: 13px; font-weight: 700; color: var(--ink); flex: 1; min-width: 0; }
+  .skill-bar-track { flex: 1; height: 6px; border-radius: 4px; background: var(--panel-3); overflow: hidden; max-width: 90px; }
+  .skill-bar-fill { height: 100%; border-radius: 4px; background: var(--gold); }
+  .skill-votes { font-size: 12px; font-weight: 800; color: var(--gold); flex: none; min-width: 34px; text-align: right; font-variant-numeric: tabular-nums; }
+  .roster-group { margin-bottom: 16px; }
+  .roster-group:last-child { margin-bottom: 0; }
+  .roster-group-label {
+    font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--gold); margin-bottom: 4px; display: flex; align-items: baseline; gap: 8px;
+  }
+  .roster-group-label .n { color: var(--ink-3); font-weight: 700; font-size: 10.5px; text-transform: none; letter-spacing: 0; }
+  .roster-row {
+    display: flex; align-items: center; gap: 10px; padding: 7px 8px; border-radius: 9px;
+    text-decoration: none; color: inherit; border-bottom: 1px solid var(--border);
+  }
+  .roster-row:last-child { border-bottom: none; }
+  .roster-row:hover { background: var(--panel-2); }
+  .roster-img { width: 32px; height: 32px; border-radius: 7px; object-fit: cover; border: 1.5px solid var(--border); flex: none; }
+  .roster-name-wrap { min-width: 0; flex: 1 1 170px; }
+  .roster-name { font-weight: 700; font-size: 13px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .roster-style { font-size: 11px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .roster-ovr-wrap { flex: none; text-align: right; min-width: 40px; }
+  .roster-ovr { font-family: 'Anton', sans-serif; font-size: 15px; color: var(--gold); line-height: 1; }
+  .roster-ovr-l { font-size: 8px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.04em; }
+  .bench-panel { padding: 0; }
+  .excluded-card { padding: 18px 18px 16px; }
+  .excluded-card .strength-head { margin-bottom: 12px; }
+  .excluded-card .strength-head h2 { font-size: 13px; }
+  .excluded-card .strength-head p { font-size: 11px; }
+  .ex-list {
+    display: flex; flex-direction: column; gap: 1px;
+    max-height: 380px; overflow-y: auto; padding-right: 4px;
+    scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+  }
+  .ex-list::-webkit-scrollbar { width: 6px; }
+  .ex-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .ex-list::-webkit-scrollbar-track { background: transparent; }
+  .ex-row {
+    display: flex; align-items: center; gap: 7px; padding: 5px 7px;
+    border-radius: 7px; text-decoration: none; color: inherit; cursor: pointer;
+  }
+  .ex-row:hover { background: var(--panel-2); }
+  .ex-name { font-size: 12px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1 1 auto; min-width: 0; }
+  .ex-meta { font-size: 10px; color: var(--ink-3); flex: none; white-space: nowrap; }
+  .ex-score { font-size: 11.5px; font-weight: 800; color: var(--ink-2); flex: none; }
+  .ex-swap-btn {
+    flex: none; width: 20px; height: 20px; border-radius: 6px; font-size: 12px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--panel-3); color: var(--ink-3); border: 1px solid var(--border);
+    cursor: pointer; font-family: inherit; padding: 0;
+  }
+  .ex-swap-btn:hover { color: var(--gold); border-color: rgba(240,196,25,0.4); }
+  .ex-swap-btn.active { background: var(--gold); color: #14110a; border-color: var(--gold); }
+  .ex-table a.efhub-link { color: var(--ink-3); text-decoration: none; }
+  .ex-table a.efhub-link:hover { color: var(--gold); }
+
+  .strength-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; gap: 12px; flex-wrap: wrap; }
+  .strength-head h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); font-weight: 800; }
+  .strength-head p { margin: 0; font-size: 12px; color: var(--ink-3); }
+
+  /* ---------- module note ---------- */
+  .module { padding: 24px 26px; display: flex; flex-direction: column; gap: 14px; }
+  .module h2 { font-family: 'Anton', 'Arial Narrow', Arial, sans-serif; font-weight: 400; text-transform: uppercase; font-size: 20px; color: #fff; }
+  .module p { margin: 0; color: var(--ink-2); font-size: 13.5px; max-width: 74ch; }
+  code, .codebox { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 12.5px; }
+  code { background: var(--panel-2); padding: 1px 5px; border-radius: 4px; }
+  .codebox { background: var(--panel-2); border: 1px solid var(--border); border-radius: 10px; padding: 13px 15px; overflow-x: auto; color: var(--ink); }
+  .codebox div { white-space: pre; }
+  .codebox .cmt { color: var(--ink-3); }
+
+  footer { text-align: center; font-size: 11.5px; color: var(--ink-3); }
+</style>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="crest">
+        <svg width="46" height="46" viewBox="0 0 46 46">
+          <circle cx="23" cy="23" r="22" fill="#0a0a0a" stroke="#fff" stroke-width="2" />
+          <circle cx="23" cy="23" r="18" fill="none" stroke="#fff" stroke-width="1" opacity="0.5" />
+          <text x="23" y="20" text-anchor="middle" font-size="8" fill="var(--gold)">&#9733;</text>
+          <text x="23" y="33" text-anchor="middle" font-family="Anton, sans-serif" font-size="22" fill="#fff">C</text>
+        </svg>
+      </div>
+      <div>
+        <div class="topbar-kicker">Meu Time</div>
+        <h1 class="display">Onze <span>Ideal</span></h1>
+      </div>
+    </div>
+    <div class="tabs" id="main-tabs">
+      <button class="tab-btn active" type="button" data-tab="titular">Onze Titular</button>
+      <button class="tab-btn" type="button" data-tab="analises">An&aacute;lises</button>
+      <button class="tab-btn" type="button" data-tab="elenco">Elenco por Posi&ccedil;&atilde;o</button>
+      <button class="tab-btn" type="button" data-tab="votos">Votos por Carta</button>
+      <button class="tab-btn" type="button" data-tab="treino">Treinamento Ideal</button>
+      <button class="tab-btn" type="button" data-tab="skills">Habilidades Mais Votadas</button>
+      <button class="tab-btn" type="button" data-tab="comparar">Comparar Jogadores</button>
+    </div>
+    <div class="tabs" id="squad-formation-toggle" style="padding:2px; margin-top:8px">
+      <button class="tab-btn active" type="button" data-squad-formation="1">Op&ccedil;&atilde;o 1 &middot; 4-2-2-2</button>
+      <button class="tab-btn" type="button" data-squad-formation="2">Op&ccedil;&atilde;o 2 &middot; 4-2-3-1</button>
+    </div>
+    <div class="pills">
+      <span class="pill gold" id="formation-pill">4-2-2-2</span>
+      <span class="pill">Contra-Ataque</span>
+      <button class="toggle-btn" id="clear-cache-btn" type="button" data-tip="Rebusca todos os jogadores no efhub ignorando o cache de 6h (só funciona rodando localhost via scripts/serve_dashboard.py)">🗑️ Limpar Cache</button>
+    </div>
+    <div id="cache-status-note" class="cache-status-note" hidden></div>
+  </div>
+
+  <section class="tab-panel" data-tab-panel="titular">
+    <div class="hud-a with-side">
+      <div class="panel overview">
+        <div class="panel-title" style="padding:0">Vis&atilde;o Geral</div>
+        <div class="ring-wrap">
+          <svg id="fit-ring" width="112" height="112" viewBox="0 0 112 112"></svg>
+          <div class="ring-label">Encaixe Nat.</div>
+        </div>
+        <div class="ov-stat"><span class="l">Esquema</span><span class="v" id="formation-scheme-label">4-2-2-2</span></div>
+        <div class="ov-stat"><span class="l">Estilo de jogo</span><span class="v">Contra-Ataque</span></div>
+        <div class="ov-stat"><span class="l">For&ccedil;a m&eacute;dia (papel)</span><span class="v tnum" id="ov-role-score"></span></div>
+        <div class="ov-stat">
+          <span class="l">Nota do time</span>
+          <div class="grade-row">
+            <span class="grade-badge" id="team-grade"></span>
+            <span class="v tnum" id="ov-overall"></span>
+          </div>
+        </div>
+        <div class="ov-stat"><span class="l">Lateral defensivo</span><span class="v" id="ov-lat-def" style="font-size:14px"></span></div>
+        <div class="ov-stat"><span class="l">1&ordm; volante</span><span class="v" id="ov-volante" style="font-size:14px"></span></div>
+        <div class="tip-group" id="tip-next-leave-group">
+          <div class="tip-group-label">⚠ Próximos a sair do banco</div>
+          <div id="tip-next-leave"></div>
+        </div>
+      </div>
+
+      <div class="panel pitch-panel">
+        <div class="pitch-toolbar">
+          <div class="tabs" id="formation-toggle" style="padding:2px">
+            <button class="tab-btn active" type="button" data-formation="ofensiva">Forma&ccedil;&atilde;o Ofensiva</button>
+            <button class="tab-btn" type="button" data-formation="defensiva">Forma&ccedil;&atilde;o Defensiva</button>
+          </div>
+          <button id="toggle-overmax" class="toggle-btn active" type="button">Overmax (treino smart)</button>
+        </div>
+        <div class="drag-hint">↕ Arraste um reserva (da lista ao lado ou do banco) pra cima de um titular no campo pra substituir</div>
+        <div class="pitch-svg-wrap">
+          <svg id="pitch" viewBox="0 0 600 660" width="100%" height="auto" role="img" aria-label="Escala&ccedil;&atilde;o t&aacute;tica 4-2-2-2"></svg>
+        </div>
+      </div>
+
+      <div class="side-col">
+        <div class="panel side-panel">
+          <div class="side-panel-head"><h3>Reservas</h3><span class="count" id="side-bench-count"></span></div>
+          <div class="side-grid" id="side-bench-grid"></div>
+        </div>
+        <div class="panel side-panel">
+          <div class="side-panel-head"><h3>N&atilde;o Relacionados</h3><span class="count" id="side-excluded-count"></span></div>
+          <div id="side-excluded-list"></div>
+        </div>
+      </div>
+    </div>
+    <div id="sections"></div>
+  </section>
+
+  <section class="tab-panel" data-tab-panel="analises" hidden>
+    <div class="hud-b">
+      <div class="panel plano-panel">
+        <div class="panel-title" style="padding:0">Plano de Jogo</div>
+        <div class="plano-block">
+          <h3>Foco</h3>
+          <ul class="plano-list">
+            <li>Explorar velocidade nas transi&ccedil;&otilde;es</li>
+            <li>Sair r&aacute;pido da defesa pro ataque</li>
+            <li>Jogo direto pelos lados com os laterais</li>
+          </ul>
+        </div>
+        <div class="plano-block">
+          <h3>Instru&ccedil;&otilde;es</h3>
+          <div class="plano-instr">
+            <div><span class="k">Linha defensiva</span><span class="v">M&eacute;dia-baixa</span></div>
+            <div><span class="k">Press&atilde;o</span><span class="v">Seletiva</span></div>
+            <div><span class="k">1&ordm; volante</span><span class="v" id="plano-anchor"></span></div>
+            <div><span class="k">Lateral defensivo</span><span class="v" id="plano-def"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel resumo-panel">
+        <div class="panel-title" style="padding:0">For&ccedil;a por Linha</div>
+        <div class="cat-bars" id="cat-bars"></div>
+        <div class="resumo-tiles" id="resumo-tiles"></div>
+      </div>
+    </div>
+
+    <div class="radar-col" style="flex-direction:row; flex-wrap:wrap; margin-top:16px">
+      <div class="panel radar-panel" style="flex:1; min-width:280px">
+        <h3>An&aacute;lise Ofensiva</h3>
+        <div class="radar-svg-wrap" id="radar-off"></div>
+      </div>
+      <div class="panel radar-panel" style="flex:1; min-width:280px">
+        <h3>An&aacute;lise Defensiva</h3>
+        <div class="radar-svg-wrap" id="radar-def"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tab-panel" data-tab-panel="elenco" hidden>
+    <div class="panel roster-panel">
+      <div class="panel-title" style="padding:18px 18px 0">Elenco completo &middot; 42 cartas</div>
+      <p style="padding:4px 18px 0; margin:0; font-size:12px; color:var(--ink-3)">Agrupado pela posi&ccedil;&atilde;o nativa de cada carta, ordenado por Community Tier Ranking (desempate: mais votos naquele tier).</p>
+      <div class="roster-filters">
+        <div class="filter-group" id="line-filters">
+          <button class="filter-btn active" type="button" data-line="all">Todas</button>
+          <button class="filter-btn" type="button" data-line="defesa">Defesa</button>
+          <button class="filter-btn" type="button" data-line="meio">Meio-campo</button>
+          <button class="filter-btn" type="button" data-line="ataque">Ataque</button>
+        </div>
+        <select id="tier-filter" class="tier-select">
+          <option value="all">Todos os tiers</option>
+          <option value="S+">Somente S+</option>
+          <option value="S">Somente S</option>
+          <option value="A">Somente A</option>
+          <option value="B">Somente B</option>
+          <option value="C">Somente C</option>
+          <option value="D">Somente D</option>
+          <option value="E">Somente E</option>
+        </select>
+      </div>
+      <div id="roster-groups" style="padding:14px 18px 18px"></div>
+    </div>
+  </section>
+
+  <section class="tab-panel" data-tab-panel="votos" hidden>
+    <div class="section-head">
+      <span class="dot" style="background:var(--gold)"></span>
+      <h2 class="display">Votos por Carta</h2>
+      <span class="count">titulares e reservas &middot; distribui&ccedil;&atilde;o completa da Community Tier Ranking</span>
+    </div>
+    <div class="votes-toolbar">
+      <span class="pitch-toolbar-label">Ordenar por</span>
+      <button class="toggle-btn" type="button" data-sort="squad">Titulares primeiro</button>
+      <button class="toggle-btn" type="button" data-sort="votes">Mais votos</button>
+      <button class="toggle-btn" type="button" data-sort="tier">Tier mais alto</button>
+    </div>
+    <div class="cards" id="votes-cards"></div>
+  </section>
+
+  <section class="tab-panel" data-tab-panel="treino" hidden>
+    <div class="section-head">
+      <span class="dot" style="background:var(--gold)"></span>
+      <h2 class="display">Treinamento Ideal</h2>
+      <span class="count">titulares e reservas trein&aacute;veis &middot; build mais escolhida pela comunidade (Community Picks)</span>
+    </div>
+    <div class="cards" id="training-cards"></div>
+  </section>
+
+  <section class="tab-panel" data-tab-panel="skills" hidden>
+    <div class="section-head">
+      <span class="dot" style="background:var(--gold)"></span>
+      <h2 class="display">Habilidades Mais Votadas</h2>
+      <span class="count">titulares e reservas &middot; Community Picks de Habilidades Adicionais</span>
+    </div>
+    <div class="cards" id="skills-cards"></div>
+  </section>
+
+  <section class="tab-panel" data-tab-panel="comparar" hidden>
+    <div class="section-head">
+      <span class="dot" style="background:var(--gold)"></span>
+      <h2 class="display">Comparar Jogadores</h2>
+      <span class="count">3 op&ccedil;&otilde;es por posi&ccedil;&atilde;o por padr&atilde;o, adicione mais &middot; atributos j&aacute; com a proje&ccedil;&atilde;o de treino ideal &middot; todo o elenco, sem filtro de tier</span>
+    </div>
+    <div class="compare-jump">
+      <select id="compare-position-select" class="tier-select"></select>
+    </div>
+    <div id="compare-sections"></div>
+  </section>
+
+  <section class="panel bench-panel">
+    <div class="section-head" style="padding:18px 18px 0">
+      <span class="dot" style="background:var(--ink-3)"></span>
+      <h2 class="display" style="font-size:20px">Banco de Reserva</h2>
+      <span class="count">at&eacute; 2 op&ccedil;&otilde;es por posi&ccedil;&atilde;o (limitado pelo elenco/regras) &middot; detalhado</span>
+    </div>
+    <div class="drag-hint" style="padding:8px 18px 0">Clique no &#8644; ao lado de um jogador em N&atilde;o Relacionados pra substituir um reserva do mesmo grupo</div>
+    <div id="swap-hint" class="swap-hint" hidden style="margin:0 18px"></div>
+    <div id="bench-groups" style="padding:14px 18px 18px"></div>
+  </section>
+
+  <section class="panel module">
+    <h2>M&oacute;dulo de verifica&ccedil;&atilde;o de jogador</h2>
+    <p>Para descobrir se um jogador novo entraria neste time &mdash; e por qu&ecirc; &mdash; rode o script abaixo passando o link do efhub.com dele.</p>
+    <div class="codebox"><div><span class="cmt"># exemplo</span></div><div>python3 scripts/check_player.py https://efhub.com/players/&lt;id&gt;</div></div>
+    <p>Para atualizar o time inteiro depois de mexer no elenco: edite <code>players.txt</code>, rode <code>fetch_players.py</code> e depois <code>select_team.py</code>.</p>
+  </section>
+
+  <footer>Gerado a partir de data/best_team.json &middot; atributos e Community Tier Ranking extra&iacute;dos do efhub.com. *Overmax = proje&ccedil;&atilde;o estimada de treino (n&atilde;o &eacute; dado oficial). An&aacute;lise Ofensiva/Defensiva &eacute; uma aproxima&ccedil;&atilde;o a partir dos atributos, n&atilde;o um dado do jogo.</footer>
+</div>
+
+<script>
+const TEAM = __TEAM_JSON__;
+const PHOTOS = __PHOTOS_JSON__;
+
+// copia mutavel do time -- arrastar um reserva pro campo troca aqui (so
+// nessa visualizacao/sessao; nao recalcula as metricas agregadas do time,
+// que continuam vindo do best_team.json original).
+function deepClone(obj) { return JSON.parse(JSON.stringify(obj)); }
+
+// "1" = 4-2-2-2 (TEAM em si), "2" = 4-2-3-1 (TEAM.formation2). Duas
+// formacoes completas -- lineup/bench/excluded/team_summary proprios cada
+// uma, so roster/comparisons sao compartilhados (elenco inteiro nao muda).
+let ACTIVE_FORMATION = "1";
+function currentTeamData() {
+  return ACTIVE_FORMATION === "2" ? TEAM.formation2 : TEAM;
+}
+
+let LINEUP = deepClone(currentTeamData().lineup);
+let BENCH = deepClone(currentTeamData().bench);
+let EXCLUDED = deepClone(currentTeamData().excluded || []);
+let dragPayload = null;
+
+// elenco completo indexado por label, pro tooltip customizado buscar tier
+// e habilidades votadas sem precisar embutir HTML dentro de atributo.
+const PLAYER_BY_LABEL = {};
+(TEAM.roster || []).forEach(p => { PLAYER_BY_LABEL[p.label] = p; });
+
+const STAT_LABEL = {
+  offensiveAwareness: "Consc. Ofensiva", ballControl: "Controle", dribbling: "Drible",
+  tightPossession: "Posse s/ Pressão", lowPass: "Passe Rasteiro", loftedPass: "Passe Alto",
+  finishing: "Finalização", heading: "Cabeceio", setPieceTaking: "Bola Parada", curl: "Efeito",
+  speed: "Velocidade", acceleration: "Aceleração", kickingPower: "Pot. de Chute", jump: "Impulsão",
+  physicalContact: "Contato Físico", balance: "Equilíbrio", stamina: "Resistência",
+  defensiveAwareness: "Consc. Defensiva", ballWinning: "Desarme", trackingBack: "Recomposição",
+  aggression: "Agressividade", gkAwareness: "Reação (GK)", gkCatching: "Encaixe (GK)",
+  gkClearing: "Afastamento (GK)", gkReflexes: "Reflexos (GK)", gkReach: "Alcance (GK)",
+};
+
+const ROLE_TOP_STATS = {
+  GK: ["gkReflexes", "gkCatching", "gkClearing", "gkReach", "gkAwareness"],
+  CB: ["defensiveAwareness", "ballWinning", "speed", "heading", "physicalContact"],
+  FB: ["defensiveAwareness", "speed", "stamina", "lowPass", "dribbling"],
+  DMF: ["defensiveAwareness", "ballWinning", "lowPass", "stamina", "physicalContact"],
+  AMF: ["dribbling", "offensiveAwareness", "lowPass", "speed", "finishing"],
+  CF: ["finishing", "speed", "acceleration", "dribbling", "physicalContact"],
+  MLE: ["dribbling", "speed", "offensiveAwareness", "lowPass", "stamina"],
+  MLD: ["dribbling", "speed", "offensiveAwareness", "lowPass", "stamina"],
+};
+
+const GROUP_OF = {
+  GK: "goleiro", CB: "defesa", FB: "defesa", DMF: "meio", AMF: "ataque", CF: "ataque",
+  MLE: "ataque", MLD: "ataque",
+};
+const GROUP_LABEL = { defesa: "Defesa", meio: "Meio-Campo", ataque: "Ataque" };
+const POS_LABELS = {
+  GK: "GO", CB: "ZC", FB: "LAT", DMF: "VOL", AMF: "MAT", CF: "CA",
+  MLE: "MLE", MLD: "MLD",
+};
+
+let SHOW_OVERMAX = true;
+
+function initials(name) {
+  const parts = name.replace(/[^\p{L}\s.]/gu, "").split(/\s+/).filter(Boolean);
+  const last = parts[parts.length - 1] || "";
+  const first = parts[0] || "";
+  return ((first[0] || "") + (last[0] || "")).toUpperCase();
+}
+
+function photoSrc(label) {
+  const b64 = PHOTOS[label];
+  return b64 ? `data:image/png;base64,${b64}` : "";
+}
+
+function cssVar(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+function tierColors(tier) {
+  if (tier === "S+" || tier === "S") return { fg: "var(--tier-top)", bg: "var(--tier-top-soft)" };
+  if (tier === "A" || tier === "B") return { fg: "var(--g-ataque)", bg: "var(--g-ataque-soft)" };
+  if (tier === "C" || tier === "D" || tier === "E") return { fg: "var(--tier-low)", bg: "var(--tier-low-soft)" };
+  return { fg: "var(--ink-3)", bg: "var(--panel-3)" };
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+// lista de habilidades adicionais mais votadas em HTML (com barra de
+// votos), usada pelo tooltip customizado -- ver initTooltips().
+function skillsListHtml(p) {
+  const skills = p.community_skills || [];
+  if (!skills.length) return `<div class="tip-line">Sem habilidades adicionais votadas ainda.</div>`;
+  const max = Math.max(...skills.map(s => s.votes), 1);
+  const rows = skills.map((s, i) => `
+    <div class="tip-skill-row">
+      <div class="tip-skill-top">
+        <span class="tip-skill-rank">${i + 1}</span>
+        <span class="tip-skill-name">${escapeHtml(s.name)}</span>
+        <span class="tip-skill-votes">${s.votes}</span>
+      </div>
+      <div class="tip-skill-track"><div class="tip-skill-fill" style="width:${Math.round(100 * s.votes / max)}%"></div></div>
+    </div>
+  `).join("");
+  return `<div class="tip-title">Habilidades mais votadas</div>${rows}`;
+}
+
+function tierInfoText(p) {
+  return p.consensus_tier
+    ? `${p.consensus_tier_votes} votos em ${p.consensus_tier} (de ${p.tier_placements} no total)`
+    : "Ainda sem votos na Community Tier Ranking";
+}
+
+function isSuperSub(p) {
+  return (p.community_skills || []).some(s => s.name === "Super substituto");
+}
+
+// ---------------- overview ----------------
+function renderOverview() {
+  const t = currentTeamData().team_summary;
+  document.getElementById("ov-role-score").textContent = t.avg_role_score;
+  document.getElementById("ov-overall").textContent = "Overall médio " + t.avg_overall;
+  document.getElementById("team-grade").textContent = t.team_grade;
+
+  const fbDef = LINEUP.FB.find(p => p.role.includes("Defensivo"));
+  const dmfAnchor = LINEUP.DMF.find(p => p.role.includes("Âncora"));
+  const shortName = s => s.replace(/\s*\[[AS]\]\s*/, "");
+  document.getElementById("ov-lat-def").textContent = shortName(fbDef.label);
+  document.getElementById("ov-volante").textContent = shortName(dmfAnchor.label);
+  document.getElementById("plano-anchor").textContent = shortName(dmfAnchor.label);
+  document.getElementById("plano-def").textContent = shortName(fbDef.label) + " (" + fbDef.side + ")";
+
+  const tipList = t.next_to_leave || [];
+  document.getElementById("tip-next-leave").innerHTML = tipList.map(n => `
+    <a class="tip-box" href="${n.url}" target="_blank" rel="noopener noreferrer">
+      <span class="tip-body">${shortName(n.label)}</span>
+      <span class="tip-sub">nota ${n.role_score} · tier ${n.consensus_tier || "sem votos"}${n.consensus_tier ? ` (${n.consensus_tier_votes} votos)` : ""}</span>
+      <span class="tip-reason">${n.reason}</span>
+    </a>
+  `).join("");
+  document.getElementById("tip-next-leave-group").style.display = tipList.length ? "flex" : "none";
+
+  // ring: % titulares em posição natural
+  const pct = t.native_fit_pct;
+  const svg = document.getElementById("fit-ring");
+  const r = 46, cx = 56, cy = 56, circ = 2 * Math.PI * r;
+  const offset = circ * (1 - pct / 100);
+  svg.innerHTML = `
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--panel-3)" stroke-width="10" />
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--g-ataque)" stroke-width="10"
+      stroke-linecap="round" stroke-dasharray="${circ}" stroke-dashoffset="${offset}"
+      transform="rotate(-90 ${cx} ${cy})" />
+    <text x="${cx}" y="${cy - 2}" text-anchor="middle" font-family="Anton, sans-serif" font-size="26" fill="#fff">${pct}%</text>
+    <text x="${cx}" y="${cy + 16}" text-anchor="middle" font-size="9" fill="var(--ink-3)">titulares</text>
+  `;
+}
+
+function renderResumo() {
+  const t = currentTeamData().team_summary;
+  document.getElementById("resumo-tiles").innerHTML = [
+    { n: t.avg_speed, l: "Velocidade Média" },
+    { n: t.avg_acceleration, l: "Aceleração Média" },
+  ].map(x => `<div class="rtile"><div class="n tnum">${x.n}</div><div class="l">${x.l}</div></div>`).join("");
+
+  const catColor = { "Ataque": "var(--g-ataque)", "Meio-campo": "var(--g-meio)", "Defesa": "var(--g-defesa)", "Goleiro": "var(--g-goleiro)" };
+  document.getElementById("cat-bars").innerHTML = Object.entries(t.category_bars).map(([label, val]) => `
+    <div class="cat-row">
+      <div class="cat-label">${label}</div>
+      <div class="cat-track"><div class="cat-fill" style="width:${val}%; background:${catColor[label]}"></div></div>
+      <div class="cat-val tnum" style="color:${catColor[label]}">${val}</div>
+    </div>
+  `).join("");
+}
+
+// ---------------- radar ----------------
+function renderRadarChart(containerId, data, color) {
+  const axes = Object.keys(data);
+  const n = axes.length;
+  const size = 260, cx = size / 2, cy = size / 2 - 6, R = 84;
+  const angle = i => (Math.PI * 2 * i) / n - Math.PI / 2;
+  const pt = (i, frac) => [cx + Math.cos(angle(i)) * R * frac, cy + Math.sin(angle(i)) * R * frac];
+
+  let grid = "";
+  [0.33, 0.66, 1].forEach(frac => {
+    const pts = axes.map((_, i) => pt(i, frac).join(",")).join(" ");
+    grid += `<polygon points="${pts}" fill="none" stroke="var(--border)" stroke-width="1" />`;
+  });
+  axes.forEach((_, i) => {
+    const [x, y] = pt(i, 1);
+    grid += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--border)" stroke-width="1" />`;
+  });
+
+  const dataPts = axes.map((k, i) => pt(i, Math.max(0.06, data[k] / 99)).join(",")).join(" ");
+  const shape = `<polygon points="${dataPts}" fill="${color}" fill-opacity="0.28" stroke="${color}" stroke-width="2" />`;
+
+  let labels = "";
+  axes.forEach((k, i) => {
+    const [lx, ly] = pt(i, 1.28);
+    const anchor = Math.abs(Math.cos(angle(i))) < 0.3 ? "middle" : (Math.cos(angle(i)) > 0 ? "start" : "end");
+    labels += `<text x="${lx}" y="${ly}" text-anchor="${anchor}" class="radar-axis-label">${k}</text>`;
+    const [vx, vy] = pt(i, 1.28);
+    labels += `<text x="${vx}" y="${vy + 11}" text-anchor="${anchor}" class="radar-axis-value">${data[k]}</text>`;
+  });
+
+  document.getElementById(containerId).innerHTML = `
+    <svg viewBox="0 0 ${size} ${size - 10}">
+      ${grid}
+      ${shape}
+      ${labels}
+    </svg>
+  `;
+}
+
+// ---------------- pitch ----------------
+let pitchFormation = "ofensiva";
+
+// duas formas taticas do mesmo 4-2-2-2: na ofensiva os laterais sobem pra
+// linha dos volantes (sobreposição) e o volante box-to-box avança pro
+// meio, comprimindo o campo pra frente; na defensiva o bloco recua e fecha
+// junto da defesa, com os 2 CA subindo sozinhos como saída de contra-ataque.
+const FORMATION_LAYOUTS = {
+  // ofensiva: os 2 CA em cima, os 2 MAT abrem nas pontas dessa linha e o
+  // volante box-to-box (Caicedo) avança pro CENTRO da mesma linha dos MAT,
+  // formando um 4-2-1-3 na fase ofensiva (MAT-MLG-MAT), com o 1º volante
+  // segurando mais recuado.
+  ofensiva: {
+    CB: [{ x: 205, y: 500 }, { x: 395, y: 500 }],
+    FB: { LB: { x: 50, y: 500 }, RB: { x: 550, y: 500 } },
+    DMF_ANCHOR: { x: 300, y: 405 },
+    DMF_BOX: { x: 300, y: 240, posLabel: "MLG" },
+    AMF: [{ x: 150, y: 240 }, { x: 450, y: 240 }],
+    CF: [{ x: 225, y: 110 }, { x: 375, y: 110 }],
+  },
+  defensiva: {
+    CB: [{ x: 205, y: 500 }, { x: 395, y: 500 }],
+    FB: { LB: { x: 95, y: 500 }, RB: { x: 505, y: 500 } },
+    DMF_ANCHOR: { x: 235, y: 385 },
+    DMF_BOX: { x: 365, y: 385 },
+    AMF: [{ x: 145, y: 320 }, { x: 455, y: 320 }],
+    CF: [{ x: 220, y: 130 }, { x: 380, y: 130 }],
+  },
+  // formação 2 (4-2-3-1): mesma disposição pro ataque e pra defesa (não
+  // alterna) -- não são "2 volantes": o 1º volante (âncora) segura como
+  // VOL, o box-to-box joga mais avançado como MLG (meio-ligação, igual o
+  // rótulo já usado no box-to-box avançado da formação 1 ofensiva) --
+  // MLE/MLD abrindo os lados, MAT central logo atrás do CA sozinho.
+  "4-2-3-1": {
+    CB: [{ x: 205, y: 500 }, { x: 395, y: 500 }],
+    FB: { LB: { x: 95, y: 500 }, RB: { x: 505, y: 500 } },
+    DMF_ANCHOR: { x: 235, y: 420 },
+    DMF_BOX: { x: 365, y: 420, posLabel: "MLG" },
+    MLE: { x: 110, y: 290 },
+    AMF: { x: 300, y: 260 },
+    MLD: { x: 490, y: 290 },
+    CF: { x: 300, y: 110 },
+  },
+};
+
+function pitchNodes() {
+  const L = LINEUP;
+  const nodes = [];
+  // defensivo: se o elenco nao tiver jogador suficiente pra alguma vaga
+  // (ex.: so 1 zagueiro passa no filtro de tier/overmax), pula o slot em
+  // vez de empurrar um node sem jogador (que quebraria o render inteiro).
+  const push = (coords, player, group, groupIndex) => {
+    if (!player) return;
+    nodes.push({ ...coords, ...player, group, groupIndex });
+  };
+
+  if (ACTIVE_FORMATION === "2") {
+    const layout = FORMATION_LAYOUTS["4-2-3-1"];
+    if (L.GK[0]) push({ x: 300, y: 590 }, L.GK[0], "GK", 0);
+    push(layout.CB[0], L.CB[0], "CB", 0);
+    push(layout.CB[1], L.CB[1], "CB", 1);
+    L.FB.forEach((p, i) => push(layout.FB[p.side], p, "FB", i));
+    const dmfOrder = [...L.DMF].sort((a, b) => (a.role.includes("Âncora") ? -1 : 1) - (b.role.includes("Âncora") ? -1 : 1));
+    push(layout.DMF_ANCHOR, dmfOrder[0], "DMF", L.DMF.indexOf(dmfOrder[0]));
+    push(layout.DMF_BOX, dmfOrder[1], "DMF", L.DMF.indexOf(dmfOrder[1]));
+    push(layout.MLE, L.MLE[0], "MLE", 0);
+    push(layout.AMF, L.AMF[0], "AMF", 0);
+    push(layout.MLD, L.MLD[0], "MLD", 0);
+    push(layout.CF, L.CF[0], "CF", 0);
+    return nodes;
+  }
+
+  const layout = FORMATION_LAYOUTS[pitchFormation];
+  if (L.GK[0]) push({ x: 300, y: 590 }, L.GK[0], "GK", 0);
+  push(layout.CB[0], L.CB[0], "CB", 0);
+  push(layout.CB[1], L.CB[1], "CB", 1);
+  L.FB.forEach((p, i) => {
+    push(layout.FB[p.side], p, "FB", i);
+  });
+  const dmfOrder = [...L.DMF].sort((a, b) => (a.role.includes("Âncora") ? -1 : 1) - (b.role.includes("Âncora") ? -1 : 1));
+  push(layout.DMF_ANCHOR, dmfOrder[0], "DMF", L.DMF.indexOf(dmfOrder[0]));
+  push(layout.DMF_BOX, dmfOrder[1], "DMF", L.DMF.indexOf(dmfOrder[1]));
+  push(layout.AMF[0], L.AMF[0], "AMF", 0);
+  push(layout.AMF[1], L.AMF[1], "AMF", 1);
+  push(layout.CF[0], L.CF[0], "CF", 0);
+  push(layout.CF[1], L.CF[1], "CF", 1);
+  return nodes;
+}
+
+function renderPitch() {
+  const svg = document.getElementById("pitch");
+  const p1 = cssVar("--pitch-1");
+  const p2 = cssVar("--pitch-2");
+  const lineColor = cssVar("--pitch-line");
+
+  let markup = `
+    <defs>
+      <linearGradient id="turf" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${p1}" />
+        <stop offset="100%" stop-color="${p2}" />
+      </linearGradient>
+    </defs>
+    <rect x="0" y="0" width="600" height="660" fill="url(#turf)" />
+    <g stroke="${lineColor}" stroke-width="2" fill="none">
+      <rect x="16" y="16" width="568" height="628" rx="4" />
+      <line x1="16" y1="330" x2="584" y2="330" />
+      <circle cx="300" cy="330" r="56" />
+      <rect x="150" y="16" width="300" height="90" />
+      <rect x="220" y="16" width="160" height="35" />
+      <rect x="150" y="554" width="300" height="90" />
+      <rect x="220" y="609" width="160" height="35" />
+    </g>
+  `;
+
+  pitchNodes().forEach(n => {
+    const color = cssVar("--g-" + GROUP_OF[n.group]);
+    const shortName = n.label.replace(/\s*\[[AS]\]\s*/, "");
+    const w = 66, h = 46;
+    const src = photoSrc(n.label);
+    const showingMax = SHOW_OVERMAX && n.level_cap > 1;
+    const ratingVal = showingMax ? n.overmax : n.overall;
+    const tc = tierColors(n.consensus_tier);
+    const tierTxt = n.consensus_tier || "–";
+    markup += `
+      <a href="${n.url}" target="_blank" rel="noopener noreferrer" class="pitch-node" id="pnode-${n.group}-${n.groupIndex}" data-drop-group="${n.group}" data-drop-index="${n.groupIndex}">
+      <g>
+        <text x="${n.x}" y="${n.y - h / 2 - 8}" text-anchor="middle" font-size="10" font-weight="800" letter-spacing="1" fill="${color}">${n.posLabel || POS_LABELS[n.group]}</text>
+        <rect class="pitch-node-drop-ring" x="${n.x - w / 2 - 7}" y="${n.y - h / 2 - 7}" width="${w + 14}" height="${h + 14}" rx="12" fill="none" stroke="var(--gold)" stroke-width="3" opacity="0" />
+        <rect x="${n.x - w / 2 - 2}" y="${n.y - h / 2 - 2}" width="${w + 4}" height="${h + 4}" rx="9" fill="rgba(0,0,0,0.35)" />
+        ${src ? `<clipPath id="clip-${n.x}-${n.y}"><rect x="${n.x - w / 2}" y="${n.y - h / 2}" width="${w}" height="${h}" rx="7" /></clipPath>
+        <image href="${src}" x="${n.x - w / 2}" y="${n.y - h / 2}" width="${w}" height="${h}" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-${n.x}-${n.y})" />`
+        : `<rect x="${n.x - w / 2}" y="${n.y - h / 2}" width="${w}" height="${h}" rx="7" fill="${color}" />
+           <text x="${n.x}" y="${n.y + 5}" text-anchor="middle" font-size="15" font-weight="800" fill="#0a0e16">${initials(n.name)}</text>`}
+        <rect x="${n.x - w / 2}" y="${n.y - h / 2}" width="${w}" height="${h}" rx="7" fill="none" stroke="${showingMax ? "var(--gold)" : color}" stroke-width="2.5" />
+        <circle cx="${n.x + w / 2 - 3}" cy="${n.y - h / 2 - 3}" r="11" fill="${tc.fg}" stroke="#0a0e16" stroke-width="1.5">
+          <title>${n.consensus_tier ? `${n.consensus_tier_votes} votos em ${n.consensus_tier} (de ${n.tier_placements} no total)` : "Ainda sem votos na Community Tier Ranking"}</title>
+        </circle>
+        <text x="${n.x + w / 2 - 3}" y="${n.y - h / 2 + 1}" text-anchor="middle" font-size="9.5" font-weight="800" fill="#0a0e16">${tierTxt}</text>
+        <rect x="${n.x - 17}" y="${n.y + h / 2 - 2}" width="34" height="17" rx="8" fill="${showingMax ? "var(--gold)" : color}" />
+        <text x="${n.x}" y="${n.y + h / 2 + 10}" text-anchor="middle" font-family="Anton, sans-serif" font-size="11" fill="#0a0e16">${ratingVal}</text>
+        <text x="${n.x}" y="${n.y + h / 2 + 30}" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">${shortName}</text>
+        ${n.playing_style_pt ? `<text x="${n.x}" y="${n.y + h / 2 + 43}" text-anchor="middle" font-size="9.5" fill="${color}">${n.playing_style_pt}</text>` : ""}
+      </g>
+      </a>
+    `;
+  });
+
+  svg.innerHTML = markup;
+}
+
+// ---------------- cards ----------------
+function bestBenchFor(group, playerLabel) {
+  const bench = BENCH[group] || [];
+  return bench.find(b => b.label !== playerLabel) || bench[0] || null;
+}
+
+function playerCard(p, group) {
+  const groupClass = GROUP_OF[group] === "goleiro" ? "goleiro" : GROUP_OF[group];
+  const color = `var(--g-${groupClass})`;
+  const colorSoft = `var(--g-${groupClass}-soft)`;
+  const topStats = ROLE_TOP_STATS[group];
+  const bars = topStats.map(k => {
+    const v = p.stats[k];
+    return `
+      <div class="bar-row">
+        <div class="bar-label">${STAT_LABEL[k]}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${v}%; background:${color}"></div></div>
+        <div class="bar-val tnum">${v}</div>
+      </div>`;
+  }).join("");
+
+  const bench = bestBenchFor(group, p.label);
+  const compare = bench ? `
+    <div class="compare">
+      <span>vs. banco: ${bench.label} (${bench.role_score})</span>
+      <span class="delta tnum ${p.role_score >= bench.role_score ? "pos" : ""}">${p.role_score >= bench.role_score ? "+" : ""}${(p.role_score - bench.role_score).toFixed(1)}</span>
+    </div>` : "";
+
+  const fitTag = p.native_fit
+    ? `<span class="fit-native">posição natural</span>`
+    : `<span class="fit-secondary">posição secundária · fator ${p.familiarity_factor}</span>`;
+
+  const tc = tierColors(p.consensus_tier);
+  const tierBadge = p.consensus_tier
+    ? `<span class="tier-chip" style="background:${tc.bg}; color:${tc.fg}" data-tip="${p.consensus_tier_votes} votos em ${p.consensus_tier} (de ${p.tier_placements} no total)">${p.consensus_tier}</span>`
+    : `<span class="tier-chip" style="background:var(--panel-3); color:var(--ink-3)" data-tip="Ainda sem votos na Community Tier Ranking">—</span>`;
+
+  const trainingNote = p.level_cap > 1
+    ? `<span class="training-note" data-tip="Nível 1 (destreinado) até nível ${p.level_cap} · estimativa aplicada na pontuação, não é dado real do efhub">🔧 treinável (cap ${p.level_cap}) · proj. +${p.training_bonus}</span>`
+    : `<span class="training-note">🔒 nível máximo</span>`;
+
+  const src = photoSrc(p.label);
+  const avatarEl = src
+    ? `<img class="avatar" src="${src}" alt="${p.name}" style="border-color:${color}" data-tip-label="${p.label}" data-tip-kind="full" />`
+    : `<div class="avatar" style="background:${color}; display:flex; align-items:center; justify-content:center; font-weight:800; color:#0a0e16;" data-tip-label="${p.label}" data-tip-kind="full">${initials(p.name)}</div>`;
+
+  return `
+    <div class="card">
+      <div class="card-accent" style="background:${color}"></div>
+      <div class="card-body">
+        <div class="card-top">
+          ${avatarEl}
+          <div class="card-name-wrap">
+            <div class="card-name-row">
+              <div class="card-name">${p.name}</div>
+              ${tierBadge}
+            </div>
+            ${p.playing_style_pt ? `<div class="card-style">(${p.playing_style_pt})</div>` : ""}
+            <span class="card-role" style="background:${colorSoft}; color:${color}">${p.role}${p.side ? " · " + p.side : ""}</span>
+          </div>
+          <div class="card-ovr">
+            ${(() => {
+              const showingMax = SHOW_OVERMAX && p.level_cap > 1;
+              const primary = showingMax ? p.overmax : p.overall;
+              const secondary = showingMax
+                ? `<span class="ovr-max tnum">era ${p.overall}</span>`
+                : (p.level_cap > 1 ? `<span class="ovr-max tnum" data-tip="Overmax estimado (projeção de treino, não é dado oficial)">→ ${p.overmax}</span>` : "");
+              const label = showingMax ? "Overmax (proj.)*" : `Overall${p.level_cap > 1 ? " → Overmax*" : ""}`;
+              return `
+                <div class="ovr-row">
+                  <span class="n tnum" style="${showingMax ? "color:var(--gold)" : ""}">${primary}</span>
+                  ${secondary}
+                </div>
+                <div class="l">${label}</div>
+              `;
+            })()}
+          </div>
+        </div>
+        <div class="meta-line">
+          <span>${p.native_position} · ${p.playing_style_pt || "—"}</span>
+          <span>${fitTag}</span>
+        </div>
+        <div class="meta-line">${trainingNote}</div>
+        <div class="bars">${bars}</div>
+        <div class="meta-line"><span>Nota do papel</span><span class="tnum" style="font-weight:800; color:${color}">${p.role_score}</span></div>
+        ${compare}
+        <a class="card-link" href="${p.url}" target="_blank" rel="noopener noreferrer">Ver carta no efhub ↗</a>
+      </div>
+    </div>
+  `;
+}
+
+function renderSections() {
+  const L = LINEUP;
+  const sectionDefs = ACTIVE_FORMATION === "2"
+    ? [
+        { key: "defesa", label: "Defesa", groups: [["GK", L.GK], ["CB", L.CB], ["FB", L.FB]] },
+        { key: "meio", label: "Meio-Campo", groups: [["DMF", L.DMF]] },
+        { key: "ataque", label: "Ataque", groups: [["MLE", L.MLE], ["AMF", L.AMF], ["MLD", L.MLD], ["CF", L.CF]] },
+      ]
+    : [
+        { key: "defesa", label: "Defesa", groups: [["GK", L.GK], ["CB", L.CB], ["FB", L.FB]] },
+        { key: "meio", label: "Meio-Campo", groups: [["DMF", L.DMF]] },
+        { key: "ataque", label: "Ataque", groups: [["AMF", L.AMF], ["CF", L.CF]] },
+      ];
+
+  const html = sectionDefs.map(sec => {
+    const players = sec.groups.flatMap(([, ps]) => ps);
+    const cards = sec.groups.flatMap(([group, ps]) => ps.map(p => playerCard(p, group))).join("");
+    return `
+      <section>
+        <div class="section-head">
+          <span class="dot" style="background:var(--g-${sec.key})"></span>
+          <h2 class="display">${sec.label}</h2>
+          <span class="count">${players.length} titulares</span>
+        </div>
+        <div class="cards">${cards}</div>
+      </section>
+    `;
+  }).join("");
+
+  document.getElementById("sections").innerHTML = html;
+}
+
+function benchCard(p, group, index) {
+  const color = `var(--g-${GROUP_OF[group]})`;
+  const tc = tierColors(p.consensus_tier);
+  const tierBadge = p.consensus_tier
+    ? `<span class="tier-chip" style="background:${tc.bg}; color:${tc.fg}" data-tip="${p.consensus_tier_votes} votos em ${p.consensus_tier} (de ${p.tier_placements} no total)">${p.consensus_tier}</span>`
+    : `<span class="tier-chip" style="background:var(--panel-3); color:var(--ink-3)">—</span>`;
+  const ovrTxt = p.level_cap > 1 ? `${p.overall} → ${p.overmax}` : `${p.overall}`;
+  const src = photoSrc(p.label);
+  const avatarEl = src
+    ? `<img class="bench-avatar" src="${src}" alt="${p.name}" style="border-color:${color}" data-tip-label="${p.label}" data-tip-kind="full" />`
+    : `<div class="bench-avatar" style="background:${color}; display:flex; align-items:center; justify-content:center; font-weight:800; color:#0a0e16; font-size:12px;" data-tip-label="${p.label}" data-tip-kind="full">${initials(p.name)}</div>`;
+  const subMark = isSuperSub(p) ? `<span class="super-sub-mark" data-tip="Super Substituto entre as habilidades mais votadas pela comunidade">*</span>` : "";
+  return `
+    <a class="bench-card" href="${p.url}" target="_blank" rel="noopener noreferrer" draggable="true"
+       data-drag-label="${p.label}" data-drop-group="${group}" data-drop-index="${index}">
+      ${avatarEl}
+      <div class="bench-info">
+        <div class="bench-name">${p.name}${subMark} ${tierBadge}</div>
+        <div class="bench-meta">${p.native_position} · Overall ${ovrTxt}</div>
+      </div>
+      <div class="bench-score tnum">${p.role_score}</div>
+    </a>
+  `;
+}
+
+const BENCH_LABELS_F1 = { GK: "Goleiro", CB: "Zagueiro", FB: "Lateral", DMF: "Volante", AMF: "MAT", CF: "CA" };
+const BENCH_LABELS_F2 = {
+  GK: "Goleiro", CB: "Zagueiro", FB: "Lateral", DMF: "Volante",
+  MLE: "Meia-Lateral Esq.", AMF: "MAT", MLD: "Meia-Lateral Dir.", CF: "CA",
+};
+const BENCH_ORDER_F1 = ["GK", "CB", "FB", "DMF", "AMF", "CF"];
+const BENCH_ORDER_F2 = ["GK", "CB", "FB", "DMF", "MLE", "AMF", "MLD", "CF"];
+
+function renderBench() {
+  const labels = ACTIVE_FORMATION === "2" ? BENCH_LABELS_F2 : BENCH_LABELS_F1;
+  const order = ACTIVE_FORMATION === "2" ? BENCH_ORDER_F2 : BENCH_ORDER_F1;
+  const html = order.map(group => {
+    const players = BENCH[group] || [];
+    if (!players.length) return "";
+    return `
+      <div class="bench-group">
+        <div class="bench-group-label">${labels[group]}</div>
+        <div class="bench-row">${players.map((p, i) => benchCard(p, group, i)).join("")}</div>
+      </div>
+    `;
+  }).join("");
+  document.getElementById("bench-groups").innerHTML = html;
+}
+
+function renderExcluded() {
+  const labels = POS_LABELS;
+  const list = [...EXCLUDED].sort((a, b) => b.overmax - a.overmax);
+  document.getElementById("side-excluded-count").textContent = list.length;
+  const rows = list.map(p => {
+    const tc = tierColors(p.consensus_tier);
+    const tierTitle = p.consensus_tier
+      ? `${p.consensus_tier_votes} votos em ${p.consensus_tier} (de ${p.tier_placements} no total)`
+      : "Ainda sem votos na Community Tier Ranking";
+    const reasonTxt = p.excluded_reason ? ` · ${p.excluded_reason}` : "";
+    const ovrTxt = p.level_cap > 1 ? `${p.overall}→${p.overmax}` : `${p.overall}`;
+    return `
+      <div class="ex-row" data-url="${p.url}" data-tip="${p.name} · ${tierTitle}${reasonTxt}">
+        <span class="tier-chip" style="background:${tc.bg}; color:${tc.fg}">${p.consensus_tier || "—"}</span>
+        <span class="ex-name">${p.name}</span>
+        <span class="ex-meta">${labels[p.best_group]}${reasonTxt}</span>
+        <span class="ex-score tnum">${ovrTxt}</span>
+        <button class="ex-swap-btn" type="button" data-label="${p.label}" data-best-group="${p.best_group}"
+                data-tip="Substituir um reserva de ${labels[p.best_group]} por ${p.name}">⇄</button>
+      </div>
+    `;
+  }).join("");
+  document.getElementById("side-excluded-list").innerHTML = `<div class="ex-list">${rows}</div>`;
+}
+
+// ---------------- sidebar reservas (compacto) ----------------
+function collectSquadUnique() {
+  const order = ACTIVE_FORMATION === "2" ? BENCH_ORDER_F2 : BENCH_ORDER_F1;
+  const seen = new Map();
+  order.forEach(group => {
+    (LINEUP[group] || []).forEach(p => {
+      if (!seen.has(p.label)) seen.set(p.label, { ...p, group, squad: "Titular" });
+    });
+  });
+  order.forEach(group => {
+    (BENCH[group] || []).forEach(p => {
+      if (!seen.has(p.label)) seen.set(p.label, { ...p, group, squad: "Reserva" });
+    });
+  });
+  return [...seen.values()];
+}
+
+const TIER_BAR_ORDER = ["S+", "S", "A", "B", "C", "D", "E"];
+const TIER_BAR_COLOR = {
+  "S+": "#f0c419", "S": "#d9a520", "A": "#34d399", "B": "#22b285",
+  "C": "#5b8fd6", "D": "#e07a4a", "E": "#e8657a",
+};
+
+function votesCard(p) {
+  const color = `var(--g-${GROUP_OF[p.group] === "goleiro" ? "goleiro" : GROUP_OF[p.group]})`;
+  const src = photoSrc(p.label);
+  const avatarEl = src
+    ? `<img class="avatar" src="${src}" alt="${p.name}" style="border-color:${color}" data-tip-label="${p.label}" data-tip-kind="full" />`
+    : `<div class="avatar" style="background:${color}; display:flex; align-items:center; justify-content:center; font-weight:800; color:#0a0e16;" data-tip-label="${p.label}" data-tip-kind="full">${initials(p.name)}</div>`;
+  const total = p.tier_placements || 0;
+  const counts = p.tier_counts || {};
+  const maxCount = Math.max(1, ...TIER_BAR_ORDER.map(t => counts[t] || 0));
+  const rows = TIER_BAR_ORDER.map(t => {
+    const c = counts[t] || 0;
+    const pct = maxCount ? Math.round((c / maxCount) * 100) : 0;
+    return `
+      <div class="vote-row">
+        <span class="vote-tier-label" style="color:${TIER_BAR_COLOR[t]}">${t}</span>
+        <div class="vote-track"><div class="vote-fill" style="width:${pct}%; background:${TIER_BAR_COLOR[t]}"></div></div>
+        <span class="vote-count">${c}</span>
+      </div>`;
+  }).join("");
+  return `
+    <div class="card">
+      <div class="card-accent" style="background:${color}"></div>
+      <div class="card-body">
+        <div class="votes-card-head">
+          ${avatarEl}
+          <div class="card-name-wrap">
+            <div class="card-name">${p.name}</div>
+            <span class="card-role" style="background:var(--g-${GROUP_OF[p.group] === "goleiro" ? "goleiro" : GROUP_OF[p.group]}-soft); color:${color}">${p.squad} · ${p.role}</span>
+          </div>
+        </div>
+        <div class="votes-total">Community Tier Ranking &middot; ${total} voto${total === 1 ? "" : "s"} no total</div>
+        ${rows}
+        <a class="card-link" href="${p.url}" target="_blank" rel="noopener noreferrer" style="margin-top:10px">Ver carta no efhub ↗</a>
+      </div>
+    </div>
+  `;
+}
+
+const TIER_RANK = { "S+": 7, "S": 6, "A": 5, "B": 4, "C": 3, "D": 2, "E": 1 };
+let votesSortBy = "squad";
+
+function renderVotes() {
+  let squad = collectSquadUnique();
+  if (votesSortBy === "votes") {
+    squad = [...squad].sort((a, b) => (b.tier_placements || 0) - (a.tier_placements || 0));
+  } else if (votesSortBy === "tier") {
+    squad = [...squad].sort((a, b) =>
+      (TIER_RANK[b.consensus_tier] || 0) - (TIER_RANK[a.consensus_tier] || 0)
+      || (b.tier_placements || 0) - (a.tier_placements || 0));
+  } else {
+    squad = [...squad].sort((a, b) => (a.squad === b.squad ? 0 : a.squad === "Titular" ? -1 : 1));
+  }
+  document.getElementById("votes-cards").innerHTML = squad.map(votesCard).join("");
+}
+
+function setupVotesSort() {
+  const buttons = document.querySelectorAll(".votes-toolbar .toggle-btn");
+  buttons.forEach(btn => {
+    if (btn.dataset.sort === "squad") btn.classList.add("active");
+    btn.addEventListener("click", () => {
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      votesSortBy = btn.dataset.sort;
+      renderVotes();
+    });
+  });
+}
+
+function trainingCard(p) {
+  const color = `var(--g-${GROUP_OF[p.group] === "goleiro" ? "goleiro" : GROUP_OF[p.group]})`;
+  const src = photoSrc(p.label);
+  const avatarEl = src
+    ? `<img class="avatar" src="${src}" alt="${p.name}" style="border-color:${color}" data-tip-label="${p.label}" data-tip-kind="full" />`
+    : `<div class="avatar" style="background:${color}; display:flex; align-items:center; justify-content:center; font-weight:800; color:#0a0e16;" data-tip-label="${p.label}" data-tip-kind="full">${initials(p.name)}</div>`;
+  const build = p.community_training;
+  const body = build
+    ? `
+      <div class="train-ovr-row">
+        <span class="n tnum" style="color:${color}; font-family:'Anton',sans-serif; font-size:22px">${p.overall}</span>
+        <span class="train-ovr-arrow">→</span>
+        <span class="train-ovr-new tnum">${build.overall}</span>
+      </div>
+      <div class="train-votes">build de ${build.votes} pessoa${build.votes === 1 ? "" : "s"} da comunidade</div>
+      <div class="train-points">
+        ${Object.entries(build.points).map(([k, v]) => `
+          <div class="train-chip">
+            <span class="k">${TRAINING_CATEGORY_PT[k] || k}</span>
+            <span class="v tnum">${v}</span>
+          </div>
+        `).join("")}
+      </div>
+    `
+    : `<div class="train-empty">Ainda sem builds da comunidade suficientes pra essa carta.</div>`;
+  return `
+    <div class="card">
+      <div class="card-accent" style="background:${color}"></div>
+      <div class="card-body">
+        <div class="votes-card-head">
+          ${avatarEl}
+          <div class="card-name-wrap">
+            <div class="card-name">${p.name}</div>
+            <span class="card-role" style="background:var(--g-${GROUP_OF[p.group] === "goleiro" ? "goleiro" : GROUP_OF[p.group]}-soft); color:${color}">${p.squad} · nível 1 → cap ${p.level_cap}</span>
+          </div>
+        </div>
+        ${body}
+        <a class="card-link" href="${p.url}" target="_blank" rel="noopener noreferrer" style="margin-top:10px">Ver carta no efhub ↗</a>
+      </div>
+    </div>
+  `;
+}
+
+const TRAINING_CATEGORY_PT = {
+  shooting: "Tiro", passing: "Passe", dribbling: "Drible", dexterity: "Destreza",
+  lowerBodyStrength: "Força Perna", aerialStrength: "Força Aérea", defending: "Defesa",
+  gk1: "GO 1", gk2: "GO 2", gk3: "GO 3",
+};
+
+function renderTraining() {
+  const trainable = collectSquadUnique().filter(p => p.level_cap > 1);
+  document.getElementById("training-cards").innerHTML = trainable.length
+    ? trainable.map(trainingCard).join("")
+    : `<div class="roster-empty">Nenhuma carta trein&aacute;vel entre titulares e reservas.</div>`;
+}
+
+function skillsCard(p) {
+  const color = `var(--g-${GROUP_OF[p.group] === "goleiro" ? "goleiro" : GROUP_OF[p.group]})`;
+  const src = photoSrc(p.label);
+  const avatarEl = src
+    ? `<img class="avatar" src="${src}" alt="${p.name}" style="border-color:${color}" />`
+    : `<div class="avatar" style="background:${color}; display:flex; align-items:center; justify-content:center; font-weight:800; color:#0a0e16;">${initials(p.name)}</div>`;
+  const skills = p.community_skills || [];
+  const maxVotes = Math.max(1, ...skills.map(s => s.votes));
+  const rows = skills.length
+    ? skills.map((s, i) => `
+      <div class="skill-row">
+        <span class="skill-rank">${i + 1}</span>
+        <span class="skill-name">${s.name}</span>
+        <div class="skill-bar-track"><div class="skill-bar-fill" style="width:${Math.round(s.votes / maxVotes * 100)}%"></div></div>
+        <span class="skill-votes tnum">${s.votes}</span>
+      </div>
+    `).join("")
+    : `<div class="train-empty">Ainda sem builds da comunidade com habilidades registradas.</div>`;
+  return `
+    <div class="card">
+      <div class="card-accent" style="background:${color}"></div>
+      <div class="card-body">
+        <div class="votes-card-head">
+          ${avatarEl}
+          <div class="card-name-wrap">
+            <div class="card-name">${p.name}</div>
+            <span class="card-role" style="background:var(--g-${GROUP_OF[p.group] === "goleiro" ? "goleiro" : GROUP_OF[p.group]}-soft); color:${color}">${p.squad} · ${p.role}</span>
+          </div>
+        </div>
+        <div class="skills-total">Habilidades adicionais mais escolhidas pela comunidade (Community Picks)</div>
+        ${rows}
+        <a class="card-link" href="${p.url}" target="_blank" rel="noopener noreferrer" style="margin-top:10px">Ver carta no efhub ↗</a>
+      </div>
+    </div>
+  `;
+}
+
+function renderSkills() {
+  const squad = collectSquadUnique();
+  document.getElementById("skills-cards").innerHTML = squad.map(skillsCard).join("");
+}
+
+// ---------------- comparar jogadores ----------------
+const COMPARE_ORDER = ["GK", "CB", "LB", "RB", "VOL", "MLG", "LMF", "AMF", "RMF", "CF"];
+const COMPARE_LABEL = {
+  GK: "Goleiro (GO)", CB: "Zagueiro (ZC)", LB: "Lateral Esquerdo (LE)",
+  RB: "Lateral Direito (LD)", VOL: "1º Volante (VOL)", MLG: "Box-to-Box (MLG)",
+  AMF: "Meia-Atacante (MAT)", CF: "Centroavante (CA)",
+  LMF: "Meia-Lateral Esquerdo (MLE)", RMF: "Meia-Lateral Direito (MLD)",
+};
+const COMPARE_GK_CATEGORIES = [
+  { label: "Goleiro", keys: ["gkReflexes", "gkCatching", "gkClearing", "gkReach", "gkAwareness"] },
+];
+const COMPARE_OUTFIELD_CATEGORIES = [
+  { label: "Ofensivo", keys: ["offensiveAwareness", "finishing", "kickingPower", "setPieceTaking", "curl", "heading"] },
+  { label: "Drible & Posse", keys: ["dribbling", "ballControl", "tightPossession", "balance"] },
+  { label: "Passe", keys: ["lowPass", "loftedPass"] },
+  { label: "Físico", keys: ["speed", "acceleration", "jump", "physicalContact", "stamina"] },
+  { label: "Defensivo", keys: ["defensiveAwareness", "ballWinning", "trackingBack", "aggression"] },
+];
+
+// quem esta sendo comparado em cada posicao agora (array de labels) -- o
+// usuario pode adicionar/remover livremente, comeca com os 3 melhores por
+// padrao mas o resto do elenco elegivel fica disponivel pra adicionar.
+const COMPARE_DEFAULT_COUNT = 3;
+let COMPARE_VISIBLE = {};
+
+function comparePlayerHead(p, posKey, removable) {
+  const src = photoSrc(p.label);
+  const avatar = src
+    ? `<img class="compare-player-avatar" src="${src}" alt="${p.name}" data-tip-label="${p.label}" data-tip-kind="full" />`
+    : `<div class="compare-player-avatar" style="background:var(--panel-3); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:11px;" data-tip-label="${p.label}" data-tip-kind="full">${initials(p.name)}</div>`;
+  const fit = p.native_fit
+    ? `<span class="compare-fit-native">posição natural</span>`
+    : `<span class="compare-fit-secondary">secundária ×${p.familiarity_factor}</span>`;
+  const ovrTxt = p.level_cap > 1 ? `${p.overall}→${p.overmax}` : `${p.overall}`;
+  const styleTxt = p.playing_style_pt ? `<span>${p.playing_style_pt}</span>` : "";
+  const removeBtn = removable
+    ? `<button class="compare-remove-btn" type="button" data-pos="${posKey}" data-label="${p.label}" data-tip="Remover da comparação">×</button>`
+    : "";
+  return `
+    <div class="compare-player-head">
+      <div class="compare-player-top">
+        ${avatar}
+        <div style="min-width:0; flex:1">
+          <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="compare-player-name" style="display:block; color:#fff; text-decoration:none">${p.name}</a>
+          <div class="compare-player-meta">${fit}</div>
+        </div>
+        <div class="compare-player-ovr tnum">${ovrTxt}</div>
+        ${removeBtn}
+      </div>
+      <div class="compare-player-meta">${styleTxt}${p.consensus_tier ? `<span>· tier ${p.consensus_tier}</span>` : ""}</div>
+    </div>
+  `;
+}
+
+function compareSection(posKey) {
+  const all = (TEAM.comparisons || {})[posKey] || [];
+  const label = COMPARE_LABEL[posKey];
+  if (!all.length) {
+    return `
+      <div class="compare-section" id="compare-${posKey}">
+        <div class="compare-head"><h3>${label}</h3></div>
+        <div class="compare-empty">Nenhum jogador do elenco joga nessa posição ainda.</div>
+      </div>
+    `;
+  }
+
+  const byLabel = new Map(all.map(p => [p.label, p]));
+  const visibleLabels = COMPARE_VISIBLE[posKey] || [];
+  const players = visibleLabels.map(l => byLabel.get(l)).filter(Boolean);
+  const remaining = all.filter(p => !visibleLabels.includes(p.label));
+  const n = players.length;
+
+  const addControl = remaining.length
+    ? `
+      <select class="tier-select compare-add-select" data-pos="${posKey}">
+        <option value="">+ Adicionar jogador (${remaining.length})</option>
+        ${remaining.map(p => `<option value="${p.label}">${p.name} — ${p.overmax}</option>`).join("")}
+      </select>
+    `
+    : `<span class="compare-add-empty">Todo o elenco elegível já está na comparação</span>`;
+
+  const head = `
+    <div class="compare-head">
+      <h3>${label}</h3>
+      <span class="count">${n} de ${all.length} op&ccedil;${all.length === 1 ? "ão" : "ões"}</span>
+      ${addControl}
+    </div>
+  `;
+
+  if (!n) {
+    return `<div class="compare-section" id="compare-${posKey}">${head}<div class="compare-empty">Adicione jogadores acima pra comparar.</div></div>`;
+  }
+
+  const categories = posKey === "GK" ? COMPARE_GK_CATEGORIES : COMPARE_OUTFIELD_CATEGORIES;
+  const headRow = `
+    <div class="compare-corner">Atributo</div>
+    ${players.map(p => comparePlayerHead(p, posKey, n > 1)).join("")}
+  `;
+
+  const bodyRows = categories.map(cat => {
+    const catRow = `<div class="compare-cat-label">${cat.label}</div>`;
+    const statRows = cat.keys.map(key => {
+      const values = players.map(p => p.stats[key] ?? 0);
+      const max = Math.max(...values);
+      const cells = players.map(p => {
+        const v = p.stats[key] ?? 0;
+        const isBest = v === max && max > 0;
+        return `
+          <div class="compare-cell${isBest ? " best" : ""}">
+            <span class="v">${v}</span>
+            <div class="compare-cell-track"><div class="compare-cell-fill" style="width:${Math.min(100, v)}%"></div></div>
+          </div>
+        `;
+      }).join("");
+      return `<div class="compare-row-label">${STAT_LABEL[key] || key}</div>${cells}`;
+    }).join("");
+    return catRow + statRows;
+  }).join("");
+
+  return `
+    <div class="compare-section" id="compare-${posKey}">
+      ${head}
+      <div class="compare-table-wrap">
+        <div class="compare-table" style="grid-template-columns: 150px repeat(${n}, minmax(150px, 1fr))">
+          ${headRow}
+          ${bodyRows}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function refreshCompare() {
+  const activeKey = document.getElementById("compare-position-select").value;
+  document.getElementById("compare-sections").innerHTML = COMPARE_ORDER.map(compareSection).join("");
+  document.querySelectorAll(".compare-section").forEach(el => {
+    el.hidden = el.id !== `compare-${activeKey}`;
+  });
+}
+
+function renderComparisons() {
+  const select = document.getElementById("compare-position-select");
+  select.innerHTML = COMPARE_ORDER.map(k => `<option value="${k}">${COMPARE_LABEL[k]}</option>`).join("");
+
+  COMPARE_ORDER.forEach(k => {
+    const all = (TEAM.comparisons || {})[k] || [];
+    COMPARE_VISIBLE[k] = all.slice(0, COMPARE_DEFAULT_COUNT).map(p => p.label);
+  });
+
+  refreshCompare();
+  select.addEventListener("change", refreshCompare);
+
+  const sectionsEl = document.getElementById("compare-sections");
+  sectionsEl.addEventListener("change", e => {
+    const sel = e.target.closest(".compare-add-select");
+    if (!sel || !sel.value) return;
+    const pos = sel.dataset.pos;
+    COMPARE_VISIBLE[pos] = [...(COMPARE_VISIBLE[pos] || []), sel.value];
+    refreshCompare();
+  });
+  sectionsEl.addEventListener("click", e => {
+    const btn = e.target.closest(".compare-remove-btn");
+    if (!btn) return;
+    const pos = btn.dataset.pos;
+    COMPARE_VISIBLE[pos] = (COMPARE_VISIBLE[pos] || []).filter(l => l !== btn.dataset.label);
+    refreshCompare();
+  });
+}
+
+function collectBenchUnique() {
+  const order = ACTIVE_FORMATION === "2" ? BENCH_ORDER_F2 : BENCH_ORDER_F1;
+  const seen = new Map();
+  order.forEach(group => {
+    (BENCH[group] || []).forEach(p => {
+      if (!seen.has(p.label)) seen.set(p.label, { ...p, group });
+    });
+  });
+  return [...seen.values()].sort((a, b) => b.role_score - a.role_score);
+}
+
+function sideCard(p, posLabel) {
+  const src = photoSrc(p.label);
+  const img = src
+    ? `<img class="side-card-img" src="${src}" alt="${p.name}" />`
+    : `<div class="side-card-img" style="background:var(--panel-3)"></div>`;
+  const tc = tierColors(p.consensus_tier);
+  const tierTitle = p.consensus_tier
+    ? `${p.consensus_tier_votes} votos em ${p.consensus_tier} (de ${p.tier_placements} no total)`
+    : "Ainda sem votos na Community Tier Ranking";
+  const tierEl = `<span class="side-card-tier" style="background:${tc.fg}" data-tip="${tierTitle}">${p.consensus_tier || "–"}</span>`;
+  const subMark = isSuperSub(p) ? `<span class="super-sub-mark" data-tip="Super Substituto entre as habilidades mais votadas pela comunidade">*</span>` : "";
+  return `
+    <a class="side-card" href="${p.url}" target="_blank" rel="noopener noreferrer" data-tip-label="${p.label}" data-tip-kind="full" draggable="true" data-drag-label="${p.label}">
+      <div class="side-card-img-wrap">
+        ${img}
+        <span class="side-card-pos">${posLabel}</span>
+        ${tierEl}
+      </div>
+      <span class="side-card-ovr tnum">${p.overall}</span>
+      <span class="side-card-name">${p.name.split(" ").slice(-1)[0]}${subMark}</span>
+    </a>
+  `;
+}
+
+function renderSideBench() {
+  const unique = collectBenchUnique();
+  document.getElementById("side-bench-count").textContent = unique.length;
+  document.getElementById("side-bench-grid").innerHTML = unique.map(p => sideCard(p, POS_LABELS[p.group])).join("");
+}
+
+// ---------------- elenco por posição ----------------
+const ROSTER_POS_ORDER = ["GK", "CB", "LB", "RB", "DMF", "CMF", "AMF", "LMF", "RMF", "LWF", "RWF", "SS", "CF"];
+const ROSTER_POS_LABEL = {
+  GK: "Goleiro", CB: "Zagueiro", LB: "Lateral-Esquerdo", RB: "Lateral-Direito",
+  DMF: "Volante", CMF: "Meio-Campo", AMF: "Meia-Atacante",
+  LMF: "Meia-Esquerda", RMF: "Meia-Direita", LWF: "Ponta-Esquerda", RWF: "Ponta-Direita",
+  SS: "Segundo Atacante", CF: "Centroavante",
+};
+const ROSTER_LINE_OF = {
+  GK: "defesa", CB: "defesa", LB: "defesa", RB: "defesa",
+  DMF: "meio", CMF: "meio",
+  AMF: "ataque", LMF: "ataque", RMF: "ataque", LWF: "ataque", RWF: "ataque", SS: "ataque", CF: "ataque",
+};
+
+let rosterLineFilter = "all";
+let rosterTierFilter = "all";
+
+function rosterRow(p) {
+  const src = photoSrc(p.label);
+  const img = src
+    ? `<img class="roster-img" src="${src}" alt="${p.name}" />`
+    : `<div class="roster-img" style="background:var(--panel-3)"></div>`;
+  const tc = tierColors(p.consensus_tier);
+  const tierBadge = p.consensus_tier
+    ? `<span class="tier-chip" style="background:${tc.bg}; color:${tc.fg}" data-tip="${p.consensus_tier_votes} votos em ${p.consensus_tier} (de ${p.tier_placements} no total)">${p.consensus_tier}</span>`
+    : `<span class="tier-chip" style="background:var(--panel-3); color:var(--ink-3)" data-tip="Ainda sem votos na Community Tier Ranking">—</span>`;
+  const style = p.playing_style_pt || p.playing_style_defensive_pt || "—";
+  const ovrTxt = p.level_cap > 1 ? `${p.overall}<span class="ovr-max tnum" style="margin-left:3px">→${p.overmax}</span>` : `${p.overall}`;
+  return `
+    <a class="roster-row" href="${p.url}" target="_blank" rel="noopener noreferrer" data-tip-label="${p.label}" data-tip-kind="full">
+      ${img}
+      <div class="roster-name-wrap">
+        <div class="roster-name">${p.name}</div>
+        <div class="roster-style">${style}</div>
+      </div>
+      ${tierBadge}
+      <div class="roster-ovr-wrap">
+        <div class="roster-ovr tnum">${ovrTxt}</div>
+        <div class="roster-ovr-l">Overall</div>
+      </div>
+    </a>
+  `;
+}
+
+function renderRoster() {
+  let players = TEAM.roster || [];
+  if (rosterLineFilter !== "all") {
+    players = players.filter(p => ROSTER_LINE_OF[p.native_position] === rosterLineFilter);
+  }
+  if (rosterTierFilter !== "all") {
+    players = players.filter(p => p.consensus_tier === rosterTierFilter);
+  }
+
+  const groups = {};
+  players.forEach(p => {
+    (groups[p.native_position] = groups[p.native_position] || []).push(p);
+  });
+  const activeGroups = ROSTER_POS_ORDER.filter(pos => groups[pos]);
+  const html = activeGroups.length
+    ? activeGroups.map(pos => `
+      <div class="roster-group">
+        <div class="roster-group-label">${pos} — ${ROSTER_POS_LABEL[pos]} <span class="n">(${groups[pos].length})</span></div>
+        ${groups[pos].map(rosterRow).join("")}
+      </div>
+    `).join("")
+    : `<div class="roster-empty">Nenhum jogador com esses filtros.</div>`;
+  document.getElementById("roster-groups").innerHTML = html;
+}
+
+function setupRosterFilters() {
+  const lineButtons = document.querySelectorAll("#line-filters .filter-btn");
+  lineButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      lineButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      rosterLineFilter = btn.dataset.line;
+      renderRoster();
+    });
+  });
+  document.getElementById("tier-filter").addEventListener("change", (e) => {
+    rosterTierFilter = e.target.value;
+    renderRoster();
+  });
+}
+
+function renderAll() {
+  renderPitch();
+  renderSections();
+}
+
+function renderAfterSubstitution() {
+  renderOverview();
+  renderPitch();
+  renderSections();
+  renderBench();
+  renderSideBench();
+  renderExcluded();
+  renderVotes();
+  renderTraining();
+  renderSkills();
+  updateArmedUI();
+}
+
+// troca um reserva pelo titular de um slot (grupo + indice dentro do grupo
+// no LINEUP). So funciona se o reserva ja for elegivel pra esse grupo
+// especifico (aparece em BENCH[targetGroup]) -- evita escalar, por ex., um
+// centroavante no lugar de um zagueiro.
+function substituteAt(targetGroup, targetIndex, benchLabel) {
+  const benchList = BENCH[targetGroup] || [];
+  const benchIdx = benchList.findIndex(p => p.label === benchLabel);
+  if (benchIdx === -1) return false;
+  const incoming = benchList[benchIdx];
+  const outgoing = LINEUP[targetGroup][targetIndex];
+  if (!outgoing || incoming.label === outgoing.label) return false;
+
+  const newStarter = { ...incoming, role: outgoing.role };
+  if (outgoing.side) newStarter.side = outgoing.side;
+  const demoted = { ...outgoing };
+  delete demoted.role;
+  delete demoted.side;
+
+  LINEUP[targetGroup][targetIndex] = newStarter;
+  Object.keys(BENCH).forEach(g => {
+    BENCH[g] = BENCH[g].filter(p => p.label !== incoming.label);
+  });
+  if (!BENCH[targetGroup].some(p => p.label === demoted.label)) {
+    BENCH[targetGroup].push(demoted);
+    BENCH[targetGroup].sort((a, b) => b.role_score - a.role_score);
+  }
+  return true;
+}
+
+// troca um "não relacionado" pra dentro do banco (grupo + indice dentro do
+// BENCH[targetGroup]), mandando quem tava no banco pra lista de "não
+// relacionados" no lugar. Só funciona se o não relacionado tiver o mesmo
+// best_group do slot do banco -- a nota (role_score) que ele carrega foi
+// calculada só pra esse grupo, não faz sentido usá-la em outro.
+function substituteBench(targetGroup, targetIndex, exLabel) {
+  const exIdx = EXCLUDED.findIndex(p => p.label === exLabel && p.best_group === targetGroup);
+  if (exIdx === -1) return false;
+  const benchList = BENCH[targetGroup] || [];
+  const outgoing = benchList[targetIndex];
+  if (!outgoing) return false;
+
+  const { best_group, excluded_reason, ...incoming } = EXCLUDED[exIdx];
+  if (incoming.label === outgoing.label) return false;
+
+  benchList[targetIndex] = incoming;
+  EXCLUDED.splice(exIdx, 1);
+  EXCLUDED.push({ ...outgoing, best_group: targetGroup, excluded_reason: null });
+  return true;
+}
+
+// tooltip customizado que substitui o title nativo do navegador em todo
+// lugar do dashboard: elementos com data-tip mostram texto puro (com
+// quebras de linha), elementos com data-tip-label + data-tip-kind buscam o
+// jogador em PLAYER_BY_LABEL e montam HTML rico (usado pra lista de
+// habilidades mais votadas, com barra de votos).
+function tipContentFor(el) {
+  const label = el.dataset.tipLabel;
+  const kind = el.dataset.tipKind;
+  if (label && kind) {
+    const p = PLAYER_BY_LABEL[label];
+    if (!p) return "";
+    if (kind === "skills") return skillsListHtml(p);
+    if (kind === "full") {
+      return `
+        <div class="tip-title">${escapeHtml(p.name)}</div>
+        <div class="tip-line">Overall ${p.overall} · ${p.native_position}</div>
+        <div class="tip-line">${tierInfoText(p)}</div>
+        <div class="tip-sep"></div>
+        ${skillsListHtml(p)}
+      `;
+    }
+  }
+  const text = el.dataset.tip;
+  return text ? escapeHtml(text).replace(/\n/g, "<br>") : "";
+}
+
+function initTooltips() {
+  const tip = document.createElement("div");
+  tip.className = "custom-tooltip";
+  document.body.appendChild(tip);
+
+  function position(el) {
+    const rect = el.getBoundingClientRect();
+    const tw = tip.offsetWidth, th = tip.offsetHeight;
+    let top = rect.top - th - 10;
+    if (top < 8) top = rect.bottom + 10;
+    let left = rect.left + rect.width / 2 - tw / 2;
+    left = Math.max(8, Math.min(left, window.innerWidth - tw - 8));
+    tip.style.top = `${top}px`;
+    tip.style.left = `${left}px`;
+  }
+
+  function show(el) {
+    const html = tipContentFor(el);
+    if (!html) return;
+    tip.innerHTML = html;
+    tip.classList.add("visible");
+    position(el);
+  }
+  function hide() { tip.classList.remove("visible"); }
+
+  document.addEventListener("mouseover", e => {
+    const el = e.target.closest("[data-tip], [data-tip-label]");
+    if (el) show(el);
+  });
+  document.addEventListener("mouseout", e => {
+    const el = e.target.closest("[data-tip], [data-tip-label]");
+    if (el && !el.contains(e.relatedTarget)) hide();
+  });
+  document.addEventListener("focusin", e => {
+    const el = e.target.closest("[data-tip], [data-tip-label]");
+    if (el) show(el);
+  });
+  document.addEventListener("focusout", e => {
+    const el = e.target.closest("[data-tip], [data-tip-label]");
+    if (el) hide();
+  });
+  window.addEventListener("scroll", hide, true);
+  document.addEventListener("click", hide, true);
+}
+
+function setupDragDrop() {
+  document.addEventListener("dragstart", e => {
+    const src = e.target.closest("[data-drag-label]");
+    if (!src) return;
+    dragPayload = src.dataset.dragLabel;
+    src.classList.add("dragging");
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", dragPayload);
+  });
+  document.addEventListener("dragend", e => {
+    const src = e.target.closest("[data-drag-label]");
+    if (src) src.classList.remove("dragging");
+    document.querySelectorAll(".pitch-node.drag-over, .pitch-node.drag-invalid")
+      .forEach(el => el.classList.remove("drag-over", "drag-invalid"));
+  });
+
+  const svg = document.getElementById("pitch");
+  svg.addEventListener("dragover", e => {
+    const target = e.target.closest("[data-drop-group]");
+    if (!target || !dragPayload) return;
+    e.preventDefault();
+    const isValid = (BENCH[target.dataset.dropGroup] || []).some(p => p.label === dragPayload);
+    target.classList.toggle("drag-over", isValid);
+    target.classList.toggle("drag-invalid", !isValid);
+    e.dataTransfer.dropEffect = isValid ? "move" : "none";
+  });
+  svg.addEventListener("dragleave", e => {
+    const target = e.target.closest("[data-drop-group]");
+    if (target) target.classList.remove("drag-over", "drag-invalid");
+  });
+  svg.addEventListener("drop", e => {
+    const target = e.target.closest("[data-drop-group]");
+    if (!target) return;
+    e.preventDefault();
+    target.classList.remove("drag-over", "drag-invalid");
+    const label = dragPayload || e.dataTransfer.getData("text/plain");
+    const ok = substituteAt(target.dataset.dropGroup, Number(target.dataset.dropIndex), label);
+    dragPayload = null;
+    if (ok) renderAfterSubstitution();
+  });
+}
+
+// substituição Não Relacionados -> Banco por CLIQUE (não arraste): a lista
+// de excluídos fica longe do banco na página (dezenas de px de scroll), o
+// que torna um drag nativo pouco confiável -- em vez disso, clicar no botão
+// ⇄ de um excluído "arma" ele, e o próximo clique num reserva compatível
+// (mesmo grupo, destacado em dourado) completa a troca. Clicar de novo no
+// ⇄ (ou noutro ⇄) cancela/troca o armado.
+let armedLabel = null;
+let armedGroup = null;
+
+function updateArmedUI() {
+  document.querySelectorAll(".ex-swap-btn").forEach(b => {
+    b.classList.toggle("active", b.dataset.label === armedLabel);
+  });
+  document.querySelectorAll(".bench-card").forEach(c => {
+    c.classList.toggle("swap-target", !!armedLabel && c.dataset.dropGroup === armedGroup);
+  });
+  const hint = document.getElementById("swap-hint");
+  if (!hint) return;
+  if (armedLabel) {
+    hint.hidden = false;
+    hint.textContent = `Substituindo: ${armedLabel} — clique num reserva destacado em dourado pra confirmar (ou clique de novo no ⇄ pra cancelar).`;
+  } else {
+    hint.hidden = true;
+  }
+}
+
+function setupExcludedSwap() {
+  document.getElementById("side-excluded-list").addEventListener("click", e => {
+    const btn = e.target.closest(".ex-swap-btn");
+    if (btn) {
+      if (armedLabel === btn.dataset.label) {
+        armedLabel = null; armedGroup = null;
+      } else {
+        armedLabel = btn.dataset.label;
+        armedGroup = btn.dataset.bestGroup;
+      }
+      updateArmedUI();
+      return;
+    }
+    const row = e.target.closest(".ex-row");
+    if (row) window.open(row.dataset.url, "_blank", "noopener,noreferrer");
+  });
+
+  document.getElementById("bench-groups").addEventListener("click", e => {
+    if (!armedLabel) return;
+    const card = e.target.closest(".bench-card[data-drop-group]");
+    if (!card || card.dataset.dropGroup !== armedGroup) return;
+    e.preventDefault();
+    const ok = substituteBench(card.dataset.dropGroup, Number(card.dataset.dropIndex), armedLabel);
+    armedLabel = null; armedGroup = null;
+    if (ok) renderAfterSubstitution();
+    else updateArmedUI();
+  });
+}
+
+function setupToggle() {
+  const btn = document.getElementById("toggle-overmax");
+  btn.addEventListener("click", () => {
+    SHOW_OVERMAX = !SHOW_OVERMAX;
+    btn.textContent = SHOW_OVERMAX ? "Overmax (treino smart)" : "Overall atual";
+    btn.classList.toggle("active", SHOW_OVERMAX);
+    renderAll();
+  });
+}
+
+function setupFormationToggle() {
+  const buttons = document.querySelectorAll("#formation-toggle .tab-btn");
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      pitchFormation = btn.dataset.formation;
+      renderPitch();
+    });
+  });
+}
+
+const FORMATIONS = {
+  "1": { label: "4-2-2-2", sameAttackDefense: false },
+  "2": { label: "4-2-3-1", sameAttackDefense: true },
+};
+
+// troca entre as DUAS formacoes completas (4-2-2-2 / 4-2-3-1) -- diferente
+// do toggle ofensiva/defensiva acima, que so muda o LAYOUT visual dos
+// mesmos 11 titulares. Aqui troca QUEM sao os titulares/reservas/excluidos
+// (lineup/bench/excluded proprios de cada formacao).
+function switchSquadFormation(option) {
+  ACTIVE_FORMATION = option;
+  const data = currentTeamData();
+  LINEUP = deepClone(data.lineup);
+  BENCH = deepClone(data.bench);
+  EXCLUDED = deepClone(data.excluded || []);
+  armedLabel = null;
+  armedGroup = null;
+
+  const schemeLabel = FORMATIONS[option].label;
+  document.getElementById("formation-pill").textContent = schemeLabel;
+  document.getElementById("formation-scheme-label").textContent = schemeLabel;
+
+  const sameAttackDefense = FORMATIONS[option].sameAttackDefense;
+  document.getElementById("formation-toggle").style.display = sameAttackDefense ? "none" : "";
+
+  renderOverview();
+  renderResumo();
+  renderRadars();
+  renderPitch();
+  renderSections();
+  renderBench();
+  renderSideBench();
+  renderExcluded();
+  updateArmedUI();
+}
+
+function setupSquadFormationToggle() {
+  const buttons = document.querySelectorAll("#squad-formation-toggle .tab-btn");
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      switchSquadFormation(btn.dataset.squadFormation);
+    });
+  });
+}
+
+function setupCacheClear() {
+  const btn = document.getElementById("clear-cache-btn");
+  const note = document.getElementById("cache-status-note");
+  let pollTimer = null;
+
+  function showNote(text, cls) {
+    note.hidden = false;
+    note.textContent = text;
+    note.className = "cache-status-note" + (cls ? " " + cls : "");
+  }
+
+  function poll() {
+    fetch("/api/cache-status").then(r => r.json()).then(status => {
+      if (status.state === "running") {
+        showNote(`⏳ Atualizando (${status.step || "trabalhando"})... isso pode levar 1-2 minutos.`);
+        pollTimer = setTimeout(poll, 3000);
+      } else if (status.state === "done") {
+        showNote("✅ " + status.message, "ok");
+        btn.disabled = false;
+        clearTimeout(pollTimer);
+      } else if (status.state === "error") {
+        showNote("❌ " + status.message, "err");
+        btn.disabled = false;
+        clearTimeout(pollTimer);
+      }
+    }).catch(() => {
+      showNote("❌ Não consegui falar com o servidor local (esse botão só funciona em localhost, via scripts/serve_dashboard.py).", "err");
+      btn.disabled = false;
+      clearTimeout(pollTimer);
+    });
+  }
+
+  btn.addEventListener("click", () => {
+    btn.disabled = true;
+    showNote("⏳ Pedindo pra limpar o cache...");
+    fetch("/api/clear-cache", { method: "POST" })
+      .then(r => r.json())
+      .then(() => poll())
+      .catch(() => {
+        showNote("❌ Não consegui falar com o servidor local (esse botão só funciona em localhost, via scripts/serve_dashboard.py).", "err");
+        btn.disabled = false;
+      });
+  });
+}
+
+function setupTabs() {
+  const buttons = document.querySelectorAll("#main-tabs .tab-btn");
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      document.querySelectorAll(".tab-panel").forEach(panel => {
+        panel.hidden = panel.dataset.tabPanel !== btn.dataset.tab;
+      });
+      document.getElementById("main-tabs").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+}
+
+function renderRadars() {
+  const t = currentTeamData().team_summary;
+  renderRadarChart("radar-off", t.radar_off, cssVar("--g-ataque"));
+  renderRadarChart("radar-def", t.radar_def, cssVar("--g-defesa"));
+}
+
+renderOverview();
+renderResumo();
+renderRadars();
+renderPitch();
+renderSections();
+renderBench();
+renderExcluded();
+renderSideBench();
+renderRoster();
+renderVotes();
+renderTraining();
+renderSkills();
+renderComparisons();
+setupToggle();
+setupFormationToggle();
+setupSquadFormationToggle();
+initTooltips();
+setupDragDrop();
+setupExcludedSwap();
+setupCacheClear();
+setupTabs();
+setupRosterFilters();
+setupVotesSort();
+</script>

@@ -1,0 +1,9 @@
+# Gerados pelos scripts (regeneráveis): caches do efhub e o dashboard montado
+/data/
+/dashboard/dashboard.html
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/
+# Configuração local do Claude Code
+.claude/settings.local.json
