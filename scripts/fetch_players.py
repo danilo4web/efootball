@@ -47,7 +47,10 @@ def is_fresh(player_data):
 def main():
     force = "--force" in sys.argv
     entries = load_players_txt(PLAYERS_TXT)
-    cache = {} if force else load_cache()
+    # O cache é carregado mesmo com --force: o --force só ignora a validade de 6h.
+    # Sem isso, um jogador cuja busca falha sumia do time ("Limpar Cache" com o
+    # efhub instável apagava gente).
+    cache = load_cache()
 
     results = []
     errors = []
@@ -56,7 +59,7 @@ def main():
 
     for i, (label, url) in enumerate(entries, 1):
         cached = cache.get(url)
-        if cached and is_fresh(cached):
+        if cached and not force and is_fresh(cached):
             age_min = round((time.time() - cached["fetched_at"]) / 60)
             print(f"[{i}/{len(entries)}] {label} -> cache ({age_min}min atras)", file=sys.stderr)
             results.append(cached)
@@ -79,8 +82,15 @@ def main():
         time.sleep(0.6)
 
     os.makedirs(os.path.dirname(OUT_PATH), exist_ok=True)
-    with open(OUT_PATH, "w", encoding="utf-8") as f:
-        json.dump({"players": results, "errors": errors}, f, indent=2, ensure_ascii=False)
+    # Grava num temporário e troca: interrupção no meio não corrompe o cache.
+    tmp = OUT_PATH + ".tmp"
+    try:
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump({"players": results, "errors": errors}, f, indent=2, ensure_ascii=False)
+        os.replace(tmp, OUT_PATH)
+    finally:
+        if os.path.exists(tmp):
+            os.remove(tmp)
 
     print(f"\nOK: {len(results)} jogadores salvos em {OUT_PATH} "
           f"({fetched_count} buscados agora, {cached_count} do cache)", file=sys.stderr)
