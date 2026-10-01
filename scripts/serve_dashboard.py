@@ -19,6 +19,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DASHBOARD_DIR = os.path.join(ROOT, "dashboard")
 SCRIPTS_DIR = os.path.join(ROOT, "scripts")
 STATUS_PATH = os.path.join(ROOT, "data", "refresh_status.json")
+PLAYERS_JSON = os.path.join(ROOT, "data", "players.json")
 
 DEFAULT_PORT = 8765
 
@@ -38,6 +39,20 @@ def read_status():
         return json.load(open(STATUS_PATH, encoding="utf-8"))
     except (json.JSONDecodeError, OSError):
         return {"state": "idle"}
+
+
+def resumo_de_falhas():
+    """Falhas da busca (jogador mantido com o dado anterior, ou linha inválida no players.txt) entram
+    na mensagem final: antes o botão dizia só "Cache limpo" mesmo com metade do elenco falhando."""
+    try:
+        with open(PLAYERS_JSON, encoding="utf-8") as f:
+            erros = json.load(f).get("errors") or []
+    except (OSError, ValueError):
+        return ""
+    if not erros:
+        return ""
+    nomes = ", ".join(e.get("label", "?") for e in erros[:5]) + ("…" if len(erros) > 5 else "")
+    return f" Atenção: {len(erros)} falha(s) na busca ({nomes}); os jogadores já conhecidos mantiveram o dado anterior."
 
 
 def run_refresh():
@@ -77,7 +92,8 @@ def run_refresh():
             return
 
         write_status(state="done", finished_at=time.time(),
-                      message="Cache limpo, time remontado e dashboard gerado. Recarregue a página pra ver os dados novos.")
+                     message="Cache limpo, time remontado e dashboard gerado. Recarregue a página pra ver os dados novos."
+                     + resumo_de_falhas())
     finally:
         refresh_lock.release()
 

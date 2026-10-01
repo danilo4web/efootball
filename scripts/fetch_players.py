@@ -46,14 +46,18 @@ def is_fresh(player_data):
 
 def main():
     force = "--force" in sys.argv
-    entries = load_players_txt(PLAYERS_TXT)
+    invalidas = []
+    entries = load_players_txt(PLAYERS_TXT, invalid=invalidas)
     # O cache é carregado mesmo com --force: o --force só ignora a validade de 6h.
     # Sem isso, um jogador cuja busca falha sumia do time ("Limpar Cache" com o
     # efhub instável apagava gente).
     cache = load_cache()
 
     results = []
-    errors = []
+    errors = [{"label": f"players.txt linha {n}", "url": "", "error": f"linha fora do formato 'Nome [Tier]: https://efhub.com/players/<id>': {texto[:80]}"}
+              for n, texto in invalidas]
+    for e in errors:
+        print(f"IGNORADA {e['label']}: {e['error']}", file=sys.stderr)
     fetched_count = 0
     cached_count = 0
 

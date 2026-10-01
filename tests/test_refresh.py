@@ -98,6 +98,7 @@ def test_limpar_cache_remonta_o_dashboard(tmp_path, monkeypatch):
 
     monkeypatch.setattr(serve_dashboard.subprocess, "run", lambda cmd, **k: rodados.append(Path(cmd[1]).name) or Ok())
     monkeypatch.setattr(serve_dashboard, "STATUS_PATH", str(tmp_path / "status.json"))
+    monkeypatch.setattr(serve_dashboard, "PLAYERS_JSON", str(tmp_path / "nao-existe.json"))
 
     serve_dashboard.run_refresh()
 
@@ -136,3 +137,31 @@ def test_o_proprio_dashboard_dispara(servidor):
     base, disparos = servidor
     assert _post(base, origin=base) == 202
     assert _post(base.replace("127.0.0.1", "localhost"), origin=base.replace("127.0.0.1", "localhost")) == 202
+
+
+def test_linha_fora_do_formato_vira_erro_visivel(projeto, monkeypatch, tmp_path):
+    txt = tmp_path / "players.txt"
+    txt.write_text(txt.read_text() + "Kaka [S] https://efhub.com/players/3\nRonaldo [S]: https://outro-site.com/9\n# comentario\n"
+                   "Messi (SS): https://efhub.com/pt-BR/players/106784966581591\n",
+                   encoding="utf-8")
+    monkeypatch.setattr(fetch_players, "fetch_player", _efhub_falha_para(None))
+    monkeypatch.setattr(sys, "argv", ["fetch_players.py"])
+    fetch_players.main()
+    erros = json.loads(projeto.read_text())["errors"]
+    # linha 3 (sem ":" depois do nome) continua aceita; a 4 não é do efhub e vira erro visível
+    assert [e["label"] for e in erros] == ["players.txt linha 4"]
+    assert "formato" in erros[0]["error"]
+
+
+def test_mensagem_final_avisa_falhas_da_busca(tmp_path, monkeypatch):
+    class Ok:
+        returncode = 0
+        stderr = ""
+
+    (tmp_path / "players.json").write_text(json.dumps({"players": [], "errors": [{"label": "Neymar [A]"}, {"label": "players.txt linha 4"}]}))
+    monkeypatch.setattr(serve_dashboard.subprocess, "run", lambda cmd, **k: Ok())
+    monkeypatch.setattr(serve_dashboard, "STATUS_PATH", str(tmp_path / "status.json"))
+    monkeypatch.setattr(serve_dashboard, "PLAYERS_JSON", str(tmp_path / "players.json"))
+    serve_dashboard.run_refresh()
+    msg = json.loads((tmp_path / "status.json").read_text())["message"]
+    assert "2 falha(s)" in msg and "Neymar [A]" in msg

@@ -7,3 +7,4 @@ __pycache__/
 node_modules/
 # Configuração local do Claude Code
 .claude/settings.local.json
+.venv/

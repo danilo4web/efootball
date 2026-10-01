@@ -358,12 +358,21 @@ def fetch_player(url: str, label: str = None) -> dict:
     return data
 
 
-def load_players_txt(path: str):
+EFHUB_PLAYER_URL = re.compile(r"https?://(www\.)?efhub\.com/([a-z]{2}(-[A-Za-z]{2})?/)?players/\d+")
+
+
+def load_players_txt(path: str, invalid=None):
+    """Le players.txt -> [(label, url)]. Linhas que nao seguem "Nome [Tier]: https://efhub.com/players/<id>"
+    vao para `invalid` como (numero_da_linha, texto) -- antes sumiam em silencio."""
     entries = []
     with open(path, encoding="utf-8") as f:
-        for line in f:
+        for n, line in enumerate(f, 1):
             line = line.strip()
-            if not line or ":" not in line:
+            if not line or line.startswith("#"):
+                continue
+            if ":" not in line or not EFHUB_PLAYER_URL.search(line):
+                if invalid is not None:
+                    invalid.append((n, line))
                 continue
             label, url = line.split(":", 1)
             # o formato usa "Nome [Card]: http..." -- so a partir do primeiro

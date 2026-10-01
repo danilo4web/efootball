@@ -305,6 +305,35 @@ def is_low_tier(p):
     return exclusion_reason(p) is not None
 
 
+# Vagas lidas com [0] na montagem: sem ninguém aqui não existe time.
+OBRIGATORIOS = ("GK", "FB_DEF", "FB_OFF", "DMF_ANCHOR", "DMF_BOX")
+
+
+def completar_vagas(starters, used_players, low_tier_players, slot_count, rotulo=""):
+    """Vaga sem ninguem acima do corte de tier recebe o melhor jogador abaixo
+    do corte (com aviso), em vez de deixar o time sem goleiro e estourar
+    IndexError -- o que derrubava o botao Limpar Cache inteiro. Sem nenhum
+    candidato nem abaixo do corte, encerra com a lista do que falta."""
+    faltando = {s: n - len(starters[s]) for s, n in slot_count.items() if len(starters[s]) < n}
+    if faltando:
+        reserva = build_slot_candidates(low_tier_players, slot_count=slot_count)
+        for slot, n in faltando.items():
+            for c in reserva[slot]:
+                if n <= 0:
+                    break
+                if c["player"]["name"] in used_players:
+                    continue
+                starters[slot].append(c)
+                used_players.add(c["player"]["name"])
+                n -= 1
+                print(f"AVISO{rotulo}: {slot} sem ninguém acima do corte; usando {c['player']['name']} "
+                      f"({exclusion_reason(c['player'])})", file=sys.stderr)
+    sem = [s for s in OBRIGATORIOS if s in slot_count and not starters[s]]
+    if sem:
+        sys.exit(f"Elenco sem jogador para: {', '.join(sem)}. Adicione em players.txt um jogador "
+                 f"dessas posições e rode de novo.")
+
+
 def build_formation_4231(eligible_players, low_tier_players):
     """Monta a formacao 2 (4-2-3-1): reaproveita os MESMOS slots de
     defesa/meio do 4-2-2-2 (GK/CB/FB_DEF/FB_OFF/DMF_ANCHOR/DMF_BOX) --
@@ -318,6 +347,7 @@ def build_formation_4231(eligible_players, low_tier_players):
     slot_candidates = build_slot_candidates(eligible_players, slot_count=slot_count)
     starters, used_players = greedy_assign_slots(slot_candidates, slot_count=slot_count)
     candidates = group_candidates_from_slots(slot_candidates)
+    completar_vagas(starters, used_players, low_tier_players, slot_count, rotulo=" (4-2-3-1)")
 
     for slot, need in slot_count.items():
         got = len(starters[slot])
@@ -384,6 +414,8 @@ def build_formation_4231(eligible_players, low_tier_players):
             if label not in low_tier_best or c["score"] > low_tier_best[label][1]["score"]:
                 low_tier_best[label] = (group, c)
     for label, (group, c) in low_tier_best.items():
+        if label in squad_labels:  # escalado por falta de opção (completar_vagas)
+            continue
         entry = summarize(c)
         entry["best_group"] = group
         entry["excluded_reason"] = exclusion_reason(c["player"])
@@ -487,6 +519,7 @@ def main():
     slot_candidates = build_slot_candidates(eligible_players)
     starters, used_players = greedy_assign_slots(slot_candidates)
     candidates = group_candidates_from_slots(slot_candidates)
+    completar_vagas(starters, used_players, low_tier_players, SLOT_COUNT)
 
     for slot, need in SLOT_COUNT.items():
         got = len(starters[slot])
@@ -547,6 +580,8 @@ def main():
             if label not in low_tier_best or c["score"] > low_tier_best[label][1]["score"]:
                 low_tier_best[label] = (group, c)
     for label, (group, c) in low_tier_best.items():
+        if label in squad_labels:  # escalado por falta de opção (completar_vagas)
+            continue
         entry = summarize(c)
         entry["best_group"] = group
         entry["excluded_reason"] = exclusion_reason(c["player"])
