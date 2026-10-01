@@ -249,6 +249,10 @@ def parse_player_html(html: str, url: str) -> dict:
     if escaped:
         raw_block = _unescape(raw_block)
     base_stats = json.loads(raw_block)
+    # o efhub renomeou "Tracking Back" para "Defensive Engagement" -- mantem a
+    # chave antiga, que e a usada nos pesos e nos radares
+    if "trackingBack" not in base_stats and "defensiveEngagement" in base_stats:
+        base_stats["trackingBack"] = base_stats["defensiveEngagement"]
 
     tail = html[idx + len(marker):idx + len(marker) + 4000]
     if escaped:
